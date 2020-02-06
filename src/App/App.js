@@ -10,6 +10,7 @@ import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { AboutUsPage } from '../AboutUsPage';
 import { LoginPage } from '../LoginPage';
+import DiscreteSlider from '../_components/vSlider';
 
 class App extends React.Component {
     constructor(props) {
@@ -30,7 +31,11 @@ class App extends React.Component {
                     <Route path="/login" component={LoginPage} />
                 </div>
             </Router>
+           
         );
+        <p>
+        <DiscreteSlider/>
+        </p>
     }
 }
 
