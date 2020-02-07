@@ -1,4 +1,7 @@
+/* REACT IMPORTS */
 import React from "react";
+
+/* THIRD PARTY IMPORTS */
 import { makeStyles } from "@material-ui/core/styles";
 import Radio from "@material-ui/core/Radio";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -13,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function RadioButtonsGroup() {
+export default function AutoRadioGroup() {
     const classes = useStyles();
     const [value, setValue] = React.useState("agree");
 
