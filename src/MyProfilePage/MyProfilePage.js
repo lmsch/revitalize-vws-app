@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class MyProfilePage extends React.Component {
     
     render() {
-        return <Link to="/MyProfilePage"> </Link>
+        return <Link to="/MyProfile"> </Link>
     }
 }
 

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class SupportPage extends React.Component {
     
     render() {
-        return <Link to="/SupportPage"> </Link>
+        return <Link to="/Support"> </Link>
     }
 }
 

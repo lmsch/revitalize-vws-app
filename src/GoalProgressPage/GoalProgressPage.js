@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class GoalProgressPage extends React.Component {
     
     render() {
-        return <Link to="/GoalProgressPage"> </Link>
+        return <Link to="/GoalProgress"> </Link>
     }
 }
 
