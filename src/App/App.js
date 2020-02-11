@@ -24,11 +24,9 @@ class App extends React.Component {
     render() {
         return (
             <Router history={history}>
-                <div>
-                    <CssBaseline />
-                    <PrivateRoute exact path="/" component={AboutUsPage} />
-                    <Route path="/login" component={LoginPage} />
-                </div>
+                <CssBaseline />
+                <PrivateRoute exact path="/" component={AboutUsPage} />
+                <Route path="/login" component={LoginPage} />
             </Router>
         );
     }
