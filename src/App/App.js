@@ -13,8 +13,7 @@ import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { AboutUsPage } from '../AboutUsPage';
 import { LoginPage } from '../LoginPage';
-import DiscreteSlider from '../_components/vSlider';
-import IconLabelTabs from '../_components/headerComponent';
+import { NavTabs } from '../_components';
 
 class App extends React.Component {
     constructor(props) {
@@ -28,14 +27,14 @@ class App extends React.Component {
 
     render() {
         return (
-            <Router history={history}>
-                <div>
-                    <CssBaseline />
-                    <PrivateRoute exact path="/" component={AboutUsPage} />
-                    <Route path="/login" component={LoginPage} />
-                </div>
-            </Router>
-
+            <React.Fragment>
+                <NavTabs />
+                <Router history={history}>
+                        <CssBaseline />
+                        <PrivateRoute exact path="/" component={AboutUsPage} />
+                        <Route path="/login" component={LoginPage} />
+                </Router>
+            </React.Fragment>
         );
 
     }

@@ -1,2 +1,4 @@
 export * from './PrivateRoute';
-export * from './headerComponent';
+
+// Layout
+export * from './layout/headerComponent';
