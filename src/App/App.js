@@ -35,11 +35,11 @@ class App extends React.Component {
                     <Route path="/login" component={LoginPage} />
                 </div>
             </Router>
-           
+
         );
-        
+
     }
-   
+
 }
 
 function mapStateToProps(state) {
