@@ -10,7 +10,7 @@ function login(username, password) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     };
-    return fetch(`${process.env.REACT_APP_DEV_DOMAIN}/revitalize/token/`, requestOptions)
+    return fetch(`${process.env.REACT_APP_DEV_DOMAIN}/api/token/`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes

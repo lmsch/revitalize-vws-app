@@ -1,22 +1,18 @@
 /* LREACT IMPORTS */
 import React from 'react';
-import { Router, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
 /* THIRD PARTY IMPORTS */
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { connect } from 'react-redux';
+import { Router, Route, Switch } from 'react-router-dom';
 /* LOCAL IMPORTS */
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
-import { AboutUsPage } from '../AboutUsPage';
+import { MyProgramPage } from '../MyProgramPage';
 import { LoginPage } from '../LoginPage';
-import {SurveysPage} from "../SurveysPage";
-import {ContactPage} from "../ContactPage";
-import {DietaryJournalPage} from "../DietaryJournalPage";
-import {GoalProgressPage} from "../GoalProgressPage";
-import {LabValuesPage} from "../LabValuesPage";
-import {MyProfilePage} from "../MyProfilePage";
-import {SupportPage} from "../SupportPage";
+import { SupportPage } from '../SupportPage';
+import { ContactPage } from '../ContactPage';
+import { AboutUsPage } from '../AboutUsPage';
 
 class App extends React.Component {
     constructor(props) {
@@ -31,18 +27,14 @@ class App extends React.Component {
     render() {
         return (
             <Router history={history}>
-                <div>
-                    <CssBaseline />
-                    <PrivateRoute exact path="/" component={AboutUsPage} />
-                    <PrivateRoute exact path="/" component={SurveysPage} />
-                    <PrivateRoute exact path="/" component={ContactPage} />
-                    <PrivateRoute exact path="/" component={DietaryJournalPage} />
-                    <PrivateRoute exact path="/" component={GoalProgressPage} />
-                    <PrivateRoute exact path="/" component={LabValuesPage} />
-                    <PrivateRoute exact path="/" component={MyProfilePage} />
-                    <PrivateRoute exact path="/" component={SupportPage} />
+                <CssBaseline />
+                <Switch>
                     <Route path="/login" component={LoginPage} />
-                </div>
+                    <Route path="/support" component={SupportPage} />
+                    <Route path="/contact" component={ContactPage} />
+                    <PrivateRoute path="/program" component={MyProgramPage} />
+                    <Route path="/" component={AboutUsPage} />
+                </Switch>
             </Router>
         );
     }

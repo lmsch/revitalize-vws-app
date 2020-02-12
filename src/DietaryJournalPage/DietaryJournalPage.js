@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class DietaryJournalPage extends React.Component {
     
     render() {
-        return <Link to="/DietaryJournal"> </Link>
+        return <Link to="/program/journal">Journal</Link>
     }
 }
 
