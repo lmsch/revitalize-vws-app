@@ -10,6 +10,7 @@ import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { AboutUsPage } from '../AboutUsPage';
 import { LoginPage } from '../LoginPage';
+import {Drawer} from "@material-ui/core";
 
 class App extends React.Component {
     constructor(props) {
