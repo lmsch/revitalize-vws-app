@@ -13,38 +13,17 @@ import {
 } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
-const styles  = theme => ({
-    formControl: {
-        display: 'block',
-    },
-    formControlLabel: {
-        marginRight: '0',
-    },
-    radioGroup: {
-        justifyContent: 'space-around',
-        flexWrap: 'nowrap',
-    },
-    labels: {
-        display: 'flex',
-        justifyContent: 'space-around',
-    }
-});
+/* LOCAL IMPORTS */
+import {
+    styles,
+    setupInitialState,
+} from './common';
 
 class ExclusiveChoices extends React.Component {
 
-    /**
-     * Setup state to initial (as defined by API) for each question. Mapped as [question_index: number]: [radio_value: number].
-     */
     constructor(props) {
         super(props);
-        const { model } = props;
-        const initialResponse = model.question_group_type_data.initial;
-        const initialState = {};
-        model.questions.forEach((question, i) => {
-            initialState[i] = initialResponse;
-            question.response = initialResponse;
-        });
-        this.state = initialState;
+        this.state = setupInitialState(props.model);
     }
 
     /**
@@ -53,6 +32,7 @@ class ExclusiveChoices extends React.Component {
     handleChange = e => {
         this.setState({[e.target.name]: e.target.value});
         this.props.model.questions[e.target.name].response = e.target.value;
+        console.log(this.props.model.questions);
     };
 
     /**
@@ -93,38 +73,19 @@ class ExclusiveChoices extends React.Component {
             );
         } else {
             return (
-                <div>
-                    <Grid 
-                        container
-                        spacing={2}
-                        direction="row">
-                        <Grid 
-                            item
-                            xs={5} />
-                        <Grid 
-                            item
-                            xs={7}>
-                            <div className={classes.labels}>
-                                {questionData.labels.map((label, i) =>
-                                    <Typography 
-                                        key={i}
-                                        component="h6" 
-                                        variant="subtitle1">
-                                            {label}
-                                    </Typography>
-                                )}
-                            </div>
-                        </Grid>   
-                    </Grid>
+                <Grid
+                    container
+                    directon="column">
                     {model.questions.map((question, i) =>
                         <Grid 
                             key={i}
+                            item
                             container
-                            spacing={2} 
-                            direction="row">
+                            alignItems="baseline">
                             <Grid 
                                 item
-                                xs={5}>
+                                xs={6}
+                                className={classes.gridPaddingRight}>
                                 <Typography 
                                     component="p" 
                                     variant="subtitle1"
@@ -134,20 +95,30 @@ class ExclusiveChoices extends React.Component {
                             </Grid>
                             <Grid 
                                 item
-                                xs={7}>
+                                xs={6}>
                                 <FormControl 
                                     component="fieldset"
                                     className={classes.formControl}>
                                     <RadioGroup 
                                         row
-                                        className={classes.radioGroup}
+                                        className={classes.radioGroupExclusive}
                                         name={String(i)}
                                         value={this.state[i]} 
                                         onChange={this.handleChange}>
-                                        { questionData.labels.map((_, j) => 
+                                        {questionData.labels.map((label, j) => 
                                             <FormControlLabel
                                                 key={j}
+                                                classes={{label: 
+                                                    i? classes.labelNotVisible : ''
+                                                }}
                                                 value={String(j + 1)}
+                                                label={
+                                                    <Typography 
+                                                        component="h6" 
+                                                        variant="subtitle1">
+                                                        {label}
+                                                    </Typography>
+                                                }
                                                 control={<Radio color="primary" />}
                                                 labelPlacement="top"/>
                                         )}
@@ -156,11 +127,10 @@ class ExclusiveChoices extends React.Component {
                             </Grid>
                         </Grid>
                     )}
-                </div> 
+                </Grid> 
             );
         }
     }
-
 }
 
 ExclusiveChoices.propTypes = {
