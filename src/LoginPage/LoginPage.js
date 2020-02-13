@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 /* THIRD PARTY IMPORTS */
-
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
