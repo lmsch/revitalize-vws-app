@@ -7,7 +7,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 /* LOCAL IMPORTS */
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
-import { PrivateRoute } from '../_components';
+import { PrivateRoute, Footer } from '../_components';
 import { MyProgramPage } from '../MyProgramPage';
 import { LoginPage } from '../LoginPage';
 import { SupportPage } from '../SupportPage';
@@ -26,16 +26,19 @@ class App extends React.Component {
 
     render() {
         return (
-            <Router history={history}>
-                <CssBaseline />
-                <Switch>
-                    <Route path="/login" component={LoginPage} />
-                    <Route path="/support" component={SupportPage} />
-                    <Route path="/contact" component={ContactPage} />
-                    <PrivateRoute path="/program" component={MyProgramPage} />
-                    <Route path="/" component={AboutUsPage} />
-                </Switch>
-            </Router>
+           <React.Fragment>
+                <Router history={history}>
+                    <CssBaseline />
+                    <Switch>
+                        <Route path="/login" component={LoginPage} />
+                        <Route path="/support" component={SupportPage} />
+                        <Route path="/contact" component={ContactPage} />
+                        <PrivateRoute path="/program" component={MyProgramPage} />
+                        <Route path="/" component={AboutUsPage} />
+                    </Switch>
+                </Router>
+                <Footer />
+           </React.Fragment>
         );
     }
 }
