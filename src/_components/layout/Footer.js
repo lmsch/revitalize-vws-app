@@ -1,7 +1,7 @@
 /* REACT IMPORTS */
 import React from 'react'
 /* THIRD PARTY IMPORTS */
-import {AppBar, withStyles} from "@material-ui/core";
+import { AppBar, withStyles } from "@material-ui/core";
 
 const styles = () => ({
     footer: {
@@ -16,7 +16,7 @@ class Footer extends React.Component{
         const { classes } = this.props;
         return (
             <footer>
-                <AppBar>
+                <AppBar position="relative">
                     <div className={classes.footer}>
                         <p>&copy; 2020 ---</p>
                     </div>

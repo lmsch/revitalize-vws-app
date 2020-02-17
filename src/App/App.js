@@ -26,20 +26,26 @@ class App extends React.Component {
 
     render() {
         return (
-           <div className = "app-layout">
-               <NavTabs className = "app-header"/>
-               <Router className = "app-content" history={history}>
-                    <CssBaseline />
-                    <Switch>
-                        <Route path="/login" component={LoginPage} />
-                        <Route path="/support" component={SupportPage} />
-                        <Route path="/contact" component={ContactPage} />
-                        <PrivateRoute path="/program" component={MyProgramPage} />
-                        <Route path="/" component={AboutUsPage} />
-                    </Switch>
-                </Router>
-                <Footer className = "app-footer"/>
-           </div>
+            <div className="app-layout">
+                <div className="app-header">
+                    <NavTabs className="app-header" />
+                </div>
+                <div className="app-content">
+                    <Router history={history}>
+                        <CssBaseline />
+                        <Switch>
+                            <Route path="/login" component={LoginPage} />
+                            <Route path="/support" component={SupportPage} />
+                            <Route path="/contact" component={ContactPage} />
+                            <PrivateRoute path="/program" component={MyProgramPage} />
+                            <Route path="/" component={AboutUsPage} />
+                        </Switch>
+                    </Router>
+                </div>
+                <div class="app-footer">
+                    <Footer />
+                </div>
+            </div>
         );
     }
 }
