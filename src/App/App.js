@@ -1,7 +1,6 @@
 /* REACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { connect } from 'react-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 /* LOCAL IMPORTS */
@@ -28,11 +27,10 @@ class App extends React.Component {
         return (
             <div className="app-layout">
                 <div className="app-header">
-                    <NavTabs className="app-header" />
+                    <NavTabs />
                 </div>
                 <div className="app-content">
                     <Router history={history}>
-                        <CssBaseline />
                         <Switch>
                             <Route path="/login" component={LoginPage} />
                             <Route path="/support" component={SupportPage} />
