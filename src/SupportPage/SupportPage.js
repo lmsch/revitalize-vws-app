@@ -2,11 +2,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class AboutUsPage extends React.Component {
+class SupportPage extends React.Component {
     
     render() {
-        return <Link to="/">About Us</Link>
+        return <Link to="/support">Support</Link>
     }
 }
 
-export { AboutUsPage };
+export { SupportPage };

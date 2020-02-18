@@ -1,16 +1,19 @@
-/* LREACT IMPORTS */
+/* REACT IMPORTS */
 import React from 'react';
-import { Router, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
 /* THIRD PARTY IMPORTS */
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { connect } from 'react-redux';
+import { Router, Route, Switch } from 'react-router-dom';
 /* LOCAL IMPORTS */
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
-import { AboutUsPage } from '../AboutUsPage';
+import { MyProgramPage } from '../MyProgramPage';
 import { LoginPage } from '../LoginPage';
-import DiscreteSlider from '../_components/vSlider';
+//=======
+import { SupportPage } from '../SupportPage';
+import { ContactPage } from '../ContactPage';
+import { AboutUsPage } from '../AboutUsPage';
 
 class App extends React.Component {
     constructor(props) {
@@ -25,11 +28,14 @@ class App extends React.Component {
     render() {
         return (
             <Router history={history}>
-                <div>
-                    <CssBaseline />
-                    <PrivateRoute exact path="/" component={AboutUsPage} />
+                <CssBaseline />
+                <Switch>
                     <Route path="/login" component={LoginPage} />
-                </div>
+                    <Route path="/support" component={SupportPage} />
+                    <Route path="/contact" component={ContactPage} />
+                    <PrivateRoute path="/program" component={MyProgramPage} />
+                    <Route path="/" component={AboutUsPage} />
+                </Switch>
             </Router>
            
         );
