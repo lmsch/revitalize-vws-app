@@ -65,7 +65,6 @@ const useStyles = makeStyles(theme => ({
     selectChild: {
         marginRight: '10px',
         marginLeft: '10px',
-        color: 'white',
     },
 }));
 

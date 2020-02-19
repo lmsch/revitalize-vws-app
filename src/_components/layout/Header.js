@@ -61,10 +61,12 @@ const useStyles = makeStyles(theme => ({
     selectContainer: {
         display: 'flex',
         alignItems: 'center',
+        marginRight: '100px',
+        marginLeft: '500px',
+        marginTop: 'inherit'
     },
     selectChild: {
-        marginRight: '10px',
-        marginLeft: '10px',
+        color: 'white',
     },
 }));
 
