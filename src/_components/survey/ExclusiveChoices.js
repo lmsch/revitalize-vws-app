@@ -32,7 +32,6 @@ class ExclusiveChoices extends React.Component {
     handleChange = e => {
         this.setState({[e.target.name]: e.target.value});
         this.props.model.questions[e.target.name].response = e.target.value;
-        console.log(this.props.model.questions);
     };
 
     /**
