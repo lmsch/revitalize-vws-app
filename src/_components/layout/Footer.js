@@ -1,26 +1,28 @@
 /* REACT IMPORTS */
 import React from 'react'
 /* THIRD PARTY IMPORTS */
-import { AppBar, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 
-const styles = () => ({
-    footer: {
-        textAlign: 'center',
-        paddingTop: '20px',
-        paddingBottom: '20px',
-    },
-});
+const styles = (theme) => (
+    {
+        footer: {
+            textAlign: 'center',
+            paddingTop: '5px',
+            paddingBottom: '5px',
+            backgroundColor: theme.palette.primary.main,
+            color: 'white',
+        }
+    }
+);
 
 class Footer extends React.Component{
     render(){
         const { classes } = this.props;
         return (
             <footer>
-                <AppBar position="relative">
-                    <div className={classes.footer}>
-                        <p>&copy; 2020 ---</p>
-                    </div>
-                </AppBar>
+                <div className={classes.footer}>
+                    <p>&copy; 2020 ---</p>
+                </div>
             </footer>
         );
     }
