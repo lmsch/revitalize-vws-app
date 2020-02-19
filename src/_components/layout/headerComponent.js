@@ -65,6 +65,7 @@ const useStyles = makeStyles(theme => ({
     selectChild: {
         marginRight: '10px',
         marginLeft: '10px',
+        color: 'white',
     },
 }));
 
@@ -85,9 +86,9 @@ export function NavTabs() {
                     onChange={handleChange}
                     aria-label="nav tabs"
                 >
-                    <LinkTab label="About Us" href="/about-us" {...a11yProps(0)} />
-                    <LinkTab label="Support" href="/support" {...a11yProps(1)} />
-                    <LinkTab label="Contact" href="/contact" {...a11yProps(2)} />
+                        <LinkTab label="About Us" href="/about-us" {...a11yProps(0)} />
+                        <LinkTab label="Support" href="/support" {...a11yProps(1)} />
+                        <LinkTab label="Contact" href="/contact" {...a11yProps(2)} />
                     <div className={classes.selectContainer}>
                         <LanguageIcon />
                         <Select
