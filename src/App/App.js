@@ -9,7 +9,6 @@ import { alertActions } from '../_actions';
 import { PrivateRoute, Footer, NavTabs } from '../_components';
 import { MyProgramPage } from '../MyProgramPage';
 import { LoginPage } from '../LoginPage';
-import { NavTabs, Footer } from '../_components';
 import { SupportPage } from '../SupportPage';
 import { ContactPage } from '../ContactPage';
 import { AboutUsPage } from '../AboutUsPage';
