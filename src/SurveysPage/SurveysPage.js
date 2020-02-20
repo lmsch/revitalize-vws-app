@@ -1,12 +1,22 @@
-/* REACT IMPORTS */
+/* LREACT IMPORTS */
 import React from 'react';
-import { Link } from 'react-router-dom';
+/* THIRD PARTY IMPORTS */
+import { Router, withRouter } from 'react-router-dom';
+/* LOCAL IMPORTS */
+import { history } from '../_helpers';
+import { PrivateRoute } from '../_components';
 
 class SurveysPage extends React.Component {
     
     render() {
-        return <Link to="/program/surveys">Surveys</Link>
+        const { path } = this.props.match;
+        return (
+            <Router history={history}>
+                <PrivateRoute path={`${path}/:surveyId`} component={<div>Hello</div>} />
+            </Router>
+        );
     }
 }
 
-export { SurveysPage };
+const routedSurveysPage = withRouter(SurveysPage);
+export { routedSurveysPage as SurveysPage };
