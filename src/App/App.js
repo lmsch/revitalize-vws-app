@@ -6,13 +6,12 @@ import { Router, Route, Switch } from 'react-router-dom';
 /* LOCAL IMPORTS */
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
-import { PrivateRoute, Footer, Header, TemoraryDrawer } from '../_components';
+import { PrivateRoute, Footer, Header } from '../_components';
 import { MyProgramPage } from '../MyProgramPage';
 import { LoginPage } from '../LoginPage';
 import { SupportPage } from '../SupportPage';
 import { ContactPage } from '../ContactPage';
 import { AboutUsPage } from '../AboutUsPage';
-import TemporaryDrawer from "../_components/layout/Drawer";
 
 class App extends React.Component {
     constructor(props) {
