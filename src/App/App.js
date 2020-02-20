@@ -10,6 +10,7 @@ import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { MyProgramPage } from '../MyProgramPage';
 import { LoginPage } from '../LoginPage';
+import ImageAvatars from '../_components/ProfileImage';
 //=======
 import { SupportPage } from '../SupportPage';
 import { ContactPage } from '../ContactPage';
@@ -29,6 +30,7 @@ class App extends React.Component {
         return (
             <Router history={history}>
                 <CssBaseline />
+                <ImageAvatars/>
                 <Switch>
                     <Route path="/login" component={LoginPage} />
                     <Route path="/support" component={SupportPage} />
@@ -39,9 +41,6 @@ class App extends React.Component {
             </Router>
            
         );
-        <p>
-        <DiscreteSlider/>
-        </p>
     }
 }
 
