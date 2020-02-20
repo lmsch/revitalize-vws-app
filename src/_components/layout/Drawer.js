@@ -1,7 +1,8 @@
+/* REACT IMPORTS */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+/* THIRD PARTY IMPORTS */
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -16,7 +17,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function TemporaryDrawer() {
+export function SideDrawer() {
     const classes = useStyles();
     const [state, setState] = React.useState({ left: false, });
 
@@ -42,17 +43,6 @@ export default function TemporaryDrawer() {
                     </ListItem>
                 ))}
             </List>
-        </div>
-    );
-
-    const fullList = side => (
-        <div
-            className={classes.fullList}
-            role="presentation"
-            onClick={toggleDrawer(side, false)}
-            onKeyDown={toggleDrawer(side, false)}
-        >
-
         </div>
     );
 
