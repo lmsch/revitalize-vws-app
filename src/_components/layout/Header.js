@@ -9,9 +9,11 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import LanguageIcon from "@material-ui/icons/Language";
-import { Select, MenuItem} from '@material-ui/core';
+import { Select, MenuItem, IconButton} from '@material-ui/core';
 /* LOCAL IMPORTS */
 import { history } from '../../_helpers';
+import { SideDrawer } from "./Drawer";
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -75,13 +77,16 @@ const useStyles = makeStyles(theme => ({
         margin: '0 30px 0 5px',
         color: 'white',
     },
-    tabs: {
+    tabsContainer: {
         display: 'flex',
         alignItems: 'center',
-        flex: '0 0 auto'
+        flex: '0 0 auto',
     },
-    title: {
-        margin: '0 30px 0 30px',
+    tabs: {
+        margin: '0 60px 0 60px',
+    },
+    menuButton: {
+        margin: '0 18px 0 18px',
     },
 }));
 
@@ -98,7 +103,13 @@ export function Header() {
             <AppBar 
                 position="relative"
                 className={classes.appBar}>
-                <div className={classes.tabs}>
+                <div className={classes.tabsContainer}>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        className={classes.menuButton}>
+                        <SideDrawer />
+                    </IconButton>
                     <Typography 
                         className={classes.title}
                         component="h1" 
@@ -106,6 +117,7 @@ export function Header() {
                             REVITALIZE
                     </Typography>
                     <Tabs
+                        className={classes.tabs}
                         variant="fullWidth"
                         value={value}
                         onChange={handleChange}
