@@ -13,6 +13,7 @@ import { Select, MenuItem, IconButton} from '@material-ui/core';
 /* LOCAL IMPORTS */
 import { history } from '../../_helpers';
 import { SideDrawer } from "./Drawer";
+import ImageAvatars from "../ProfileImage";
 
 
 function TabPanel(props) {
@@ -138,6 +139,7 @@ export function Header() {
                         <MenuItem value="EN">EN</MenuItem>
                         <MenuItem value="FR">FR</MenuItem>
                     </Select>
+                    <ImageAvatars/>
                 </div>
             </AppBar>
         </div>
