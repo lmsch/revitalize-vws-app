@@ -89,6 +89,10 @@ const useStyles = makeStyles(theme => ({
     menuButton: {
         margin: '0 18px 0 18px',
     },
+    ImageAvatars: {
+        margin: '0px 20px 0 20px',
+        
+    },
 }));
 
 export function Header() {
