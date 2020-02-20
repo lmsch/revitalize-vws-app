@@ -12,6 +12,11 @@ import LanguageIcon from "@material-ui/icons/Language";
 import { Select, MenuItem} from '@material-ui/core';
 /* LOCAL IMPORTS */
 import { history } from '../../_helpers';
+import TemporaryDrawer from "./Drawer";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from '@material-ui/icons/Menu';
+import clsx from "clsx";
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -83,6 +88,9 @@ const useStyles = makeStyles(theme => ({
     title: {
         margin: '0 30px 0 30px',
     },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
 }));
 
 export function Header() {
@@ -99,6 +107,15 @@ export function Header() {
                 position="relative"
                 className={classes.appBar}>
                 <div className={classes.tabs}>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        className = {classes.menuButton}
+                    >
+                            <TemporaryDrawer/>
+                    </IconButton>
+
                     <Typography 
                         className={classes.title}
                         component="h1" 
