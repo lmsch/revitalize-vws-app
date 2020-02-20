@@ -1,13 +1,12 @@
 /* REACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { connect } from 'react-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 /* LOCAL IMPORTS */
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
-import { PrivateRoute } from '../_components';
+import { PrivateRoute, Footer, Header } from '../_components';
 import { MyProgramPage } from '../MyProgramPage';
 import { LoginPage } from '../LoginPage';
 //=======
@@ -27,21 +26,22 @@ class App extends React.Component {
 
     render() {
         return (
-            <Router history={history}>
-                <CssBaseline />
-                <Switch>
-                    <Route path="/login" component={LoginPage} />
-                    <Route path="/support" component={SupportPage} />
-                    <Route path="/contact" component={ContactPage} />
-                    <PrivateRoute path="/program" component={MyProgramPage} />
-                    <Route path="/" component={AboutUsPage} />
-                </Switch>
-            </Router>
-           
+            <div className="app-layout">
+                <Header className="app-header" />
+                <main>
+                    <Router history={history}>
+                        <Switch>
+                            <Route path="/login" component={LoginPage} />
+                            <Route path="/support" component={SupportPage} />
+                            <Route path="/contact" component={ContactPage} />
+                            <PrivateRoute path="/program" component={MyProgramPage} />
+                            <Route path="/" component={AboutUsPage} />
+                        </Switch>
+                    </Router>
+                </main>
+                <Footer clasName="app-footer" />
+            </div>
         );
-        <p>
-        <DiscreteSlider/>
-        </p>
     }
 }
 
