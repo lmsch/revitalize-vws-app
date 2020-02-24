@@ -9,7 +9,11 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import LanguageIcon from "@material-ui/icons/Language";
-import { Select, MenuItem } from '@material-ui/core';
+import { Select, MenuItem, IconButton} from '@material-ui/core';
+/* LOCAL IMPORTS */
+import { history } from '../../_helpers';
+import { SideDrawer } from "./Drawer";
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -47,6 +51,7 @@ function LinkTab(props) {
             component="a"
             onClick={event => {
                 event.preventDefault();
+                history.push(props.href);
             }}
             {...props}
         />
@@ -55,20 +60,37 @@ function LinkTab(props) {
 
 const useStyles = makeStyles(theme => ({
     root: {
-        backgroundColor: theme.palette.background.paper,
         width: '100%',
+    },
+    appBar: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     selectContainer: {
         display: 'flex',
         alignItems: 'center',
+        flex: '0 0 auto',
     },
     selectChild: {
-        marginRight: '10px',
-        marginLeft: '10px',
+        margin: '0 30px 0 5px',
+        color: 'white',
+    },
+    tabsContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        flex: '0 0 auto',
+    },
+    tabs: {
+        margin: '0 60px 0 60px',
+    },
+    menuButton: {
+        margin: '0 18px 0 18px',
     },
 }));
 
-export function NavTabs() {
+export function Header() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -78,29 +100,45 @@ export function NavTabs() {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
-                <Tabs
-                    variant="fullWidth"
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="nav tabs"
-                >
-                    <LinkTab label="About Us" href="/about-us" {...a11yProps(0)} />
-                    <LinkTab label="Support" href="/support" {...a11yProps(1)} />
-                    <LinkTab label="Contact" href="/contact" {...a11yProps(2)} />
-                    <div className={classes.selectContainer}>
-                        <LanguageIcon />
-                        <Select
-                            autoWidth="true"
-                            id="Language selector"
-                            value="EN"
-                            className={classes.selectChild}
-                        >
-                            <MenuItem value="EN">EN</MenuItem>
-                            <MenuItem value="FR">FR</MenuItem>
-                        </Select>
-                    </div>
-                </Tabs>
+            <AppBar 
+                position="relative"
+                className={classes.appBar}>
+                <div className={classes.tabsContainer}>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        className={classes.menuButton}>
+                        <SideDrawer />
+                    </IconButton>
+                    <Typography 
+                        className={classes.title}
+                        component="h1" 
+                        variant="h6">
+                            REVITALIZE
+                    </Typography>
+                    <Tabs
+                        className={classes.tabs}
+                        variant="fullWidth"
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="nav tabs"
+                    >
+                        <LinkTab label="About Us" href="/" {...a11yProps(0)} />
+                        <LinkTab label="Support" href="/support" {...a11yProps(1)} />
+                        <LinkTab label="Contact" href="/contact" {...a11yProps(2)} />
+                    </Tabs>
+                </div>
+                <div className={classes.selectContainer}>
+                    <LanguageIcon />
+                    <Select
+                        id="Language selector"
+                        value="EN"
+                        className={classes.selectChild}
+                    >
+                        <MenuItem value="EN">EN</MenuItem>
+                        <MenuItem value="FR">FR</MenuItem>
+                    </Select>
+                </div>
             </AppBar>
         </div>
     );
