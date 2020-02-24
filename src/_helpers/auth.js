@@ -1,6 +1,7 @@
 /* LOCAL IMPORTS */
 import { userService } from '../_services';
 import { alertActions, userActions } from '../_actions';
+import { userConstants } from '../_constants';
 import { store } from '.';
 
 export const DEFAULT_TIMEOUT = 2;
@@ -33,7 +34,7 @@ export async function apiCall(url, options, timeout = DEFAULT_TIMEOUT) {
 }
 
 async function apiRefresh() {
-    dispatch(request());
+    store.dispatch(request());
     try {
         const response = await userService.refreshAccess();
         const user = await handleResponse(response);

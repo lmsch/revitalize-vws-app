@@ -5,6 +5,7 @@ export const styles = () => ({
     },
     formControlLabel: {
         margin: 0,
+        paddingRight: '20px',
     },
     radioGroupExclusive: {
         justifyContent: 'space-around',
@@ -29,6 +30,12 @@ export const styles = () => ({
     },
     integerScaleChild: {
         flex: '0 0 auto',
+    },
+    elementContainer: {
+        marginTop: '60px',
+    },
+    surveyQuestionsContainer: {
+        marginBottom: '60px',
     }
 });
 

@@ -32,8 +32,11 @@ function renderElement(element) {
                 <Typography 
                     component="p" 
                     variant="subtitle1"
-                    dangerouslySetInnerHTML={{__html: element.number ? 
-                    `${element.number}: ${element.text} ` : `${element.text}`}}>
+                    dangerouslySetInnerHTML={{__html: 
+                        element.number ? `${element.number}: ${element.text} ` :
+                        element.text ? `${element.text}` :
+                        ''
+                    }}>
                 </Typography>
                 <SurveyComponent model={element} />
             </React.Fragment>
@@ -49,20 +52,24 @@ class GenerateSurvey extends React.Component {
      * Renders the component based on various model conditions.
      */
     render() {
-        const { model } = this.props;
+        const { model, classes } = this.props;
         return (
             <div>
                 <Typography 
                     component="h1" 
-                    variant="h3">
+                    variant="h4">
                     {model.name}
                 </Typography>
                 <p dangerouslySetInnerHTML={{__html: model.description}}></p>
-                {model.elements.map((element, i) =>
-                    <div key={i}>
-                        {renderElement(element)}
-                    </div>
-                )}
+                <div className={classes.surveyQuestionsContainer}>
+                    {model.elements.map((element, i) =>
+                        <div 
+                            className={classes.elementContainer}
+                            key={i}>
+                            {renderElement(element)}
+                        </div>
+                    )}
+                </div>
             </div>
         );
     }

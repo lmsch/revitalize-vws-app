@@ -44,18 +44,18 @@ class IntegerRange extends React.Component {
             const question = model.questions[0];
             return (
                 <div>
-    `               <Typography 
+                    <Typography 
                         component="p" 
                         variant="subtitle1"
                         dangerouslySetInnerHTML={{__html: question.number ? 
-                        `${question.number}: ${question.text} ` : `${question.text}`}}>
+                        `${question.number}: ${question.text}` : `${question.text}`}}>
                     </Typography>
                     <div className={classes.integerScale}>
                         <Typography 
                             className={classes.integerScaleChild}
                             component="h6" 
                             variant="subtitle1">
-                            {questionData.annotations.minimum}
+                            {questionData.annotations?.minimum}
                         </Typography>
                         <FormControl 
                             className={classes.integerScaleChild}
@@ -66,7 +66,7 @@ class IntegerRange extends React.Component {
                                 name={String(0)}
                                 value={this.state[0]} 
                                 onChange={this.handleChange}>
-                                {questionData.labels.map((label, j) => 
+                                {questionData.labels?.map((label, j) => 
                                     <FormControlLabel
                                         className={classes.formControlLabel}
                                         key={j}
@@ -81,8 +81,8 @@ class IntegerRange extends React.Component {
                             className={classes.integerScaleChild}
                             component="h6" 
                             variant="subtitle1">
-                            {questionData.annotations.maximum}
-                        </Typography>`
+                            {questionData.annotations?.maximum}
+                        </Typography>
                     </div>
                 </div>
             );
@@ -106,7 +106,7 @@ class IntegerRange extends React.Component {
                                     component="p" 
                                     variant="subtitle1"
                                     dangerouslySetInnerHTML={{__html: question.number ? 
-                                    `${question.number}: ${question.text} ` : `${question.text}`}}>
+                                    `${question.number}: ${question.text}` : `${question.text}`}}>
                                 </Typography>
                             </Grid>
                             <Grid 
@@ -117,7 +117,7 @@ class IntegerRange extends React.Component {
                                         className={classes.integerScaleChild}
                                         component="h6" 
                                         variant="subtitle1">
-                                        {questionData.annotations.minimum}
+                                        {questionData.annotations?.minimum}
                                     </Typography>
                                     <FormControl 
                                         className={classes.integerScaleChild}
@@ -128,7 +128,7 @@ class IntegerRange extends React.Component {
                                             name={String(i)}
                                             value={this.state[i]} 
                                             onChange={this.handleChange}>
-                                            {questionData.labels.map((label, j) => 
+                                            {questionData.labels?.map((label, j) => 
                                                 <FormControlLabel
                                                     className={classes.formControlLabel}
                                                     key={j}
@@ -143,8 +143,8 @@ class IntegerRange extends React.Component {
                                         className={classes.integerScaleChild}
                                         component="h6" 
                                         variant="subtitle1">
-                                        {questionData.annotations.maximum}
-                                    </Typography>`
+                                        {questionData.annotations?.maximum}
+                                    </Typography>
                                 </div>
                             </Grid>
                         </Grid>

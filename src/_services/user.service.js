@@ -34,7 +34,8 @@ function refreshAccess() {
     return fetch(`${process.env.REACT_APP_DEV_DOMAIN}/api/token/refresh/`, requestOptions)
         .then(handleResponse)
         .then(access => {
-            const user = {...user, access};
+            let user = JSON.parse(localStorage.getItem('user'));
+            user = {...user, access};
             localStorage.setItem('user', JSON.stringify(user));
             return user;
         });

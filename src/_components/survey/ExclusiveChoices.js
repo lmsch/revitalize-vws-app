@@ -57,7 +57,7 @@ class ExclusiveChoices extends React.Component {
                             name={String(0)}
                             value={this.state[0]} 
                             onChange={this.handleChange}>
-                            {questionData.labels.map((label, j) => 
+                            {questionData.labels?.map((label, j) => 
                                 <FormControlLabel
                                     className={classes.formControlLabel}
                                     key={j}
@@ -104,7 +104,7 @@ class ExclusiveChoices extends React.Component {
                                         name={String(i)}
                                         value={this.state[i]} 
                                         onChange={this.handleChange}>
-                                        {questionData.labels.map((label, j) => 
+                                        {questionData.labels?.map((label, j) => 
                                             <FormControlLabel
                                                 key={j}
                                                 classes={{label: 
