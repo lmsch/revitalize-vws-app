@@ -1,40 +1,46 @@
 /* LOCAL IMPORTS */
 import { userService } from '../_services';
 import { alertActions, userActions } from '../_actions';
+import { store } from '.';
 
 export const DEFAULT_TIMEOUT = 2;
 
-export async function apiCall(url, options, dispatch, timeout = DEFAULT_TIMEOUT) {
+export async function apiCall(url, options, timeout = DEFAULT_TIMEOUT) {
     try {
-        const response = await fetch(url, options);
+        const appendedUrl = `${process.env.REACT_APP_DEV_DOMAIN}/api${url}`;
+        if (options.headers && !options.headers['Content-Type']) {
+            options.headers['Content-Type'] = 'application/json';
+        }
+        options.headers = {...options.headers, ...accessHeader()};
+        const response = await fetch(appendedUrl, options);
         return await handleResponse(response);
     } catch(error) {
         if(!timeout) {
-            dispatch(userActions.logout())
+            store.dispatch(userActions.logout());
             return Promise.reject(error);
         }
         if(error.status === 401) {
             try {
-                await apiRefresh(dispatch);
+                await apiRefresh();
             } catch(error) {
-                dispatch(alertActions.error(error));
+                store.dispatch(alertActions.error(error));
             }
-            return await apiCall(url, options, dispatch, timeout - 1);
+            return await apiCall(url, options, timeout - 1);
         }
 
     }
 
 }
 
-async function apiRefresh(dispatch) {
+async function apiRefresh() {
     dispatch(request());
     try {
         const response = await userService.refreshAccess();
         const user = await handleResponse(response);
-        dispatch(success(user));
+        store.dispatch(success(user));
         return user;
     } catch(error) {
-        dispatch(failure(error));
+        store.dispatch(failure(error));
         return Promise.reject(error);
     }
     function request() { return { type: userConstants.REFRESH_REQUEST } }
