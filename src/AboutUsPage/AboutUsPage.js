@@ -8,8 +8,9 @@ class AboutUsPage extends React.Component {
 
     // An example on how to use. Do not include REACT_APP_DEV_DOMAIN/api
     componentDidMount() {
-        apiCall('/', { method: 'GET' })
+        apiCall('/available_surveys/', { method: 'GET' })
             .then(response => console.log(response))
+            .catch(error => console.log(error));
     }
     
     render() {

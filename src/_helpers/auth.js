@@ -4,7 +4,7 @@ import { alertActions, userActions } from '../_actions';
 import { userConstants } from '../_constants';
 import { store } from '.';
 
-export const DEFAULT_TIMEOUT = 2;
+export const DEFAULT_TIMEOUT = 3;
 
 export async function apiCall(url, options, timeout = DEFAULT_TIMEOUT) {
     try {
@@ -18,6 +18,7 @@ export async function apiCall(url, options, timeout = DEFAULT_TIMEOUT) {
     } catch(error) {
         if(!timeout) {
             store.dispatch(userActions.logout());
+            window.location.reload(true);
             return Promise.reject(error);
         }
         if(error instanceof Response && error.status === 401) {
@@ -36,8 +37,7 @@ export async function apiCall(url, options, timeout = DEFAULT_TIMEOUT) {
 async function apiRefresh() {
     store.dispatch(request());
     try {
-        const response = await userService.refreshAccess();
-        const user = await handleResponse(response);
+        const user = await userService.refreshAccess();
         store.dispatch(success(user));
         return user;
     } catch(error) {

@@ -35,7 +35,7 @@ function refreshAccess() {
         .then(handleResponse)
         .then(access => {
             let user = JSON.parse(localStorage.getItem('user'));
-            user = {...user, access};
+            user = {...user, ...access};
             localStorage.setItem('user', JSON.stringify(user));
             return user;
         });
