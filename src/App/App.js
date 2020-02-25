@@ -9,6 +9,7 @@ import { alertActions } from '../_actions';
 import { PrivateRoute, Footer, Header } from '../_components';
 import { MyProgramPage } from '../MyProgramPage';
 import { LoginPage } from '../LoginPage';
+import { DenseTable } from '../_components/survey/surveyHistory';
 //=======
 import { SupportPage } from '../SupportPage';
 import { ContactPage } from '../ContactPage';
@@ -39,7 +40,8 @@ class App extends React.Component {
                         </Switch>
                     </Router>
                 </main>
-                <Footer clasName="app-footer" />
+                <DenseTable/>
+                <Footer clasName="app-footer" />               
             </div>
         );
     }
