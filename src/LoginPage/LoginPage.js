@@ -1,6 +1,7 @@
 /* REACT IMPORTS */
 import React from 'react';
 import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 /* THIRD PARTY IMPORTS */
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
@@ -9,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
 import { userActions } from '../_actions';
+
 
 const styles  = theme => ({
     layout: {
@@ -26,8 +28,26 @@ const styles  = theme => ({
     },
 });
 
+const validate = values => {
+    const errors = {};
+        if (!values.username) {
+            errors.username = 'Required'
+        }
+     return errors
+};
+
+const RenderTextInput = ({ input, label, meta: { touched, error }, ...custom }) => (
+    <TextField
+        hintText={label}
+        floatingLabelText={label}
+        errorText={touched && error}
+        {...input}
+        {...custom}
+    />
+);
+
 class LoginPage extends React.Component {
-      
+
     constructor(props) {
         super(props);
 
@@ -77,7 +97,8 @@ class LoginPage extends React.Component {
                             autoFocus
                             name="username"
                             label="Username"
-                            value={username} 
+                            component={RenderTextInput}
+                            value={username}
                             onChange={this.handleChange}/>
                         <TextField
                             variant="outlined"
@@ -87,7 +108,7 @@ class LoginPage extends React.Component {
                             name="password"
                             label="Password"
                             type="password"
-                            value={password} 
+                            value={password}
                             onChange={this.handleChange}/>
                         <Button
                             type="submit"
@@ -114,3 +135,9 @@ function mapStateToProps(state) {
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);
 const styledConnectedLoginPage = withStyles(styles)(connectedLoginPage);
 export { styledConnectedLoginPage as LoginPage };
+
+LoginPage = reduxForm({
+    form: 'LoginPage',
+    validate,
+})(LoginPage);
+export default LoginPage
