@@ -7,7 +7,7 @@ class AboutUsPage extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Link to="/login">Login</Link>
+                <Link to="/login">Login</Link> <br />
                 <Link to="/program/surveys">Surveys</Link>
             </React.Fragment>
         ) ;
