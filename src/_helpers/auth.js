@@ -19,7 +19,7 @@ export async function apiCall(url, options, timeout = DEFAULT_TIMEOUT) {
         if(!timeout) {
             store.dispatch(userActions.logout());
             window.location.reload(true);
-            return Promise.reject(error);
+            return timeout;
         }
         if(error instanceof Response && error.status === 401) {
             try {

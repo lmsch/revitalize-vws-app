@@ -1,5 +1,5 @@
 // Survey styles.
-export const styles = () => ({
+export const styles = (theme) => ({
     formControl: {
         display: 'block',
     },
@@ -34,9 +34,22 @@ export const styles = () => ({
     elementContainer: {
         marginTop: '60px',
     },
-    surveyQuestionsContainer: {
-        marginBottom: '60px',
-    }
+    availableSurveysRow: {
+        '&:hover': {
+            cursor: 'pointer',
+        }
+    },
+    availableSurveysSelected: {
+        backgroundColor: `${theme.palette.grey[300]} !important`,
+    },
+    doSurveyContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    doSurveyButton: {
+        marginLeft: '10px',
+    },
 });
 
 /**

@@ -4,11 +4,12 @@ import React from 'react';
 import { Router, Switch, withRouter } from 'react-router-dom';
 /* LOCAL IMPORTS */
 import { PrivateRoute } from '../_components';
-import { SurveysPage } from "../SurveysPage";
+import { SurveysPage } from '../SurveysPages';
 import { DietaryJournalPage} from "../DietaryJournalPage";
 import { GoalProgressPage } from "../GoalProgressPage";
 import { LabValuesPage } from "../LabValuesPage";
 import { MyProfilePage } from "../MyProfilePage";
+import { DoSurveyPage } from '../SurveysPages';
 import { history } from '../_helpers/history';
 
 class MyProgramPage extends React.Component {
@@ -18,6 +19,7 @@ class MyProgramPage extends React.Component {
         return (
             <Router history={history}>
                 <Switch>
+                    <PrivateRoute path={`${path}/surveys/:surveyId`} component={DoSurveyPage} />
                     <PrivateRoute path={`${path}/surveys`} component={SurveysPage} />
                     <PrivateRoute path={`${path}/journal`} component={DietaryJournalPage} />
                     <PrivateRoute path={`${path}/progress`} component={GoalProgressPage} />

@@ -61,15 +61,13 @@ class GenerateSurvey extends React.Component {
                     {model.name}
                 </Typography>
                 <p dangerouslySetInnerHTML={{__html: model.description}}></p>
-                <div className={classes.surveyQuestionsContainer}>
-                    {model.elements.map((element, i) =>
-                        <div 
-                            className={classes.elementContainer}
-                            key={i}>
-                            {renderElement(element)}
-                        </div>
-                    )}
-                </div>
+                {model.elements.map((element, i) =>
+                    <div 
+                        className={classes.elementContainer}
+                        key={i}>
+                        {renderElement(element)}
+                    </div>
+                )}
             </div>
         );
     }

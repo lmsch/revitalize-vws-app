@@ -26,7 +26,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="app-layout">
-                <Header className="app-header" />
+                <Header />
                 <main>
                     <Router history={history}>
                         <Switch>
@@ -38,7 +38,7 @@ class App extends React.Component {
                         </Switch>
                     </Router>
                 </main>
-                <Footer clasName="app-footer" />
+                <Footer />
             </div>
         );
     }
