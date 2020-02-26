@@ -14,7 +14,6 @@ import { Select, MenuItem, IconButton} from '@material-ui/core';
 import { history } from '../../_helpers';
 import { SideDrawer } from "./Drawer";
 
-
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 

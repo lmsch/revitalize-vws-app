@@ -1,6 +1,5 @@
 /* REACT IMPORTS */
 import React from 'react';
-/* THIRD PARTY IMPORTS */
 import { connect } from 'react-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 /* LOCAL IMPORTS */

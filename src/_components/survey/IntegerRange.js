@@ -1,7 +1,6 @@
 /* REACT IMPORTS */
 import React from 'react';
 import PropTypes from 'prop-types';
-
 /* THIRD PARTY IMPORTS */
 import { 
     Radio,
@@ -12,7 +11,6 @@ import {
     Grid
 } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
-
 /* LOCAL IMPORTS */
 import {
     styles,
