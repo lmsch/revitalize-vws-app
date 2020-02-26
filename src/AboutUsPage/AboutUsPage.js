@@ -5,7 +5,12 @@ import { Link } from 'react-router-dom';
 class AboutUsPage extends React.Component {
 
     render() {
-        return <Link to="/program/surveys">Surveys</Link>
+        return (
+            <React.Fragment>
+                <Link to="/login">Login</Link>
+                <Link to="/program/surveys">Surveys</Link>
+            </React.Fragment>
+        ) ;
     }
 }
 
