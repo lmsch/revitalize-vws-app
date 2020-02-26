@@ -1,2 +1,2 @@
 export * from './PrivateRoute';
-export * from './drawer';
+export * from './Drawer';

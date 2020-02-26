@@ -1,4 +1,6 @@
+/* REACT IMPORTS */
 import React from 'react';
+/* THIRD PARTY IMPORTS */
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
@@ -36,7 +38,7 @@ export default function TemporaryDrawer() {
             onKeyDown={toggleDrawer(side, false)}
         >
             <List>
-                {['Option1', 'Option2', 'Option3', 'Option4'].map((text, index) => (
+                {['My Profile', 'Lab Values', 'Surveys', 'Dietary Journal', 'Goal Progress'].map((text, index) => (
                     <ListItem button key={text}>
                         <ListItemText primary={text} />
                     </ListItem>
