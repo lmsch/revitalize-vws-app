@@ -6,7 +6,7 @@ import { store } from '.';
 
 export const DEFAULT_TIMEOUT = 3;
 
-export async function apiCall(url, options, timeout = DEFAULT_TIMEOUT) {
+export async function apiCall(url, options, logout = true, timeout = DEFAULT_TIMEOUT) {
     try {
         const appendedUrl = `${process.env.REACT_APP_DEV_DOMAIN}/api${url}`;
         if (options.headers && !options.headers['Content-Type']) {
@@ -17,9 +17,12 @@ export async function apiCall(url, options, timeout = DEFAULT_TIMEOUT) {
         return await handleResponse(response);
     } catch(error) {
         if(!timeout) {
-            store.dispatch(userActions.logout());
-            window.location.reload(true);
-            return timeout;
+            if (logout) {
+                store.dispatch(userActions.logout());
+                window.location.reload(true);
+                return timeout;
+            }
+            return Promise.reject(error);
         }
         if(error instanceof Response && error.status === 401) {
             try {
@@ -28,7 +31,7 @@ export async function apiCall(url, options, timeout = DEFAULT_TIMEOUT) {
                 store.dispatch(alertActions.error(error));
             }
         }
-        return await apiCall(url, options, timeout - 1);
+        return await apiCall(url, options, logout, timeout - 1);
     }
 }
 
@@ -51,7 +54,6 @@ function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
-            console.log('hello');
             return Promise.reject(response);
         }
         return data;

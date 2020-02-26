@@ -26,7 +26,11 @@ class DoSurveyPage extends React.Component {
     }
 
     handleSubmitSurvey = () => {
-        //TODO: Endpoint for submitting survey.
+        const model = JSON.stringify(this.state.model);
+        const { surveyId  } = this.props.match.params;
+        apiCall(`/surveys/${surveyId}/submit/`, { method: 'POST', body: model }, false)
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
     };
 
     componentDidMount() {
@@ -34,6 +38,7 @@ class DoSurveyPage extends React.Component {
         apiCall(`/surveys/${surveyId}/`, { method: 'GET'})
             .then(response => this.setState({model: response}));
     }
+
 
     render() {
         const { model } = this.state;
