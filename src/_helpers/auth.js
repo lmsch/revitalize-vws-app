@@ -2,7 +2,7 @@
 import { userService } from '../_services';
 import { alertActions, userActions } from '../_actions';
 import { userConstants } from '../_constants';
-import { store } from '.';
+import { store, history } from '.';
 
 export const DEFAULT_TIMEOUT = 3;
 
@@ -18,7 +18,7 @@ export async function apiCall(url, options, timeout = DEFAULT_TIMEOUT) {
     } catch(error) {
         if(!timeout) {
             store.dispatch(userActions.logout());
-            window.location.reload(true);
+            history.push('/login');
             return timeout;
         }
         if(error instanceof Response && error.status === 401) {
