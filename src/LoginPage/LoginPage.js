@@ -36,13 +36,10 @@ const validate = values => {
      return errors
 };
 
-const RenderTextInput = ({ input, label, meta: { touched, error }, ...custom }) => (
+const RenderTextInput = ({ label, meta: { touched, error }}) => (
     <TextField
-        hintText={label}
         floatingLabelText={label}
         errorText={touched && error}
-        {...input}
-        {...custom}
     />
 );
 
@@ -134,10 +131,7 @@ function mapStateToProps(state) {
 
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);
 const styledConnectedLoginPage = withStyles(styles)(connectedLoginPage);
-export { styledConnectedLoginPage as LoginPage };
+const formStyledConnectedLoginPage = reduxForm({form: 'Login', validate})(styledConnectedLoginPage);
+export { formStyledConnectedLoginPage as LoginPage };
 
-LoginPage = reduxForm({
-    form: 'LoginPage',
-    validate,
-})(LoginPage);
-export default LoginPage
+
