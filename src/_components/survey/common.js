@@ -1,10 +1,11 @@
 // Survey styles.
-export const styles = () => ({
+export const styles = (theme) => ({
     formControl: {
         display: 'block',
     },
     formControlLabel: {
         margin: 0,
+        paddingRight: '20px',
     },
     radioGroupExclusive: {
         justifyContent: 'space-around',
@@ -29,7 +30,26 @@ export const styles = () => ({
     },
     integerScaleChild: {
         flex: '0 0 auto',
-    }
+    },
+    elementContainer: {
+        marginTop: '60px',
+    },
+    availableSurveysRow: {
+        '&:hover': {
+            cursor: 'pointer',
+        }
+    },
+    availableSurveysSelected: {
+        backgroundColor: `${theme.palette.grey[300]} !important`,
+    },
+    doSurveyContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    doSurveyButton: {
+        marginLeft: '10px',
+    },
 });
 
 /**
@@ -44,3 +64,4 @@ export function setupInitialState(model) {
     });
     return initialState;
 }
+

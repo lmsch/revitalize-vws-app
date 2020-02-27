@@ -1,7 +1,6 @@
 /* REACT IMPORTS */
 import React from 'react';
 import PropTypes from 'prop-types';
-
 /* THIRD PARTY IMPORTS */
 import { 
     Radio,
@@ -12,7 +11,6 @@ import {
     Grid
 } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
-
 /* LOCAL IMPORTS */
 import {
     styles,
@@ -32,7 +30,6 @@ class ExclusiveChoices extends React.Component {
     handleChange = e => {
         this.setState({[e.target.name]: e.target.value});
         this.props.model.questions[e.target.name].response = e.target.value;
-        console.log(this.props.model.questions);
     };
 
     /**
@@ -58,7 +55,7 @@ class ExclusiveChoices extends React.Component {
                             name={String(0)}
                             value={this.state[0]} 
                             onChange={this.handleChange}>
-                            {questionData.labels.map((label, j) => 
+                            {questionData.labels?.map((label, j) => 
                                 <FormControlLabel
                                     className={classes.formControlLabel}
                                     key={j}
@@ -105,7 +102,7 @@ class ExclusiveChoices extends React.Component {
                                         name={String(i)}
                                         value={this.state[i]} 
                                         onChange={this.handleChange}>
-                                        {questionData.labels.map((label, j) => 
+                                        {questionData.labels?.map((label, j) => 
                                             <FormControlLabel
                                                 key={j}
                                                 classes={{label: 

@@ -1,6 +1,5 @@
 /* REACT IMPORTS */
 import React from 'react';
-/* THIRD PARTY IMPORTS */
 import { connect } from 'react-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 /* LOCAL IMPORTS */
@@ -26,7 +25,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="app-layout">
-                <Header className="app-header" />
+                <Header />
                 <main>
                     <Router history={history}>
                         <Switch>
@@ -38,7 +37,7 @@ class App extends React.Component {
                         </Switch>
                     </Router>
                 </main>
-                <Footer clasName="app-footer" />
+                <Footer />
             </div>
         );
     }
