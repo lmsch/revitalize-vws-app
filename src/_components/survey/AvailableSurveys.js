@@ -91,7 +91,7 @@ class AvailableSurveys extends React.Component {
                             <TableRow> 
                                 <TableCell 
                                     colSpan={2}>
-                                    <div className={classes.doSurveyContainer}>
+                                    <div className={`${classes.doSurveyContainer} ${classes.rowFlexContainer}`}>
                                         <span>
                                             { this.state.selectedSurvey ? 
                                                 `You have selected ${this.state.selectedSurvey.name}.`
