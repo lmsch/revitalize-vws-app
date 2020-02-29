@@ -11,13 +11,19 @@ export function authentication(state = initialState, action) {
                 loggingIn: true,
                 user: action.user
             };
+        case userConstants.REFRESH_REQUEST:
+            return {
+                loggingIn: true,
+                user: state.user,
+            }
         case userConstants.LOGIN_SUCCESS:
+        case userConstants.REFRESH_SUCCESS:
             return {
                 loggedIn: true,
                 user: action.user
             };
         case userConstants.LOGIN_FAILURE:
-            return {};
+        case userConstants.REFRESH_FAILURE:
         case userConstants.LOGOUT:
             return {};
         default:

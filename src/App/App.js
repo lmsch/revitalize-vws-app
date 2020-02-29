@@ -1,8 +1,7 @@
 /* REACT IMPORTS */
 import React from 'react';
-/* THIRD PARTY IMPORTS */
 import { connect } from 'react-redux';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch, withRouter } from 'react-router-dom';
 /* LOCAL IMPORTS */
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
@@ -15,6 +14,7 @@ import { ContactPage } from '../ContactPage';
 import { AboutUsPage } from '../AboutUsPage';
 
 class App extends React.Component {
+    
     constructor(props) {
         super(props);
         const { dispatch } = this.props;
@@ -25,9 +25,12 @@ class App extends React.Component {
     }
 
     render() {
+        const { location } = this.props;
         return (
             <div className="app-layout">
-                <Header className="app-header" />
+                <Header 
+                    loggedIn={this.props.authentication?.loggedIn}
+                    inProgram={location.pathname?.includes('/program/')} />
                 <main>
                     <Router history={history}>
                         <Switch>
@@ -39,18 +42,20 @@ class App extends React.Component {
                         </Switch>
                     </Router>
                 </main>
-                <Footer clasName="app-footer" />
+                <Footer />
             </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    const { alert } = state;
+    const { alert, authentication } = state;
     return {
+        authentication,
         alert
     };
 }
 
 const connectedApp = connect(mapStateToProps)(App);
-export { connectedApp as App }; 
+const routedConnectedApp = withRouter(connectedApp);
+export { routedConnectedApp as App }; 
