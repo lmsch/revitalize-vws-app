@@ -8,7 +8,6 @@ import {
     FormControl,
     FormControlLabel,
     Typography,
-    Grid
 } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
@@ -38,118 +37,52 @@ class IntegerRange extends React.Component {
     render() {
         const { classes, model } = this.props;
         const questionData = model.question_group_type_data;
-        if (model.number_of_questions === 1) {
-            const question = model.questions[0];
-            return (
-                <div>
-                    <Typography 
-                        component="p" 
-                        variant="subtitle1"
-                        dangerouslySetInnerHTML={{__html: question.number ? 
-                        `${question.number}: ${question.text}` : `${question.text}`}}>
-                    </Typography>
-                    <div className={classes.integerScale}>
+        return (
+            <React.Fragment>
+                {model.questions?.map((question, i) =>
+                    <div 
+                        className={`${classes.questionPadding} ${classes.colFlexContainer} ${classes.multiLineJustify}`}
+                        key={i}>
                         <Typography 
-                            className={classes.integerScaleChild}
-                            component="h6" 
-                            variant="subtitle1">
-                            {questionData.annotations?.minimum}
+                            component="p" 
+                            variant="subtitle1"
+                            dangerouslySetInnerHTML={{__html: question.number ? 
+                            `<b>${question.number}</b>: ${question.text}` : `${question.text}`}}>
                         </Typography>
-                        <FormControl 
-                            className={classes.integerScaleChild}
-                            component="fieldset">
-                            <RadioGroup 
-                                row
-                                className={classes.radioGroupInteger}
-                                name={String(0)}
-                                value={this.state[0]} 
-                                onChange={this.handleChange}>
-                                {questionData.labels?.map((label, j) => 
+                        <div className={classes.rowFlexContainer}>
+                            <Typography 
+                                component="h6" 
+                                variant="subtitle1">
+                                {questionData.annotations?.minimum}
+                            </Typography>
+                            <FormControl 
+                                component="fieldset">
+                                <RadioGroup 
+                                    className={`${classes.rowFlexContainer} ${classes.questionJustify}`}
+                                    name={String(i)}
+                                    value={this.state[i]} 
+                                    onChange={this.handleChange}>
+                                    {questionData.labels?.map((label, j) => 
                                     <FormControlLabel
-                                        className={classes.formControlLabel}
+                                        className={classes.integerScaleMargin}
                                         key={j}
                                         label={label}
                                         value={String(j + 1)}
                                         control={<Radio color="primary" />}
                                         labelPlacement="bottom"/>
-                                )}
-                            </RadioGroup>
-                        </FormControl>
-                        <Typography 
-                            className={classes.integerScaleChild}
-                            component="h6" 
-                            variant="subtitle1">
-                            {questionData.annotations?.maximum}
-                        </Typography>
+                                    )}
+                                </RadioGroup>
+                            </FormControl>
+                            <Typography 
+                                component="h6" 
+                                variant="subtitle1">
+                                {questionData.annotations?.maximum}
+                            </Typography>
+                        </div>
                     </div>
-                </div>
-            );
-        } else {
-            return (
-                <Grid
-                    container
-                    directon="column">
-                    {model.questions.map((question, i) =>
-                        <Grid 
-                            className={classes.gridPaddingBottom}
-                            key={i}
-                            item
-                            container
-                            alignItems="center">
-                            <Grid 
-                                item
-                                xs={4}
-                                className={classes.gridPaddingRight}>
-                                <Typography 
-                                    component="p" 
-                                    variant="subtitle1"
-                                    dangerouslySetInnerHTML={{__html: question.number ? 
-                                    `${question.number}: ${question.text}` : `${question.text}`}}>
-                                </Typography>
-                            </Grid>
-                            <Grid 
-                                item
-                                xs={8}>
-                                <div className={classes.integerScale}>
-                                    <Typography 
-                                        className={classes.integerScaleChild}
-                                        component="h6" 
-                                        variant="subtitle1">
-                                        {questionData.annotations?.minimum}
-                                    </Typography>
-                                    <FormControl 
-                                        className={classes.integerScaleChild}
-                                        component="fieldset">
-                                        <RadioGroup 
-                                            row
-                                            className={classes.radioGroupInteger}
-                                            name={String(i)}
-                                            value={this.state[i]} 
-                                            onChange={this.handleChange}>
-                                            {questionData.labels?.map((label, j) => 
-                                                <FormControlLabel
-                                                    className={classes.formControlLabel}
-                                                    key={j}
-                                                    label={label}
-                                                    value={String(j + 1)}
-                                                    control={<Radio color="primary" />}
-                                                    labelPlacement="bottom"/>
-                                            )}
-                                        </RadioGroup>
-                                    </FormControl>
-                                    <Typography 
-                                        className={classes.integerScaleChild}
-                                        component="h6" 
-                                        variant="subtitle1">
-                                        {questionData.annotations?.maximum}
-                                    </Typography>
-                                </div>
-                            </Grid>
-                        </Grid>
-                    )}
-                </Grid> 
-            );
-        }
+                )}
+            </React.Fragment> 
+        );
     }
 }
 

@@ -1,38 +1,36 @@
 // Survey styles.
 export const styles = (theme) => ({
-    formControl: {
-        display: 'block',
+    rowFlexContainer: {
+        display: 'flex',
+        flexDirection: 'row',
     },
-    formControlLabel: {
-        margin: 0,
-        paddingRight: '20px',
+    colFlexContainer: {
+        display: 'flex',
+        flexDirection: 'column',
     },
-    radioGroupExclusive: {
-        justifyContent: 'space-around',
+    exclusiveChoiceGroup: {
+        justifyContent: 'space-evenly',
         flexWrap: 'nowrap',
     },
-    radioGroupInteger: {
-        flexWrap: 'nowrap',
+    questionPadding: {
+        padding: '20px 0 20px 0',
+    },
+    integerScaleMargin: {
+        margin: '0 5px 0 5px'
     },
     labelNotVisible: {
         visibility: 'hidden',
     },
-    gridPaddingRight: {
-        paddingRight: '50px',
+    formControlBlock: {
+        display: 'block',
+        width: '100%',
     },
-    gridPaddingBottom: {
-        paddingBottom: '50px',
+    multiLineJustify: {
+        justifyContent: 'start'
     },
-    integerScale: {
-        display: 'flex',
-        flexWrap: 'no-wrap',
-        alignItems: 'center',
-    },
-    integerScaleChild: {
-        flex: '0 0 auto',
-    },
-    elementContainer: {
-        marginTop: '60px',
+    questionJustify: {
+        justifyContent: 'space-evenly',
+        flexWrap: 'wrap',
     },
     availableSurveysRow: {
         '&:hover': {
@@ -43,13 +41,20 @@ export const styles = (theme) => ({
         backgroundColor: `${theme.palette.grey[300]} !important`,
     },
     doSurveyContainer: {
-        display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
     },
     doSurveyButton: {
         marginLeft: '10px',
     },
+    submitSurveyContainer: {
+        justifyContent: 'center',
+        marginTop: '30px',
+    },
+    submitSurveyButton: {
+        minWidth: '200px',
+        width: '33%'
+    }
 });
 
 /**

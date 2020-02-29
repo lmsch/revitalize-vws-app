@@ -41,28 +41,26 @@ class ExclusiveChoices extends React.Component {
         if (model.number_of_questions === 1) {
             const question = model.questions[0];
             return (
-                <div>
+                <div className={`${classes.colFlexContainer} ${classes.questionPadding}`}>
                     <Typography 
                         component="p" 
                         variant="subtitle1"
                         dangerouslySetInnerHTML={{__html: question.number ? 
-                        `${question.number}: ${question.text} ` : `${question.text}`}}>
+                        `<b>${question.number}</b>: ${question.text} ` : `${question.text}`}}>
                     </Typography>
                     <FormControl 
-                        component="fieldset"
-                        className={classes.formControl}>
+                        component="fieldset">
                         <RadioGroup 
                             name={String(0)}
                             value={this.state[0]} 
                             onChange={this.handleChange}>
                             {questionData.labels?.map((label, j) => 
                                 <FormControlLabel
-                                    className={classes.formControlLabel}
                                     key={j}
                                     label={label}
                                     value={String(j + 1)}
                                     control={<Radio color="primary" />}
-                                    labelPlacement="start"/>
+                                    labelPlacement="end"/>
                             )}
                         </RadioGroup>
                     </FormControl>
@@ -71,34 +69,36 @@ class ExclusiveChoices extends React.Component {
         } else {
             return (
                 <Grid
+                    className={classes.questionPadding}
                     container
                     directon="column">
-                    {model.questions.map((question, i) =>
+                    {model.questions?.map((question, i) =>
                         <Grid 
                             key={i}
                             item
-                            container
-                            alignItems="baseline">
+                            container>
                             <Grid 
                                 item
                                 xs={6}
-                                className={classes.gridPaddingRight}>
+                                container
+                                alignItems="flex-end">
                                 <Typography 
                                     component="p" 
                                     variant="subtitle1"
                                     dangerouslySetInnerHTML={{__html: question.number ? 
-                                    `${question.number}: ${question.text} ` : `${question.text}`}}>
+                                    `<b>${question.number}</b>: ${question.text} ` : `${question.text}`}}>
                                 </Typography>
                             </Grid>
                             <Grid 
                                 item
-                                xs={6}>
+                                xs={6}
+                                container
+                                alignItems="flex-end">
                                 <FormControl 
                                     component="fieldset"
-                                    className={classes.formControl}>
+                                    className={classes.formControlBlock}>
                                     <RadioGroup 
-                                        row
-                                        className={classes.radioGroupExclusive}
+                                        className={`${classes.rowFlexContainer} ${classes.exclusiveChoiceGroup}`}
                                         name={String(i)}
                                         value={this.state[i]} 
                                         onChange={this.handleChange}>
@@ -110,11 +110,11 @@ class ExclusiveChoices extends React.Component {
                                                 }}
                                                 value={String(j + 1)}
                                                 label={
-                                                    <Typography 
-                                                        component="h6" 
-                                                        variant="subtitle1">
-                                                        {label}
-                                                    </Typography>
+                                                <Typography 
+                                                    component="h6" 
+                                                    variant="subtitle1">
+                                                    {label}
+                                                </Typography>
                                                 }
                                                 control={<Radio color="primary" />}
                                                 labelPlacement="top"/>
