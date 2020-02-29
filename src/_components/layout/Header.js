@@ -3,17 +3,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useHistory, Link } from 'react-router-dom';
 /* THIRD PARTY IMPORTS */
-import { makeStyles, Avatar } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import LanguageIcon from "@material-ui/icons/Language";
-import { Select, MenuItem, IconButton } from '@material-ui/core';
+import { Select, MenuItem, IconButton, makeStyles, Avatar } from '@material-ui/core';
 /* LOCAL IMPORTS */
 import { SideDrawer } from "./Drawer";
-//import ImageAvatars from "../ProfileImage";
 
 
 function TabPanel(props) {
@@ -74,7 +72,7 @@ const useStyles = makeStyles(theme => ({
         flex: '0 0 auto',
     },
     selectChild: {
-        marginLeft: '5px',
+        margin: '0 30px 0 5px',
         color: 'white',
     },
     tabsContainer: {
@@ -97,10 +95,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ImageAvatars(props) {
-    const classes = useStyles();
     if (props.loggedIn) {
       return (
-        <div className={classes.root}>
+        <div>
           <Avatar alt="Revi Talize" src="/imgLocation" />
         </div>
       );
@@ -108,7 +105,7 @@ function ImageAvatars(props) {
     else {
       return (
         <div>
-          <Link to="/login">Login</Link>
+          <Link to="/login">Sign In</Link>
         </div>
       );
     }
@@ -165,8 +162,8 @@ export function Header(props) {
                         <MenuItem value="EN">EN</MenuItem>
                         <MenuItem value="FR">FR</MenuItem>
                     </Select>
-                    <ImageAvatars/>
-                </div>                    
+                    <ImageAvatars loggedIn={props.loggedIn} />      
+                </div>              
             </AppBar>
         </div>
     );
