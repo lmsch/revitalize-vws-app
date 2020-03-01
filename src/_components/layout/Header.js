@@ -1,6 +1,7 @@
 /* REACT IMPORTS */
 import React from "react";
 import PropTypes from "prop-types";
+import { useHistory } from 'react-router-dom';
 /* THIRD PARTY IMPORTS */
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -9,11 +10,9 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import LanguageIcon from "@material-ui/icons/Language";
-import { Select, MenuItem, IconButton} from '@material-ui/core';
+import { Select, MenuItem, IconButton } from '@material-ui/core';
 /* LOCAL IMPORTS */
-import { history } from '../../_helpers';
 import { SideDrawer } from "./Drawer";
-
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -51,7 +50,7 @@ function LinkTab(props) {
             component="a"
             onClick={event => {
                 event.preventDefault();
-                history.push(props.href);
+                props.history.push(props.href);
             }}
             {...props}
         />
@@ -59,14 +58,13 @@ function LinkTab(props) {
 }
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        width: '100%',
-    },
     appBar: {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        padding: '0 30px 0 18px',
+        width: '100%',
     },
     selectContainer: {
         display: 'flex',
@@ -74,7 +72,7 @@ const useStyles = makeStyles(theme => ({
         flex: '0 0 auto',
     },
     selectChild: {
-        margin: '0 30px 0 5px',
+        marginLeft: '5px',
         color: 'white',
     },
     tabsContainer: {
@@ -86,12 +84,19 @@ const useStyles = makeStyles(theme => ({
         margin: '0 60px 0 60px',
     },
     menuButton: {
-        margin: '0 18px 0 18px',
+        marginRight: '18px',
     },
+    inProgramTabs: {
+        visibility: 'hidden',
+    },
+    notLoggedInMenu: {
+        visibility: 'hidden',
+    }
 }));
 
-export function Header() {
+export function Header(props) {
     const classes = useStyles();
+    const history = useHistory();
     const [value, setValue] = React.useState(0);
 
     const handleChange = (_, newValue) => {
@@ -99,33 +104,34 @@ export function Header() {
     };
 
     return (
-        <div className={classes.root}>
+        <div>
             <AppBar 
                 position="relative"
                 className={classes.appBar}>
                 <div className={classes.tabsContainer}>
                     <IconButton
+                        className={`${!props.loggedIn ? classes.notLoggedInMenu : ''} ${classes.menuButton}`}
+                        disabled={!props.loggedIn}
                         color="inherit"
-                        aria-label="open drawer"
-                        className={classes.menuButton}>
+                        aria-label="open drawer">
                         <SideDrawer />
                     </IconButton>
                     <Typography 
-                        className={classes.title}
                         component="h1" 
                         variant="h6">
                             REVITALIZE
                     </Typography>
                     <Tabs
                         className={classes.tabs}
+                        classes={{indicator: props.inProgram ? classes.inProgramTabs : ''}}
                         variant="fullWidth"
                         value={value}
                         onChange={handleChange}
                         aria-label="nav tabs"
                     >
-                        <LinkTab label="About Us" href="/" {...a11yProps(0)} />
-                        <LinkTab label="Support" href="/support" {...a11yProps(1)} />
-                        <LinkTab label="Contact" href="/contact" {...a11yProps(2)} />
+                        <LinkTab label="About Us" href="/" history={history} {...a11yProps(0)} />
+                        <LinkTab label="Support" href="/support" history={history} {...a11yProps(1)} />
+                        <LinkTab label="Contact" href="/contact" history={history} {...a11yProps(2)} />
                     </Tabs>
                 </div>
                 <div className={classes.selectContainer}>

@@ -1,34 +1,59 @@
 // Survey styles.
-export const styles = () => ({
-    formControl: {
-        display: 'block',
+export const styles = (theme) => ({
+    rowFlexContainer: {
+        display: 'flex',
+        flexDirection: 'row',
     },
-    formControlLabel: {
-        margin: 0,
+    colFlexContainer: {
+        display: 'flex',
+        flexDirection: 'column',
     },
-    radioGroupExclusive: {
-        justifyContent: 'space-around',
+    exclusiveChoiceGroup: {
+        justifyContent: 'space-evenly',
         flexWrap: 'nowrap',
     },
-    radioGroupInteger: {
-        flexWrap: 'nowrap',
+    questionPadding: {
+        padding: '20px 0 20px 0',
+    },
+    integerScaleMargin: {
+        margin: '0 5px 0 5px'
     },
     labelNotVisible: {
         visibility: 'hidden',
     },
-    gridPaddingRight: {
-        paddingRight: '50px',
+    formControlBlock: {
+        display: 'block',
+        width: '100%',
     },
-    gridPaddingBottom: {
-        paddingBottom: '50px',
+    multiLineJustify: {
+        justifyContent: 'start'
     },
-    integerScale: {
-        display: 'flex',
-        flexWrap: 'no-wrap',
+    questionJustify: {
+        justifyContent: 'space-evenly',
+        flexWrap: 'wrap',
+    },
+    availableSurveysRow: {
+        '&:hover': {
+            cursor: 'pointer',
+        }
+    },
+    availableSurveysSelected: {
+        backgroundColor: `${theme.palette.grey[300]} !important`,
+    },
+    doSurveyContainer: {
         alignItems: 'center',
+        justifyContent: 'space-between',
     },
-    integerScaleChild: {
-        flex: '0 0 auto',
+    doSurveyButton: {
+        marginLeft: '10px',
+    },
+    submitSurveyContainer: {
+        justifyContent: 'center',
+        marginTop: '30px',
+    },
+    submitSurveyButton: {
+        minWidth: '200px',
+        width: '33%'
     }
 });
 
@@ -44,3 +69,4 @@ export function setupInitialState(model) {
     });
     return initialState;
 }
+

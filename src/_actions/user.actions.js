@@ -17,7 +17,7 @@ function login(username, password) {
             .then(
                 user => { 
                     dispatch(success(user));
-                    history.push('/program');
+                    history.push('/program/surveys');
                 },
                 error => {
                     dispatch(failure(error));
