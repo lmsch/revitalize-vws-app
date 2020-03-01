@@ -70,7 +70,7 @@ class LoginPage extends React.Component {
                         Sign in
                     </Typography>
                 </DialogTitle>
-                <DialogContent>
+                <DialogContent dividers>
                     <Container maxWidth="xs">
                         <div className={classes.layout}>
                             <form className={classes.form} onSubmit={this.handleSubmit} noValidate>
