@@ -7,8 +7,6 @@ import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { PrivateRoute, Footer, Header } from '../_components';
 import { MyProgramPage } from '../MyProgramPage';
-import { LoginPage } from '../LoginPage';
-//=======
 import { SupportPage } from '../SupportPage';
 import { ContactPage } from '../ContactPage';
 import { AboutUsPage } from '../AboutUsPage';
@@ -25,16 +23,15 @@ class App extends React.Component {
     }
 
     render() {
-        const { location } = this.props;
+        const { location, authentication } = this.props;
         return (
             <div className="app-layout">
                 <Header 
-                    loggedIn={this.props.authentication?.loggedIn}
+                    loggedIn={authentication.loggedIn}
                     inProgram={location.pathname?.includes('/program/')} />
                 <main>
                     <Router history={history}>
                         <Switch>
-                            <Route path="/login" component={LoginPage} />
                             <Route path="/support" component={SupportPage} />
                             <Route path="/contact" component={ContactPage} />
                             <PrivateRoute path="/program" component={MyProgramPage} />
