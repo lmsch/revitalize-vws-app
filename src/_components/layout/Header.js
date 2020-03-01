@@ -51,6 +51,27 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const mainLinks = [
+    {
+        id: 'about-us',
+        label: 'About Us',
+        link: '/',
+        value: 0,
+    },
+    {
+        id: 'support',
+        label: 'Support',
+        link: '/support',
+        value: 1,
+    },
+    {
+        id: 'contact',
+        label: 'Contact Us',
+        link: '/contact',
+        value: 2,
+    },
+];
+
 function LinkTab(props) {
     return (
         <Tab
@@ -108,13 +129,12 @@ export function Header() {
     const classes = useStyles();
     const history = useHistory();
     const loggedIn = useSelector(state => state.authentication.loggedIn);
-    const inProgram = useLocation().pathname?.includes('/program/')
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (_, newValue) => {
-        setValue(newValue);
-    };
-
+    const location = useLocation();
+    const currentPath = mainLinks.find((link) => link.link === location.pathname);
+    let inProgram = true;
+    if(currentPath) {
+        inProgram = false;
+    }
     return (
         <div>
             <AppBar
@@ -138,12 +158,15 @@ export function Header() {
                         classes={{ indicator: inProgram ? classes.inProgramTabs : '' }}
                         variant="fullWidth"
                         aria-label="nav tabs"
-                        value={value}
-                        onChange={handleChange}
+                        value={currentPath ? currentPath.value : -1}
                     >
-                        <LinkTab label="About Us" href="/" history={history} />
-                        <LinkTab label="Support" href="/support" history={history} />
-                        <LinkTab label="Contact" href="/contact" history={history} />
+                    {mainLinks.map(link =>
+                        <LinkTab 
+                            key={link.id} 
+                            label={link.label}
+                            href={link.link} 
+                            history={history} />
+                    )}
                     </Tabs>
                 </div>
                 <div className={classes.selectContainer}>
