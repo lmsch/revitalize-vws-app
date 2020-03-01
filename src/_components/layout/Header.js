@@ -1,6 +1,7 @@
 /* REACT IMPORTS */
 import React from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 /* THIRD PARTY IMPORTS */
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -70,8 +71,9 @@ function ImageAvatars(props) {
         setOpen(false);
     }
 
-    const handleSubmit = (success) => {
-        if(success) {
+    const handleSubmit = () => {
+        console.log(props.loggedIn);
+        if(props.loggedIn) {
             setOpen(false);
         }
     }
@@ -103,9 +105,11 @@ function ImageAvatars(props) {
 }
 
 
-export function Header(props) {
+export function Header() {
     const classes = useStyles();
     const history = useHistory();
+    const loggedIn = useSelector(state => state.authentication.loggedIn);
+    const inProgram = useLocation().pathname?.includes('/program/')
     const [value, setValue] = React.useState(0);
 
     const handleChange = (_, newValue) => {
@@ -119,8 +123,8 @@ export function Header(props) {
                 className={classes.appBar}>
                 <div className={classes.tabsContainer}>
                     <IconButton
-                        className={`${!props.loggedIn ? classes.notLoggedInMenu : ''} ${classes.menuButton}`}
-                        disabled={!props.loggedIn}
+                        className={`${!loggedIn ? classes.notLoggedInMenu : ''} ${classes.menuButton}`}
+                        disabled={!loggedIn}
                         color="inherit"
                         aria-label="open drawer">
                         <SideDrawer />
@@ -132,7 +136,7 @@ export function Header(props) {
                     </Typography>
                     <Tabs
                         className={classes.tabs}
-                        classes={{ indicator: props.inProgram ? classes.inProgramTabs : '' }}
+                        classes={{ indicator: inProgram ? classes.inProgramTabs : '' }}
                         variant="fullWidth"
                         aria-label="nav tabs"
                         value={value}
@@ -153,7 +157,7 @@ export function Header(props) {
                         <MenuItem value="EN">EN</MenuItem>
                         <MenuItem value="FR">FR</MenuItem>
                     </Select>
-                    <ImageAvatars loggedIn={props.loggedIn} />
+                    <ImageAvatars loggedIn={loggedIn} />
                 </div>
             </AppBar>
         </div>

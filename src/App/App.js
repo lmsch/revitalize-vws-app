@@ -1,7 +1,7 @@
 /* REACT IMPORTS */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Router, Route, Switch, withRouter } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 /* LOCAL IMPORTS */
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
@@ -23,12 +23,9 @@ class App extends React.Component {
     }
 
     render() {
-        const { location, authentication } = this.props;
         return (
             <div className="app-layout">
-                <Header 
-                    loggedIn={authentication.loggedIn}
-                    inProgram={location.pathname?.includes('/program/')} />
+                <Header />
                 <main>
                     <Router history={history}>
                         <Switch>
@@ -46,13 +43,11 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { alert, authentication } = state;
+    const { alert } = state;
     return {
-        authentication,
         alert
     };
 }
 
 const connectedApp = connect(mapStateToProps)(App);
-const routedConnectedApp = withRouter(connectedApp);
-export { routedConnectedApp as App }; 
+export { connectedApp as App }; 

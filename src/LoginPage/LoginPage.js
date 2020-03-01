@@ -50,10 +50,10 @@ class LoginPage extends React.Component {
         e.preventDefault();
         this.setState({ submitted: true });
         const { username, password } = this.state;
-        const { dispatch, handleSubmit, loggedIn } = this.props;
+        const { dispatch, handleSubmit } = this.props;
         if (username && password) {
             dispatch(userActions.login(username, password));
-            handleSubmit(loggedIn);
+            handleSubmit();
         }
     }
 
@@ -117,14 +117,6 @@ LoginPage.propTypes = {
     handleClose: PropTypes.func.isRequired,
 }
 
-function mapStateToProps(state) {
-    const { loggingIn, loggedIn } = state.authentication;
-    return {
-        loggingIn,
-        loggedIn,
-    };
-}
-
-const connectedLoginPage = connect(mapStateToProps)(LoginPage);
+const connectedLoginPage = connect(null)(LoginPage);
 const styledConnectedLoginPage = withStyles(styles)(connectedLoginPage);
 export { styledConnectedLoginPage as LoginPage };
