@@ -49,36 +49,34 @@ class IntegerRange extends React.Component {
                             dangerouslySetInnerHTML={{__html: question.number ? 
                             `<b>${question.number}</b>: ${question.text}` : `${question.text}`}}>
                         </Typography>
-                        <div className={classes.rowFlexContainer}>
-                            <Typography 
-                                component="h6" 
-                                variant="subtitle1">
-                                {questionData.annotations?.minimum}
-                            </Typography>
-                            <FormControl 
-                                component="fieldset">
-                                <RadioGroup 
-                                    className={`${classes.rowFlexContainer} ${classes.questionJustify}`}
-                                    name={String(i)}
-                                    value={this.state[i]} 
-                                    onChange={this.handleChange}>
-                                    {questionData.labels?.map((label, j) => 
-                                    <FormControlLabel
-                                        className={classes.integerScaleMargin}
-                                        key={j}
-                                        label={label}
-                                        value={String(j + 1)}
-                                        control={<Radio color="primary" />}
-                                        labelPlacement="bottom"/>
-                                    )}
-                                </RadioGroup>
-                            </FormControl>
-                            <Typography 
-                                component="h6" 
-                                variant="subtitle1">
-                                {questionData.annotations?.maximum}
-                            </Typography>
-                        </div>
+                        <FormControl 
+                            component="fieldset">
+                            <RadioGroup 
+                                className={`${classes.rowFlexContainer} ${classes.questionJustify}`}
+                                name={String(i)}
+                                value={this.state[i]} 
+                                onChange={this.handleChange}>
+                                <Typography 
+                                    component="h6" 
+                                    variant="subtitle1">
+                                    {questionData.annotations?.minimum}
+                                </Typography>
+                                {questionData.labels?.map((label, j) => 
+                                <FormControlLabel
+                                    className={classes.integerScaleMargin}
+                                    key={j}
+                                    label={label}
+                                    value={String(j + 1)}
+                                    control={<Radio color="primary" />}
+                                    labelPlacement="bottom"/>
+                                )}
+                                <Typography 
+                                    component="h6" 
+                                    variant="subtitle1">
+                                    {questionData.annotations?.maximum}
+                                </Typography>
+                            </RadioGroup>
+                        </FormControl>
                     </div>
                 )}
             </React.Fragment> 
