@@ -72,7 +72,6 @@ function ImageAvatars(props) {
     }
 
     const handleSubmit = () => {
-        console.log(props.loggedIn);
         if(props.loggedIn) {
             setOpen(false);
         }
