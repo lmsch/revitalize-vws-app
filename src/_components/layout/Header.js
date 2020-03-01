@@ -1,61 +1,18 @@
 /* REACT IMPORTS */
 import React from "react";
-import PropTypes from "prop-types";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 /* THIRD PARTY IMPORTS */
-import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Button from '@material-ui/core/Button';
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 import LanguageIcon from "@material-ui/icons/Language";
-import { Select, MenuItem, IconButton } from '@material-ui/core';
+import { Select, MenuItem, IconButton, makeStyles, Avatar } from '@material-ui/core';
 /* LOCAL IMPORTS */
 import { SideDrawer } from "./Drawer";
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <Typography
-            component="div"
-            role="tabpanel"
-            hidden={value !== index}
-            id={`nav-tabpanel-${index}`}
-            aria-labelledby={`nav-tab-${index}`}
-            {...other}
-        >
-            {value === index && <Box p={3}>{children}</Box>}
-        </Typography>
-    );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired
-};
-
-function a11yProps(index) {
-    return {
-        id: `nav-tab-${index}`,
-        "aria-controls": `nav-tabpanel-${index}`
-    };
-}
-
-function LinkTab(props) {
-    return (
-        <Tab
-            component="a"
-            onClick={event => {
-                event.preventDefault();
-                props.history.push(props.href);
-            }}
-            {...props}
-        />
-    );
-}
+import { LoginPage } from '../../LoginPage';
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -72,7 +29,7 @@ const useStyles = makeStyles(theme => ({
         flex: '0 0 auto',
     },
     selectChild: {
-        marginLeft: '5px',
+        margin: '0 30px 0 5px',
         color: 'white',
     },
     tabsContainer: {
@@ -94,9 +51,65 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export function Header(props) {
+function LinkTab(props) {
+    return (
+        <Tab
+            component="a"
+            onClick={event => {
+                event.preventDefault();
+                props.history.push(props.href);
+            }}
+            {...props}
+        />
+    );
+}
+
+function ImageAvatars(props) {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const handleSubmit = () => {
+        console.log(props.loggedIn);
+        if(props.loggedIn) {
+            setOpen(false);
+        }
+    }
+
+    if (props.loggedIn) {
+        return (
+            <div>
+                <Avatar alt="Revi Talize" src="/imgLocation" />
+            </div>
+        );
+    }
+    else {
+        return (
+            <div>
+                <Button
+                    aria-modal="true"
+                    aria-label="Open sign in"
+                    variant="contained"
+                    onClick={_ => setOpen(true)}>
+                    Sign In
+                </Button>
+                <LoginPage 
+                    open={open}
+                    handleSubmit={handleSubmit}
+                    handleClose={handleClose} />
+            </div>
+        );
+    }
+}
+
+
+export function Header() {
     const classes = useStyles();
     const history = useHistory();
+    const loggedIn = useSelector(state => state.authentication.loggedIn);
+    const inProgram = useLocation().pathname?.includes('/program/')
     const [value, setValue] = React.useState(0);
 
     const handleChange = (_, newValue) => {
@@ -105,33 +118,33 @@ export function Header(props) {
 
     return (
         <div>
-            <AppBar 
+            <AppBar
                 position="relative"
                 className={classes.appBar}>
                 <div className={classes.tabsContainer}>
                     <IconButton
-                        className={`${!props.loggedIn ? classes.notLoggedInMenu : ''} ${classes.menuButton}`}
-                        disabled={!props.loggedIn}
+                        className={`${!loggedIn ? classes.notLoggedInMenu : ''} ${classes.menuButton}`}
+                        disabled={!loggedIn}
                         color="inherit"
                         aria-label="open drawer">
                         <SideDrawer />
                     </IconButton>
-                    <Typography 
-                        component="h1" 
+                    <Typography
+                        component="h1"
                         variant="h6">
-                            REVITALIZE
+                        REVITALIZE
                     </Typography>
                     <Tabs
                         className={classes.tabs}
-                        classes={{indicator: props.inProgram ? classes.inProgramTabs : ''}}
+                        classes={{ indicator: inProgram ? classes.inProgramTabs : '' }}
                         variant="fullWidth"
+                        aria-label="nav tabs"
                         value={value}
                         onChange={handleChange}
-                        aria-label="nav tabs"
                     >
-                        <LinkTab label="About Us" href="/" history={history} {...a11yProps(0)} />
-                        <LinkTab label="Support" href="/support" history={history} {...a11yProps(1)} />
-                        <LinkTab label="Contact" href="/contact" history={history} {...a11yProps(2)} />
+                        <LinkTab label="About Us" href="/" history={history} />
+                        <LinkTab label="Support" href="/support" history={history} />
+                        <LinkTab label="Contact" href="/contact" history={history} />
                     </Tabs>
                 </div>
                 <div className={classes.selectContainer}>
@@ -144,6 +157,7 @@ export function Header(props) {
                         <MenuItem value="EN">EN</MenuItem>
                         <MenuItem value="FR">FR</MenuItem>
                     </Select>
+                    <ImageAvatars loggedIn={loggedIn} />
                 </div>
             </AppBar>
         </div>

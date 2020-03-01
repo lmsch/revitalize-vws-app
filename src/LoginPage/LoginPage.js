@@ -1,18 +1,21 @@
 /* REACT IMPORTS */
 import React from 'react';
 import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 /* THIRD PARTY IMPORTS */
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
 import { userActions } from '../_actions';
 
 const styles  = theme => ({
     layout: {
-        marginTop: theme.spacing(8),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -27,90 +30,93 @@ const styles  = theme => ({
 });
 
 class LoginPage extends React.Component {
-      
+
     constructor(props) {
         super(props);
-
         this.props.dispatch(userActions.logout());
-
         this.state = {
             username: '',
             password: '',
-            submitted: false
+            submitted: false,
         };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         const { name, value } = e.target;
         this.setState({ [name]: value });
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
-
         this.setState({ submitted: true });
         const { username, password } = this.state;
-        const { dispatch } = this.props;
+        const { dispatch, handleSubmit } = this.props;
         if (username && password) {
             dispatch(userActions.login(username, password));
+            handleSubmit();
         }
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, open, handleClose } = this.props;
         const { username, password } = this.state;
         return (
-            <Container component="main" maxWidth="xs">
-                <div className={classes.layout}>
-                    <Typography component="h1" variant="h5">
+            <Dialog
+                open={open} 
+                onClose={handleClose}
+                aria-label="Sign in">
+                <DialogTitle disableTypography={true}>
+                    <Typography component="h1" variant="h4">
                         Sign in
                     </Typography>
-                    <form className={classes.form} onSubmit={this.handleSubmit} noValidate>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            autoFocus
-                            name="username"
-                            label="Username"
-                            value={username} 
-                            onChange={this.handleChange}/>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            value={password} 
-                            onChange={this.handleChange}/>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}>
-                            Sign In
-                        </Button>
-                    </form>
-                </div>
-            </Container>
+                </DialogTitle>
+                <DialogContent>
+                    <Container maxWidth="xs">
+                        <div className={classes.layout}>
+                            <form className={classes.form} onSubmit={this.handleSubmit} noValidate>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    autoFocus
+                                    name="username"
+                                    label="Username"
+                                    value={username} 
+                                    onChange={this.handleChange}/>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    value={password} 
+                                    onChange={this.handleChange}/>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}>
+                                    Sign In
+                                </Button>
+                            </form>
+                        </div>
+                    </Container>
+                </DialogContent>
+            </Dialog>
         );
     }
 }
 
-function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
-    return {
-        loggingIn
-    };
+LoginPage.propTypes = {
+    open: PropTypes.bool.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    handleClose: PropTypes.func.isRequired,
 }
 
-const connectedLoginPage = connect(mapStateToProps)(LoginPage);
+const connectedLoginPage = connect(null)(LoginPage);
 const styledConnectedLoginPage = withStyles(styles)(connectedLoginPage);
 export { styledConnectedLoginPage as LoginPage };
