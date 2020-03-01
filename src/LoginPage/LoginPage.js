@@ -6,6 +6,11 @@ import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
 import { userActions } from '../_actions';
@@ -27,7 +32,7 @@ const styles  = theme => ({
 });
 
 class LoginPage extends React.Component {
-      
+
     constructor(props) {
         super(props);
 
@@ -65,9 +70,13 @@ class LoginPage extends React.Component {
         return (
             <Container component="main" maxWidth="xs">
                 <div className={classes.layout}>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
+                    <Dialog open aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">
+                            <Typography component="h1" variant="h5">
+                                 Sign in
+                            </Typography>
+                        </DialogTitle>
+                        <DialogContent>
                     <form className={classes.form} onSubmit={this.handleSubmit} noValidate>
                         <TextField
                             variant="outlined"
@@ -89,6 +98,9 @@ class LoginPage extends React.Component {
                             type="password"
                             value={password} 
                             onChange={this.handleChange}/>
+                    </form>
+                        </DialogContent>
+                        <DialogActions>
                         <Button
                             type="submit"
                             fullWidth
@@ -97,7 +109,8 @@ class LoginPage extends React.Component {
                             className={classes.submit}>
                             Sign In
                         </Button>
-                    </form>
+                        </DialogActions>
+                </Dialog>
                 </div>
             </Container>
         );
