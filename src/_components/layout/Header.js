@@ -71,7 +71,7 @@ const useStyles = makeStyles(theme => ({
         flex: '0 0 auto',
     },
     selectChild: {
-        marginLeft: '5px',
+        margin: '0 30px 0 5px',
         color: 'white',
     },
     tabsContainer: {
