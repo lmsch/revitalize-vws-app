@@ -13,7 +13,6 @@ import { Select, MenuItem, IconButton, makeStyles, Avatar } from '@material-ui/c
 /* LOCAL IMPORTS */
 import { SideDrawer } from "./Drawer";
 
-
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -72,7 +71,7 @@ const useStyles = makeStyles(theme => ({
         flex: '0 0 auto',
     },
     selectChild: {
-        margin: '0 30px 0 5px',
+        marginLeft: '5px',
         color: 'white',
     },
     tabsContainer: {
