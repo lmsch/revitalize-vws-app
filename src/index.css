@@ -22,10 +22,13 @@ body {
 }
 
 main {
+  align-self: center;
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 0;
-  padding: 40px 15% 40px 15%;
+  max-width: 1400px;
+  width: 80%;
+  padding: 40px 0 40px 0;
 }
 
 .progress-spinner-container {

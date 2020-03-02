@@ -18,8 +18,7 @@ export async function apiCall(url, options, logout = true, timeout = DEFAULT_TIM
     } catch(error) {
         if(!timeout) {
             if (logout) {
-                store.dispatch(userActions.logout());
-                window.location.reload(true);
+                store.dispatch(userActions.logout(true));
                 return timeout;
             }
             return Promise.reject(error);
@@ -54,7 +53,7 @@ function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
-            return Promise.reject(response);
+            return Promise.reject(data);
         }
         return data;
     });

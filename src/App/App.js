@@ -1,17 +1,16 @@
 /* REACT IMPORTS */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Router, Route, Switch, withRouter } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 /* LOCAL IMPORTS */
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { PrivateRoute, Footer, Header } from '../_components';
 import { MyProgramPage } from '../MyProgramPage';
-import { LoginPage } from '../LoginPage';
-//=======
 import { SupportPage } from '../SupportPage';
 import { ContactPage } from '../ContactPage';
 import { AboutUsPage } from '../AboutUsPage';
+import { profileActions } from '../_actions';
 
 class App extends React.Component {
     
@@ -24,17 +23,25 @@ class App extends React.Component {
         });
     }
 
+    componentDidMount() { this.updateProfile() }
+
+    componentDidUpdate() { this.updateProfile() }
+
+    updateProfile() {
+        const loggedIn = this.props.authentication.loggedIn;
+        const { profile } = this.props;
+        if(loggedIn && !profile.loadingProfile && !profile.profileLoaded) {
+            this.props.dispatch(profileActions.getProfile());
+        }
+    }
+
     render() {
-        const { location } = this.props;
         return (
             <div className="app-layout">
-                <Header 
-                    loggedIn={this.props.authentication?.loggedIn}
-                    inProgram={location.pathname?.includes('/program/')} />
+                <Header />
                 <main>
                     <Router history={history}>
                         <Switch>
-                            <Route path="/login" component={LoginPage} />
                             <Route path="/support" component={SupportPage} />
                             <Route path="/contact" component={ContactPage} />
                             <PrivateRoute path="/program" component={MyProgramPage} />
@@ -49,13 +56,13 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { alert, authentication } = state;
+    const { alert, authentication, profile } = state;
     return {
+        alert,
         authentication,
-        alert
+        profile,
     };
 }
 
 const connectedApp = connect(mapStateToProps)(App);
-const routedConnectedApp = withRouter(connectedApp);
-export { routedConnectedApp as App }; 
+export { connectedApp as App }; 

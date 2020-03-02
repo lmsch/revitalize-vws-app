@@ -41,7 +41,7 @@ class ExclusiveChoices extends React.Component {
         if (model.number_of_questions === 1) {
             const question = model.questions[0];
             return (
-                <div className={`${classes.colFlexContainer} ${classes.questionPadding}`}>
+                <div className={`${classes.colFlexContainer} ${classes.multiLineJustify} ${classes.questionPadding}`}>
                     <Typography 
                         component="p" 
                         variant="subtitle1"
@@ -51,6 +51,7 @@ class ExclusiveChoices extends React.Component {
                     <FormControl 
                         component="fieldset">
                         <RadioGroup 
+                            className={`${classes.rowFlexContainer} ${classes.questionJustify}`}
                             name={String(0)}
                             value={this.state[0]} 
                             onChange={this.handleChange}>
