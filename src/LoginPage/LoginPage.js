@@ -71,7 +71,7 @@ class LoginPage extends React.Component {
                 <div className={classes.layout}>
                     <Dialog open aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">
-                            <Typography component="h1" variant="h5">
+                            <Typography component="h1" variant="h5" align="center">
                                  Sign in
                             </Typography>
                         </DialogTitle>
