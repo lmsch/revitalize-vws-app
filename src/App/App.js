@@ -10,6 +10,7 @@ import { MyProgramPage } from '../MyProgramPage';
 import { SupportPage } from '../SupportPage';
 import { ContactPage } from '../ContactPage';
 import { AboutUsPage } from '../AboutUsPage';
+import { profileActions } from '../_actions';
 
 class App extends React.Component {
     
@@ -20,6 +21,18 @@ class App extends React.Component {
             // clear alert on location change
             dispatch(alertActions.clear());
         });
+    }
+
+    componentDidMount() { this.updateProfile() }
+
+    componentDidUpdate() { this.updateProfile() }
+
+    updateProfile() {
+        const loggedIn = this.props.authentication.loggedIn;
+        const { profile } = this.props;
+        if(loggedIn && !profile.loadingProfile && !profile.profileLoaded) {
+            this.props.dispatch(profileActions.getProfile());
+        }
     }
 
     render() {
@@ -43,9 +56,11 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { alert } = state;
+    const { alert, authentication, profile } = state;
     return {
-        alert
+        alert,
+        authentication,
+        profile,
     };
 }
 
