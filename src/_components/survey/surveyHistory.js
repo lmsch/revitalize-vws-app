@@ -1,49 +1,111 @@
+/* REACT IMPORTS */
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import PropTypes from 'prop-types';
+/* THIRD PARTY IMPORTS */
+import {
+  makeStyles,
+  Table,
+  Paper,
+  TableRow,
+  TableHead,
+  TableContainer,
+  TableCell,
+  TableBody,
+  Button,
+} from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+/* LOCAL IMPORTS */
+import { styles } from './common';
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 100,
-    maxWidth: 350,
+const surveyHistoryColumns = [
+  {
+    id: 'name',
+    label: 'Name',
+  },
+];
+
+// const rows = [createData("Survey History 1")];
+
+class SurveyHistory extends React.Component {
+  state = {
+    selectedSurvey: null,
   }
-});
 
-function createData(name) {
-  return { name };
-}
+  handleSelect = (survey) => {
+    this.setState({ selectedSurvey: survey });
+  };
 
-const rows = [createData("Examnple 1")];
+  viewSurvey = () => {
+    if (this.state.selectedSurvey) {
+      this.props.onSurveySelected(this.state.selectedSurvey.id);
+    }
+  };
 
-export function DenseTable() {
-  const classes = useStyles();
+  render() {
+    const { classes, surveyHistory } = this.props;
 
-  return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" aria-label="Survey History">
-        <TableHead>
-          <TableRow>
-            <TableCell>Survey History</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
+    return (
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableCell>
+              <b>
+                Recent Surveys
+              </b>
+            </TableCell>
+            <TableRow>
+              {surveyHistoryColumns.map(column => (
+                <TableCell
+                  key={column.id}
+                  align="left">
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {surveyHistoryColumns.map(survey => (
+              <TableRow
+                hover
+                classes={{
+                  // hover: classes.surveyHistoryRow,
+                }}
+                key={survey.id}>
+                <TableCell
+                  align="left">
+                  {survey.name}
+                </TableCell>
+              </TableRow>
+            ))}
+            <TableRow>
+              <TableCell
+                colSpan={2}>
+                <div className={`${classes.doSurveyContainer} ${classes.rowFlexContainer}`}>
+                  <span>
+                    {this.state.selectedSurvey ?
+                      `You have selected ${this.state.selectedSurvey.name}.`
+                      : 'Click on a row to select a survey.'
+                    }
+                  </span>
+                  <Button
+                    className={classes.viewSurveyButton}
+                    variant="contained"
+                    color="primary"
+                    onClick={_ => this.viewSurvey()}>
+                    View Survey
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  }
 }
-
-export default DenseTable;
+SurveyHistory.propTypes = {
+  surveyHistory: PropTypes.array.isRequired,
+  onSurveySelected: PropTypes.func.isRequired,
+};
+const styledSurveyHistory = withStyles(styles)(SurveyHistory);
+export { styledSurveyHistory as SurveyHistory };
