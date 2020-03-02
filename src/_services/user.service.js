@@ -14,7 +14,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
     return fetch(`${process.env.REACT_APP_DEV_DOMAIN}/api/token/`, requestOptions)
-        .then(handleResponse)
+        .then(response => handleResponse(response, true))
         .then(user => {
             localStorage.setItem('user', JSON.stringify(user));
             return user;
@@ -41,11 +41,11 @@ function refreshAccess() {
         });
 }
 
-function handleResponse(response) {
+function handleResponse(response, loggingIn = false) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
-            if (response.status === 401) {
+            if (response.status === 401 && !loggingIn) {
                 logout();
                 window.location.reload(true);
             }

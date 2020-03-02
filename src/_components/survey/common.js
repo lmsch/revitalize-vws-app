@@ -64,7 +64,7 @@ export function setupInitialState(model) {
     const initialResponse = model.question_group_type_data.initial;
     const initialState = {};
     model.questions.forEach((question, i) => {
-        initialState[i] = initialResponse;
+        initialState[i] = initialResponse ? initialResponse : '';
         question.response = initialResponse;
     });
     return initialState;

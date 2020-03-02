@@ -1,6 +1,5 @@
-/* LREACT IMPORTS */
+/* REACT IMPORTS */
 import React from 'react';
-/* THIRD PARTY IMPORTS */
 import { Router, Switch, withRouter } from 'react-router-dom';
 /* LOCAL IMPORTS */
 import { PrivateRoute } from '../_components';
@@ -31,5 +30,5 @@ class MyProgramPage extends React.Component {
     }
 }
 
-const routedMyProgramPage = withRouter(MyProgramPage)
+const routedMyProgramPage = withRouter(MyProgramPage);
 export { routedMyProgramPage as MyProgramPage };

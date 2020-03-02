@@ -9,7 +9,7 @@ export const userActions = {
     logout,
 };
 
-function login(username, password) {
+function login(username, password, callback = null) {
     return dispatch => {
         dispatch(request({ username }));
 
@@ -17,7 +17,10 @@ function login(username, password) {
             .then(
                 user => { 
                     dispatch(success(user));
-                    history.push('/program/surveys');
+                    if (callback) {
+                        callback();
+                    }
+                    history.push('/program/profile');
                 },
                 error => {
                     dispatch(failure(error));
@@ -31,7 +34,12 @@ function login(username, password) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-function logout() {
-    userService.logout();
-    return { type: userConstants.LOGOUT };
+function logout(reload = false) {
+    return dispatch => {
+        userService.logout();
+        dispatch({ type: userConstants.LOGOUT });
+        if(reload) {
+            window.location.reload(true);
+        }
+    }
 }
