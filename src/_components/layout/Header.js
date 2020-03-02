@@ -97,6 +97,7 @@ function ImageAvatars(props) {
     const [open, setOpen] = React.useState(false);
     const profilePayload = useSelector(state => state.profile.payload);
     const dispatch = useDispatch();
+    const { classes } = props;
 
     const handleClose = () => {
         setOpen(false);
@@ -108,7 +109,6 @@ function ImageAvatars(props) {
 
     if (props.loggedIn && profilePayload?.length > 0) {
         const profile = profilePayload[0];
-        const { classes } = props;
         return (
             <React.Fragment>
                 <span>
@@ -127,7 +127,7 @@ function ImageAvatars(props) {
             </React.Fragment>
         );
     }
-    else {
+    else if (!props.loggedIn) {
         return (
             <div>
                 <Button
@@ -142,6 +142,15 @@ function ImageAvatars(props) {
                     handleSubmit={handleSubmit}
                     handleClose={handleClose} />
             </div>
+        );
+    } else {
+        return (
+            <a 
+                className={classes.signOutLink} 
+                href="#"
+                onClick={_ => dispatch(userActions.logout(true))}>
+                (Sign Out)
+            </a>
         );
     }
 }
