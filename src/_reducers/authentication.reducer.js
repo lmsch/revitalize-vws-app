@@ -9,7 +9,7 @@ export function authentication(state = initialState, action) {
         case userConstants.LOGIN_REQUEST:
             return {
                 loggingIn: true,
-                user: action.user
+                user: action.user,
             };
         case userConstants.REFRESH_REQUEST:
             return {
@@ -20,13 +20,13 @@ export function authentication(state = initialState, action) {
         case userConstants.REFRESH_SUCCESS:
             return {
                 loggedIn: true,
-                user: action.user
+                user: action.user,
             };
         case userConstants.LOGIN_FAILURE:
         case userConstants.REFRESH_FAILURE:
         case userConstants.LOGOUT:
             return {};
         default:
-            return state
+            return state;
     }
 }

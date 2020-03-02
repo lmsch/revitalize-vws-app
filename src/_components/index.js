@@ -10,3 +10,6 @@ export * from './survey/AvailableSurveys';
 export * from './layout/Header';
 export * from './layout/Footer';
 export * from './layout/Drawer';
+
+// Profile
+export * from './profile/MyInformation';

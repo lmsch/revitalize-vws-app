@@ -18,8 +18,7 @@ export async function apiCall(url, options, logout = true, timeout = DEFAULT_TIM
     } catch(error) {
         if(!timeout) {
             if (logout) {
-                store.dispatch(userActions.logout());
-                window.location.reload(true);
+                store.dispatch(userActions.logout(true));
                 return timeout;
             }
             return Promise.reject(error);

@@ -31,14 +31,9 @@ const styles  = theme => ({
 
 class LoginPage extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.props.dispatch(userActions.logout());
-        this.state = {
-            username: '',
-            password: '',
-            submitted: false,
-        };
+    state = {
+        username: '',
+        password: '',
     }
 
     handleChange = (e) => {
@@ -48,12 +43,11 @@ class LoginPage extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.setState({ submitted: true });
         const { username, password } = this.state;
         const { dispatch, handleSubmit } = this.props;
         if (username && password) {
-            dispatch(userActions.login(username, password));
-            handleSubmit();
+            this.setState({username: '', password: ''});
+            dispatch(userActions.login(username, password, handleSubmit));
         }
     }
 

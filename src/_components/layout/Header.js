@@ -1,7 +1,7 @@
 /* REACT IMPORTS */
 import React from "react";
 import { useHistory, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 /* THIRD PARTY IMPORTS */
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -13,6 +13,7 @@ import { Select, MenuItem, IconButton, makeStyles, Avatar } from '@material-ui/c
 /* LOCAL IMPORTS */
 import { SideDrawer } from "./Drawer";
 import { LoginPage } from '../../LoginPage';
+import { userActions } from '../../_actions';
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -32,6 +33,9 @@ const useStyles = makeStyles(theme => ({
         margin: '0 30px 0 5px',
         color: 'white',
     },
+    selectAvatar: {
+        marginLeft: '10px',
+    },
     tabsContainer: {
         display: 'flex',
         alignItems: 'center',
@@ -48,7 +52,10 @@ const useStyles = makeStyles(theme => ({
     },
     notLoggedInMenu: {
         visibility: 'hidden',
-    }
+    },
+    signOutLink: {
+        color: 'white',
+    },
 }));
 
 const mainLinks = [
@@ -73,12 +80,13 @@ const mainLinks = [
 ];
 
 function LinkTab(props) {
+    const history = useHistory();
     return (
         <Tab
             component="a"
             onClick={event => {
                 event.preventDefault();
-                props.history.push(props.href);
+                history.push(props.href);
             }}
             {...props}
         />
@@ -87,22 +95,36 @@ function LinkTab(props) {
 
 function ImageAvatars(props) {
     const [open, setOpen] = React.useState(false);
+    const profilePayload = useSelector(state => state.profile.payload);
+    const dispatch = useDispatch();
 
     const handleClose = () => {
         setOpen(false);
     }
 
     const handleSubmit = () => {
-        if(props.loggedIn) {
-            setOpen(false);
-        }
+        setOpen(false);
     }
 
-    if (props.loggedIn) {
+    if (props.loggedIn && profilePayload?.length > 0) {
+        const profile = profilePayload[0];
+        const { classes } = props;
         return (
-            <div>
-                <Avatar alt="Revi Talize" src="/imgLocation" />
-            </div>
+            <React.Fragment>
+                <span>
+                    {`${profile.first_name} ${profile.last_name} `}
+                    <a 
+                        className={classes.signOutLink} 
+                        href="#"
+                        onClick={_ => dispatch(userActions.logout(true))}>
+                        (Sign Out)
+                    </a>
+                </span>
+                <Avatar 
+                    className={classes.selectAvatar} 
+                    alt={`${profile.first_name} ${profile.last_name}`} 
+                    src={profile.profile_picture} />
+            </React.Fragment>
         );
     }
     else {
@@ -127,7 +149,6 @@ function ImageAvatars(props) {
 
 export function Header() {
     const classes = useStyles();
-    const history = useHistory();
     const loggedIn = useSelector(state => state.authentication.loggedIn);
     const location = useLocation();
     const currentPath = mainLinks.find((link) => link.link === location.pathname);
@@ -158,14 +179,13 @@ export function Header() {
                         classes={{ indicator: inProgram ? classes.inProgramTabs : '' }}
                         variant="fullWidth"
                         aria-label="nav tabs"
-                        value={currentPath ? currentPath.value : -1}
+                        value={currentPath ? currentPath.value : false }
                     >
                     {mainLinks.map(link =>
                         <LinkTab 
                             key={link.id} 
                             label={link.label}
-                            href={link.link} 
-                            history={history} />
+                            href={link.link} />
                     )}
                     </Tabs>
                 </div>
@@ -179,7 +199,9 @@ export function Header() {
                         <MenuItem value="EN">EN</MenuItem>
                         <MenuItem value="FR">FR</MenuItem>
                     </Select>
-                    <ImageAvatars loggedIn={loggedIn} />
+                    <ImageAvatars 
+                        loggedIn={loggedIn} 
+                        classes={classes} />
                 </div>
             </AppBar>
         </div>
