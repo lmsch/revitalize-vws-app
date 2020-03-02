@@ -50,7 +50,6 @@ class App extends React.Component {
                         </Switch>
                     </Router>
                 </main>
-                <SurveyHistory/>
                 <Footer />
             </div>
         );
