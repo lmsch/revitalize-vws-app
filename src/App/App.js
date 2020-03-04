@@ -11,7 +11,6 @@ import { SupportPage } from '../SupportPage';
 import { ContactPage } from '../ContactPage';
 import { AboutUsPage } from '../AboutUsPage';
 import { profileActions } from '../_actions';
-import { SurveyHistory}  from '../_components/survey/surveyHistory';
 
 class App extends React.Component {
     
