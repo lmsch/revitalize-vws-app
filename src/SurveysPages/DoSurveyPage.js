@@ -4,13 +4,18 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 /* LOCAL IMPORTS */
-import { GenerateSurvey } from '../_components';
+import { GenerateSurvey, ErrorDisplay } from '../_components';
 import { apiCall } from '../_helpers';
 
 class DoSurveyPage extends React.Component {
 
     state = {
         model: null,
+    }
+
+    constructor() {
+        super();
+        this.errorsRef = React.createRef();
     }
 
     handleSubmitSurvey = () => {
@@ -35,6 +40,7 @@ class DoSurveyPage extends React.Component {
         }
         return (
             <React.Fragment>
+                <ErrorDisplay errorsRef={this.errorsRef} />
                 <GenerateSurvey 
                     model={this.state.model} 
                     submit={this.handleSubmitSurvey} />
