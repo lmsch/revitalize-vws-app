@@ -23,7 +23,7 @@ export async function apiCall(url, options, logout = true, timeout = DEFAULT_TIM
             }
             return Promise.reject(error);
         }
-        if(error instanceof Response && error.status === 401) {
+        if(error.code === 'token_not_valid' || error.status === 401) {
             try {
                 await apiRefresh();
             } catch(error) {
