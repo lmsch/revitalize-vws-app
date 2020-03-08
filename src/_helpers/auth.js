@@ -19,11 +19,11 @@ export async function apiCall(url, options, logout = true, timeout = DEFAULT_TIM
         if(!timeout) {
             if (logout) {
                 store.dispatch(userActions.logout(true));
-                return timeout;
+                return error;
             }
             return Promise.reject(error);
         }
-        if(error.code === 'token_not_valid' || error.status === 401) {
+        if(error.code === 'token_not_valid') {
             try {
                 await apiRefresh();
             } catch(error) {
