@@ -54,7 +54,12 @@ const useStyles = makeStyles(theme => ({
         visibility: 'hidden',
     },
     signOutLink: {
+        background: 'none !important',
+        border: 'none',
+        padding: '0 !important',
         color: 'white',
+        textDecoration: 'underline',
+        cursor: 'pointer',
     },
 }));
 
@@ -113,12 +118,11 @@ function ImageAvatars(props) {
             <React.Fragment>
                 <span>
                     {`${profile.first_name} ${profile.last_name} `}
-                    <a 
+                    <button 
                         className={classes.signOutLink} 
-                        href="#"
                         onClick={_ => dispatch(userActions.logout(true))}>
                         (Sign Out)
-                    </a>
+                    </button>
                 </span>
                 <Avatar 
                     className={classes.selectAvatar} 
@@ -145,12 +149,11 @@ function ImageAvatars(props) {
         );
     } else {
         return (
-            <a 
+            <button 
                 className={classes.signOutLink} 
-                href="#"
                 onClick={_ => dispatch(userActions.logout(true))}>
                 (Sign Out)
-            </a>
+            </button>
         );
     }
 }
