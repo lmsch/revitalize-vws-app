@@ -2,14 +2,16 @@
 import React from 'react';
 /* THIRD PARTY IMPORTS */
 import { withRouter } from 'react-router-dom';
+import { CircularProgress } from '@material-ui/core';
 /* LOCAL IMPORTS */
-import { AvailableSurveys } from '../_components';
+import { AvailableSurveys, SurveyHistory } from '../_components';
 import { apiCall } from '../_helpers';
 
 class SurveysPage extends React.Component {
 
     state = {
-        availableSurveys: [],
+        availableSurveys: null,
+        surveyHistory: null,
     }
 
     handleSurveySelected = (surveyId) => {
@@ -20,13 +22,24 @@ class SurveysPage extends React.Component {
     componentDidMount() {
         apiCall('/available_surveys/', { method: 'GET'})
             .then(response => this.setState({availableSurveys: response}));
+        // TODO: Remove reverse and allow sorting in history.
+        apiCall('/survey_history/', { method: 'GET'})
+            .then(response => this.setState({surveyHistory: response.reverse()}));
+            
     }
     
     render() {
+        const { availableSurveys, surveyHistory} = this.state;
+        if(!availableSurveys || !surveyHistory ) {
+            return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
+        }
         return (
-            <AvailableSurveys 
-                availableSurveys={this.state.availableSurveys}
-                onSurveySelected={this.handleSurveySelected}/>
+            <React.Fragment>
+                <AvailableSurveys 
+                    availableSurveys={availableSurveys}
+                    onSurveySelected={this.handleSurveySelected}/>
+                <SurveyHistory surveyHistory={surveyHistory} />
+            </React.Fragment>
         );
     }
 }

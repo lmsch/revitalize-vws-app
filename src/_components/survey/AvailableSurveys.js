@@ -68,7 +68,7 @@ class AvailableSurveys extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        {availableSurveys.map(survey => (
+                        {availableSurveys?.map(survey => (
                             <TableRow
                                 hover
                                 classes={{

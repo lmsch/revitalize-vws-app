@@ -11,7 +11,6 @@ import { SupportPage } from '../SupportPage';
 import { ContactPage } from '../ContactPage';
 import { AboutUsPage } from '../AboutUsPage';
 import { profileActions } from '../_actions';
-import { historyPreview}  from '../_components/survey/HistoryPreview';
 
 class App extends React.Component {
     
@@ -50,7 +49,6 @@ class App extends React.Component {
                         </Switch>
                     </Router>
                 </main>
-                <historyPreview/>
                 <Footer />
             </div>
         );
