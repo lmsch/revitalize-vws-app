@@ -21,7 +21,10 @@ class DoSurveyPage extends React.Component {
         const { surveyId  } = this.props.match.params;
         apiCall(`/surveys/${surveyId}/submit/`, { method: 'POST', body: model }, false)
             .then(_ => this.props.history.push('/program/surveys'))
-            .catch(error => this.setState({error, spinner: false}));
+            .catch(error => {
+                console.log(error);
+                this.setState({error, spinner: false});
+            });
     };
 
     componentDidMount() {

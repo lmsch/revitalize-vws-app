@@ -26,7 +26,7 @@ export async function apiCall(url, options, logout = true, timeout = DEFAULT_TIM
             }
             return Promise.reject(error);
         }
-        if(error.code === 'token_not_valid') {
+        if(error.data?.code === 'token_not_valid') {
             try {
                 await apiRefresh();
             } catch(error) {
@@ -56,7 +56,7 @@ function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
-            return Promise.reject(data);
+            return Promise.reject({response, data});
         }
         return data;
     });
