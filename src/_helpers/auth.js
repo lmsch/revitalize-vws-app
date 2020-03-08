@@ -8,10 +8,13 @@ export const DEFAULT_TIMEOUT = 3;
 
 export async function apiCall(url, options, logout = true, timeout = DEFAULT_TIMEOUT) {
     try {
-        const appendedUrl = `${process.env.REACT_APP_DEV_DOMAIN}/api${url}`;
-        if (options.headers && !options.headers['Content-Type']) {
+        if(!options.headers) {
+            options.headers = {};
+        }
+        if (!options.headers['Content-Type']) {
             options.headers['Content-Type'] = 'application/json';
         }
+        const appendedUrl = `${process.env.REACT_APP_DEV_DOMAIN}/api${url}`;
         options.headers = {...options.headers, ...accessHeader()};
         const response = await fetch(appendedUrl, options);
         return await handleResponse(response);
