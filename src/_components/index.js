@@ -5,6 +5,7 @@ export * from './survey/ExclusiveChoices';
 export * from './survey/IntegerRange';
 export * from './survey/GenerateSurvey';
 export * from './survey/AvailableSurveys';
+export * from './survey/TextArea'
 
 // Layout
 export * from './layout/Header';
