@@ -33,6 +33,10 @@ main > * {
   margin: 20px 0 20px 0;
 }
 
+.inline-card-left {
+  margin-right: 20px;
+}
+
 .progress-spinner-container {
   display: flex;
   justify-content: center;
