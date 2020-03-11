@@ -15,12 +15,14 @@ import { withStyles } from "@material-ui/core/styles";
 import { styles } from './common';
 import { ExclusiveChoices } from './ExclusiveChoices';
 import { IntegerRange } from './IntegerRange';
+import { TextArea } from "./TextArea";
 
 // Survey component map
 const surveyMap = {
     'integer_range': IntegerRange,
     'exclusive_choices': ExclusiveChoices,
     'boolean': ExclusiveChoices,
+    'text_area': TextArea,
 };
 
 /**

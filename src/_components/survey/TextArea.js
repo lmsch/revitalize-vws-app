@@ -4,16 +4,28 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import {withStyles} from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
-import {styles} from './common';
+import {setupInitialState, styles} from './common';
+import PropTypes from "prop-types";
 
 
 class TextArea extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = setupInitialState(props.model);
+    }
+
+    /**
+     * Sets state and updates model with new selection.
+     */
     handleChange = e => {
         this.setState({[e.target.name]: e.target.value});
         this.props.model.questions[e.target.name].response = e.target.value;
     };
 
+    /**
+     * Renders the component based on various model conditions.
+     */
     render() {
         const {classes, model} = this.props;
         const questionData = model.question_group_type_data;
@@ -40,6 +52,9 @@ class TextArea extends React.Component {
         )
     };
 }
+TextArea.propTypes = {
+    model: PropTypes.object.isRequired,
+};
 
 const styledTextArea = withStyles(styles)(TextArea);
 export { styledTextArea as TextArea };
