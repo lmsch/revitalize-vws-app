@@ -23,18 +23,22 @@ body {
 
 main {
   align-self: center;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 0;
-  max-width: 1500px;
+  flex: 1 1 auto;
+  max-width: 1600px;
   width: 90%;
-  padding: 40px 0 40px 0;
+  padding: 20px 0 20px 0;
+}
+
+main > * {
+  margin: 20px 0 20px 0;
+}
+
+.inline-card-left {
+  margin-right: 20px;
 }
 
 .progress-spinner-container {
-  height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 

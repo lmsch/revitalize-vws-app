@@ -61,10 +61,10 @@ export const styles = (theme) => ({
  * Setup state to initial (as defined by API) for each question. Mapped as [question_index: number]: [radio_value: number].
  */
 export function setupInitialState(model) {
-    const initialResponse = model.question_group_type_data.initial;
+    const initialResponse = String(model.question_group_type_data.initial);
     const initialState = {};
     model.questions.forEach((question, i) => {
-        initialState[i] = initialResponse ? initialResponse : '';
+        initialState[String(i)] = initialResponse ? initialResponse : null;
         question.response = initialResponse;
     });
     return initialState;
