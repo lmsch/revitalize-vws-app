@@ -14,3 +14,7 @@ export * from './layout/Drawer';
 
 // Profile
 export * from './profile/MyInformation';
+
+// Graphs
+export * from './graphing/GraphSelector';
+export * from './graphing/SurveyIndicatorLinear';
