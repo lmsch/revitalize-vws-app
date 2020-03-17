@@ -28,21 +28,19 @@ class DoSurveyPage extends React.Component {
         apiCall(`/surveys/${surveyId}/submit/`, { method: 'POST', body: model }, false)
             .then(_ => this.props.history.push('/program/surveys'))
             .catch(error => {
-                console.log(error);
                 this.setState({errors: error.data.errors, spinner: false});
+                this.errorsRef.current.scrollIntoView();
             });
     };
 
     generateErrorMessages(errors) {
         const messages = [];
         _.forEach(errors, error => {
-            _.forEach(error.questions, question => {
-                messages.push(
-                    <span>
-                        <b>Question {question.question_number}:</b> {question.user_message}
-                    </span>
-                );
-            })
+            messages.push(
+                <span>
+                    <b>Question {error.question_number}:</b> {error.user_message}
+                </span>
+            );
         });
         return messages;
     }

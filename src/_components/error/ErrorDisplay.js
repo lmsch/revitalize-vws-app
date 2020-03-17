@@ -8,6 +8,7 @@ import {
     CardHeader,
     CardContent,
  } from "@material-ui/core";
+ import * as _ from 'lodash';
 
 const styles = () => ({
     root: {
@@ -22,6 +23,16 @@ const styles = () => ({
 });
 
 class ErrorDisplay extends React.Component{
+
+    determineTitle(errors, header) {
+        if(header) {
+            return header;
+        } else if(_.isString(errors)) {
+            return errors;
+        } else {
+            return 'See errors below:';
+        }
+    }
 
     render(){
         const props = this.props;
@@ -40,17 +51,20 @@ class ErrorDisplay extends React.Component{
                         error_outline
                     </Icon>
                     <CardHeader 
-                        subheader={props.header ? props.header : 'See errors below.'}
+                        title={this.determineTitle(props.errors, props.header)}
                         titleTypographyProps={{
                             component: "h6",
                             variant: "h6",
                         }} />
                 </div>
-            <CardContent>
-                <ul>
-                {props.errors?.map((error, i) =><li key={i}>{error}</li>)}
-                </ul>
-            </CardContent>
+                {_.isArray(props.errors) && props.errors.length > 0 ?
+                    <CardContent>
+                        <ul>
+                        {props.errors.map((error, i) =><li key={i}>{error}</li>)}
+                        </ul>
+                    </CardContent>
+                    : null
+                }
         </Card>
         );
     }

@@ -1,7 +1,7 @@
 /* REACT IMPORTS */
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 /* THIRD PARTY IMPORTS */
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -13,7 +13,7 @@ import { Select, MenuItem, IconButton, makeStyles, Avatar } from '@material-ui/c
 /* LOCAL IMPORTS */
 import { SideDrawer } from "./Drawer";
 import { LoginPage } from '../../LoginPage';
-import { userActions } from '../../_actions';
+import { userActions, profileActions } from '../../_actions';
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -84,36 +84,12 @@ const mainLinks = [
     },
 ];
 
-function LinkTab(props) {
-    const history = useHistory();
-    return (
-        <Tab
-            component="a"
-            onClick={event => {
-                event.preventDefault();
-                history.push(props.href);
-            }}
-            {...props}
-        />
-    );
-}
-
 function ImageAvatars(props) {
     const [open, setOpen] = React.useState(false);
-    const profilePayload = useSelector(state => state.profile.payload);
-    const dispatch = useDispatch();
-    const { classes } = props;
+    const { classes, payload, loggedIn, dispatch } = props;
 
-    const handleClose = () => {
-        setOpen(false);
-    }
-
-    const handleSubmit = () => {
-        setOpen(false);
-    }
-
-    if (props.loggedIn && profilePayload?.length > 0) {
-        const profile = profilePayload[0];
+    if (loggedIn && payload?.length > 0) {
+        const profile = payload[0];
         return (
             <React.Fragment>
                 <span>
@@ -131,7 +107,7 @@ function ImageAvatars(props) {
             </React.Fragment>
         );
     }
-    else if (!props.loggedIn) {
+    else if (!loggedIn) {
         return (
             <div>
                 <Button
@@ -143,8 +119,8 @@ function ImageAvatars(props) {
                 </Button>
                 <LoginPage 
                     open={open}
-                    handleSubmit={handleSubmit}
-                    handleClose={handleClose} />
+                    handleSubmit={_ => setOpen(false)}
+                    handleClose={_ => setOpen(false)} />
             </div>
         );
     } else {
@@ -158,16 +134,25 @@ function ImageAvatars(props) {
     }
 }
 
-
-export function Header() {
+function Header(props) {
     const classes = useStyles();
-    const loggedIn = useSelector(state => state.authentication.loggedIn);
     const location = useLocation();
-    const currentPath = mainLinks.find((link) => link.link === location.pathname);
-    let inProgram = true;
-    if(currentPath) {
-        inProgram = false;
-    }
+    const history = useHistory();
+    const dispatch = props.dispatch;
+
+    const { loggedIn } = props.authentication;
+    const { payload, loadingProfile, profileLoaded } = props.profile;
+
+    const currentPath = mainLinks.find(link => link.link === location.pathname);
+
+    useEffect(() => {
+        if(loggedIn && !loadingProfile && !profileLoaded) {
+            dispatch(profileActions.getProfile());
+        }
+    });
+
+    const imageAvatarProps = { classes, loggedIn, payload, dispatch };
+
     return (
         <div>
             <AppBar
@@ -188,17 +173,17 @@ export function Header() {
                     </Typography>
                     <Tabs
                         className={classes.tabs}
-                        classes={{ indicator: inProgram ? classes.inProgramTabs : '' }}
+                        classes={{ indicator: !currentPath ? classes.inProgramTabs : '' }}
                         variant="fullWidth"
                         aria-label="nav tabs"
                         value={currentPath ? currentPath.value : false }
                     >
-                    {mainLinks.map(link =>
-                        <LinkTab 
-                            key={link.id} 
+                        {mainLinks.map(link =>
+                        <Tab
+                            key={link.id}
                             label={link.label}
-                            href={link.link} />
-                    )}
+                            component="a"
+                            onClick={_ =>  history.push(link.link)} />                   )}
                     </Tabs>
                 </div>
                 <div className={classes.selectContainer}>
@@ -211,11 +196,20 @@ export function Header() {
                         <MenuItem value="EN">EN</MenuItem>
                         <MenuItem value="FR">FR</MenuItem>
                     </Select>
-                    <ImageAvatars 
-                        loggedIn={loggedIn} 
-                        classes={classes} />
+                    <ImageAvatars {...imageAvatarProps} />
                 </div>
             </AppBar>
         </div>
     );
 }
+
+function mapStateToProps(state) {
+    const { authentication, profile } = state;
+    return {
+        authentication,
+        profile,
+    };
+}
+
+const connectedHeader = connect(mapStateToProps)(Header);
+export { connectedHeader as Header };
