@@ -26,6 +26,9 @@ class ErrorDisplay extends React.Component{
     render(){
         const props = this.props;
         const { classes } = props;
+        if(!props.errors || props.errors.length <= 0) {
+            return null;
+        }
         return (
             <Card 
                 className={classes.root}

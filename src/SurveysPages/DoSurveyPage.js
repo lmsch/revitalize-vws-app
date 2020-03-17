@@ -3,6 +3,7 @@ import React from 'react';
 /* THIRD PARTY IMPORTS */
 import { withRouter } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
+import * as _ from 'lodash';
 /* LOCAL IMPORTS */
 import { GenerateSurvey, ErrorDisplay } from '../_components';
 import { apiCall } from '../_helpers';
@@ -12,7 +13,7 @@ class DoSurveyPage extends React.Component {
     state = {
         model: null,
         spinner: true,
-        error: null,
+        errors: null,
     }
 
     constructor() {
@@ -28,9 +29,23 @@ class DoSurveyPage extends React.Component {
             .then(_ => this.props.history.push('/program/surveys'))
             .catch(error => {
                 console.log(error);
-                this.setState({error, spinner: false});
+                this.setState({errors: error.data.errors, spinner: false});
             });
     };
+
+    generateErrorMessages(errors) {
+        const messages = [];
+        _.forEach(errors, error => {
+            _.forEach(error.questions, question => {
+                messages.push(
+                    <span>
+                        <b>Question {question.question_number}:</b> {question.user_message}
+                    </span>
+                );
+            })
+        });
+        return messages;
+    }
 
     componentDidMount() {
         const { surveyId  } = this.props.match.params;
@@ -45,7 +60,10 @@ class DoSurveyPage extends React.Component {
         }
         return (
             <React.Fragment>
-                <ErrorDisplay errorsRef={this.errorsRef} />
+                <ErrorDisplay 
+                    header="Submission Error" 
+                    errors={this.generateErrorMessages(this.state.errors)}
+                    errorsRef={this.errorsRef} />
                 <GenerateSurvey 
                     model={this.state.model} 
                     submit={this.handleSubmitSurvey} />
