@@ -1,7 +1,7 @@
 /* REACT IMPORTS */
 import React from 'react'
 /* THIRD PARTY IMPORTS */
-import { withStyles } from "@material-ui/core";
+import { withStyles, Box } from "@material-ui/core";
 
 const styles = (theme) => (
     {
@@ -20,9 +20,11 @@ class Footer extends React.Component{
         const { classes } = this.props;
         return (
             <footer>
-                <div className={classes.footer}>
+                <Box 
+                    boxShadow={3} 
+                    className={classes.footer}>
                     <p>&copy; 2020 ---</p>
-                </div>
+                </Box>
             </footer>
         );
     }

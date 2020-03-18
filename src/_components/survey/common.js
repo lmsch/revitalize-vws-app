@@ -8,29 +8,13 @@ export const styles = (theme) => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    exclusiveChoiceGroup: {
-        justifyContent: 'space-evenly',
-        flexWrap: 'nowrap',
-    },
     questionPadding: {
         padding: '20px 0 20px 0',
     },
-    integerScaleMargin: {
-        margin: '0 5px 0 5px'
-    },
-    labelNotVisible: {
-        visibility: 'hidden',
-    },
-    formControlBlock: {
-        display: 'block',
-        width: '100%',
-    },
-    multiLineJustify: {
-        justifyContent: 'start'
-    },
     questionJustify: {
-        justifyContent: 'space-evenly',
-        flexWrap: 'wrap',
+        justifyContent: 'flex-start',
+        flexWrap: 'nowrap',
+        overflow: 'auto',
     },
     availableSurveysRow: {
         '&:hover': {
@@ -64,7 +48,7 @@ export function setupInitialState(model) {
     const initialResponse = String(model.question_group_type_data.initial);
     const initialState = {};
     model.questions.forEach((question, i) => {
-        initialState[String(i)] = initialResponse ? initialResponse : null;
+        initialState[String(i)] = initialResponse >= 0 ? initialResponse : '';
         question.response = initialResponse;
     });
     return initialState;

@@ -3,17 +3,25 @@ import React, { useEffect } from "react";
 import { useHistory, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 /* THIRD PARTY IMPORTS */
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Button from '@material-ui/core/Button';
-import Typography from "@material-ui/core/Typography";
 import LanguageIcon from "@material-ui/icons/Language";
-import { Select, MenuItem, IconButton, makeStyles, Avatar } from '@material-ui/core';
+import {
+    Select,
+    MenuItem,
+    IconButton,
+    useMediaQuery,
+    makeStyles,
+    Avatar,
+    AppBar,
+    Tabs,
+    Tab,
+    Button,
+    Typography,
+} from '@material-ui/core';
 /* LOCAL IMPORTS */
 import { SideDrawer } from "./Drawer";
 import { LoginPage } from '../../LoginPage';
 import { userActions, profileActions } from '../../_actions';
+import { mainLinks } from './common';
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -21,7 +29,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: '0 30px 0 18px',
+        padding: '0 15px 0 15px',
         width: '100%',
     },
     selectContainer: {
@@ -30,22 +38,16 @@ const useStyles = makeStyles(theme => ({
         flex: '0 0 auto',
     },
     selectChild: {
-        margin: '0 30px 0 5px',
+        margin: '0 20px 0 5px',
         color: 'white',
     },
     selectAvatar: {
-        marginLeft: '10px',
+        marginLeft: '5px',
     },
     tabsContainer: {
         display: 'flex',
         alignItems: 'center',
         flex: '0 0 auto',
-    },
-    tabs: {
-        margin: '0 60px 0 60px',
-    },
-    menuButton: {
-        marginRight: '18px',
     },
     inProgramTabs: {
         visibility: 'hidden',
@@ -61,48 +63,30 @@ const useStyles = makeStyles(theme => ({
         textDecoration: 'underline',
         cursor: 'pointer',
     },
+    title: {
+        margin: '0 15px 0 15px',
+    }
 }));
-
-const mainLinks = [
-    {
-        id: 'about-us',
-        label: 'About Us',
-        link: '/',
-        value: 0,
-    },
-    {
-        id: 'support',
-        label: 'Support',
-        link: '/support',
-        value: 1,
-    },
-    {
-        id: 'contact',
-        label: 'Contact Us',
-        link: '/contact',
-        value: 2,
-    },
-];
 
 function ImageAvatars(props) {
     const [open, setOpen] = React.useState(false);
-    const { classes, payload, loggedIn, dispatch } = props;
+    const { classes, payload, loggedIn, dispatch, isMobile } = props;
 
-    if (loggedIn && payload?.length > 0) {
+    if (!isMobile && loggedIn && payload?.length > 0) {
         const profile = payload[0];
         return (
             <React.Fragment>
                 <span>
                     {`${profile.first_name} ${profile.last_name} `}
-                    <button 
-                        className={classes.signOutLink} 
+                    <button
+                        className={classes.signOutLink}
                         onClick={_ => dispatch(userActions.logout(true))}>
                         (Sign Out)
                     </button>
                 </span>
-                <Avatar 
-                    className={classes.selectAvatar} 
-                    alt={`${profile.first_name} ${profile.last_name}`} 
+                <Avatar
+                    className={classes.selectAvatar}
+                    alt={`${profile.first_name} ${profile.last_name}`}
                     src={profile.profile_picture} />
             </React.Fragment>
         );
@@ -117,7 +101,7 @@ function ImageAvatars(props) {
                     onClick={_ => setOpen(true)}>
                     Sign In
                 </Button>
-                <LoginPage 
+                <LoginPage
                     open={open}
                     handleSubmit={_ => setOpen(false)}
                     handleClose={_ => setOpen(false)} />
@@ -125,8 +109,8 @@ function ImageAvatars(props) {
         );
     } else {
         return (
-            <button 
-                className={classes.signOutLink} 
+            <button
+                className={classes.signOutLink}
                 onClick={_ => dispatch(userActions.logout(true))}>
                 (Sign Out)
             </button>
@@ -135,6 +119,7 @@ function ImageAvatars(props) {
 }
 
 function Header(props) {
+    const isMobile = useMediaQuery('(max-width:992px)');
     const classes = useStyles();
     const location = useLocation();
     const history = useHistory();
@@ -143,15 +128,15 @@ function Header(props) {
     const { loggedIn } = props.authentication;
     const { payload, loadingProfile, profileLoaded } = props.profile;
 
-    const currentPath = mainLinks.find(link => link.link === location.pathname);
+    const currentPath = mainLinks.find(link => link.url === location.pathname);
 
     useEffect(() => {
-        if(loggedIn && !loadingProfile && !profileLoaded) {
+        if (loggedIn && !loadingProfile && !profileLoaded) {
             dispatch(profileActions.getProfile());
         }
     });
 
-    const imageAvatarProps = { classes, loggedIn, payload, dispatch };
+    const imageAvatarProps = { classes, loggedIn, payload, dispatch, isMobile };
 
     return (
         <div>
@@ -160,31 +145,33 @@ function Header(props) {
                 className={classes.appBar}>
                 <div className={classes.tabsContainer}>
                     <IconButton
-                        className={`${!loggedIn ? classes.notLoggedInMenu : ''} ${classes.menuButton}`}
-                        disabled={!loggedIn}
+                        className={!loggedIn && !isMobile ? classes.notLoggedInMenu : ''}
+                        disabled={!loggedIn && !isMobile}
                         color="inherit"
                         aria-label="open drawer">
                         <SideDrawer />
                     </IconButton>
                     <Typography
+                        className={classes.title}
                         component="h1"
                         variant="h6">
                         REVITALIZE
                     </Typography>
+                    {!isMobile ?
                     <Tabs
-                        className={classes.tabs}
                         classes={{ indicator: !currentPath ? classes.inProgramTabs : '' }}
                         variant="fullWidth"
                         aria-label="nav tabs"
-                        value={currentPath ? currentPath.value : false }
+                        value={currentPath ? currentPath.value : false}
                     >
                         {mainLinks.map(link =>
-                        <Tab
-                            key={link.id}
-                            label={link.label}
-                            component="a"
-                            onClick={_ =>  history.push(link.link)} />                   )}
-                    </Tabs>
+                            <Tab
+                                key={link.label}
+                                label={link.label}
+                                component="a"
+                                onClick={_ => history.push(link.url)} />)}
+                    </Tabs> : null
+                    }
                 </div>
                 <div className={classes.selectContainer}>
                     <LanguageIcon />

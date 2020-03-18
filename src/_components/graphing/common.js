@@ -4,9 +4,10 @@ export const styles = theme => ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            flexWrap: 'wrap',
         },
-        timeRangeControls: {
-            margin: '0 5px 0 5px',
+        controlsMargin: {
+            margin: '10px',
         },
         graphMargin: {
             marginTop: '20px',

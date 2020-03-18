@@ -9,7 +9,10 @@ import {
     XAxis,
     YAxis,
 } from 'recharts';
-import { withStyles } from '@material-ui/core';
+import { 
+    withStyles, 
+    withTheme 
+} from '@material-ui/core';
 import * as moment from 'moment';
 /* LOCAL IMPORTS */
 import { GraphSelector } from './GraphSelector';
@@ -56,8 +59,7 @@ class SurveyIndicatorLinear extends React.Component {
                             type="string"/>
                         <YAxis 
                             dataKey="indicator"
-                            name="Indicator"
-                            tick={false} />
+                            name="Indicator"/>
                         <Scatter 
                             data={surveyFakeData} 
                             line={{ stroke: 'black' }}
@@ -73,8 +75,9 @@ class SurveyIndicatorLinear extends React.Component {
 
 SurveyIndicatorLinear.propTypes = {
     handleChange: PropTypes.func.isRequired,
-    options: PropTypes.object.isRequired,
+    options: PropTypes.array.isRequired,
 }
 
 const styledSurveyIndicatorLinear = withStyles(styles)(SurveyIndicatorLinear);
-export { styledSurveyIndicatorLinear as SurveyIndicatorLinear };
+const themedStyledSurveyIndicatorLinear = withTheme(styledSurveyIndicatorLinear);
+export { themedStyledSurveyIndicatorLinear as SurveyIndicatorLinear };

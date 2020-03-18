@@ -14,11 +14,11 @@ import { withStyles } from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
 import { styles } from './common';
 import { ExclusiveChoices } from './ExclusiveChoices';
-import { IntegerRange } from './IntegerRange';
+import { withMediaQuery } from '../../_helpers';
 
 // Survey component map
 const surveyMap = {
-    'integer_range': IntegerRange,
+    'integer_range': ExclusiveChoices,
     'exclusive_choices': ExclusiveChoices,
     'boolean': ExclusiveChoices,
 };
@@ -26,14 +26,16 @@ const surveyMap = {
 /**
  * Dynamically render survey elements.
  */
-function renderElement(element, classes) {
+function renderElement(element, classes, isMobile) {
     const elementType = element.element_type;
     if (elementType === 'text') {
         return <p className={classes.questionPadding} dangerouslySetInnerHTML={{__html: element.text}}></p>;
     } else if (elementType === 'question_group') {
         const SurveyComponent = surveyMap[element.question_group_type];
         if (!element.number && !element.text){
-            return <SurveyComponent model={element} />
+            return <SurveyComponent 
+                model={element}
+                isMobile={isMobile} />
         }
         return (
             <React.Fragment>
@@ -45,7 +47,9 @@ function renderElement(element, classes) {
                         element.number ? `<b>${element.number}</b>: ${element.text}` : element.text
                     }}>
                 </Typography>
-                <SurveyComponent model={element} />
+                <SurveyComponent
+                    model={element}
+                    isMobile={isMobile} />
             </React.Fragment>
         );
     } else {
@@ -59,7 +63,7 @@ class GenerateSurvey extends React.Component {
      * Renders the component based on various model conditions.
      */
     render() {
-        const { model, classes } = this.props;
+        const { model, classes, mediaQuery } = this.props;
         return (
             <Card>
                 <CardHeader 
@@ -73,7 +77,7 @@ class GenerateSurvey extends React.Component {
                     {model.elements.map((element, i) =>
                     <div key={i}>
                         <Divider />
-                        {renderElement(element, classes)}
+                        {renderElement(element, classes, mediaQuery)}
                     </div>
                     )}
                     <div className={`${classes.submitSurveyContainer} ${classes.rowFlexContainer}`}>
@@ -96,4 +100,5 @@ GenerateSurvey.propTypes = {
 };
 
 const styledGenerateSurvey = withStyles(styles)(GenerateSurvey);
-export { styledGenerateSurvey as GenerateSurvey };
+const queriedStyledGenerateSurvey = withMediaQuery('(max-width:1200px)')(styledGenerateSurvey);
+export { queriedStyledGenerateSurvey as GenerateSurvey };

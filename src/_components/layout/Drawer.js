@@ -11,6 +11,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import MenuIcon from '@material-ui/icons/Menu';
 import Icon from '@material-ui/core/Icon';
 import Divider from '@material-ui/core/Divider';
+import { useMediaQuery } from '@material-ui/core';
+import { connect } from 'react-redux';
+/* LOCAL IMPORTS */
+import { programLinks, mainLinks } from './common';
 
 const useStyles = makeStyles({
     list: {
@@ -22,37 +26,11 @@ const useStyles = makeStyles({
     },
 });
 
-const programLinks = [
-    {
-        label: 'My Profile',
-        url: '/program/profile',
-        icon: 'account_box'
-    },
-    {
-        label: 'Lab Values',
-        url: '/program/lab-values',
-        icon: 'folder_shared',
-    },
-    {
-        label: 'Surveys',
-        url: '/program/surveys',
-        icon: 'library_books',
-    },
-    {
-        label: 'Dietary Journal',
-        url: '/program/journal',
-        icon: 'menu_book',
-    },
-    {
-        label: 'Goal Progress',
-        url: '/program/progress',
-        icon: 'trending_up',
-    }
-];
-
-export function SideDrawer() {
+function SideDrawer(props) {
+    const isMobile = useMediaQuery('(max-width:992px)');
     const history = useHistory();
     const classes = useStyles();
+    const { loggedIn } = props.authentication;
     const [state, setState] = React.useState({ left: false, });
 
     const toggleDrawer = (side, open) => event => {
@@ -71,8 +49,9 @@ export function SideDrawer() {
             onKeyDown={toggleDrawer(side, false)}
         >
             <List>
-                <Divider />
-                {programLinks.map((link) => (
+                {loggedIn ?
+                <React.Fragment>
+                    {programLinks.map((link) => (
                     <ListItem 
                         button 
                         key={link.label}
@@ -82,8 +61,25 @@ export function SideDrawer() {
                         </ListItemIcon>
                         <ListItemText primary={link.label} />
                     </ListItem>
-                ))}
-                <Divider />
+                    ))}
+                    <Divider />
+                </React.Fragment> : null
+                }
+                {isMobile ?
+                <React.Fragment>
+                    {mainLinks.map((link) => (
+                    <ListItem 
+                        button 
+                        key={link.label}
+                        onClick={_ => history.push(link.url)}>
+                        <ListItemIcon>
+                            <Icon>{link.icon}</Icon>
+                        </ListItemIcon>
+                        <ListItemText primary={link.label} />
+                    </ListItem>
+                    ))} 
+                </React.Fragment> : null
+                }
             </List>
         </div>
     );
@@ -97,3 +93,13 @@ export function SideDrawer() {
         </div>
     );
 }
+
+function mapStateToProps(state) {
+    const { authentication } = state;
+    return {
+        authentication,
+    };
+}
+
+const connectedSideDrawer = connect(mapStateToProps)(SideDrawer);
+export { connectedSideDrawer as SideDrawer};
