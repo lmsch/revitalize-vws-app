@@ -68,7 +68,6 @@ class LabValueIndicatorLinear extends React.Component {
             </GraphSelector>
         );
     }
-
 }
 
 LabValueIndicatorLinear.propTypes = {
