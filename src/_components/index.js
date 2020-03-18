@@ -2,7 +2,6 @@ export * from './PrivateRoute';
 
 // Surveys
 export * from './survey/ExclusiveChoices';
-export * from './survey/IntegerRange';
 export * from './survey/GenerateSurvey';
 export * from './survey/AvailableSurveys';
 export * from './survey/SurveyHistory';

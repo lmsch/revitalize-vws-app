@@ -53,7 +53,7 @@ class GraphSelector extends React.Component {
                     }} />
                 <CardContent>
                     <div className={classes.selectorControlsContainer}>
-                        <FormControl>
+                        <FormControl className={classes.controlsMargin}>
                             <InputLabel>{this.props.selectMessage}</InputLabel>
                             <Select
                                 name="selector"
@@ -71,7 +71,7 @@ class GraphSelector extends React.Component {
                         <form noValidate>
                             <TextField 
                                 name="min_date"
-                                className={classes.timeRangeControls}
+                                className={classes.controlsMargin}
                                 label="Starting:"
                                 type="date"
                                 defaultValue={moment().subtract(1, 'month').format('YYYY-MM-DD')}
@@ -79,7 +79,7 @@ class GraphSelector extends React.Component {
                                 InputLabelProps={{shrink: true}} />
                              <TextField
                                 name="max_date"
-                                className={classes.timeRangeControls}
+                                className={classes.controlsMargin}
                                 label="Ending:"
                                 type="date"
                                 defaultValue={moment().format('YYYY-MM-DD')}

@@ -2,27 +2,10 @@
 import React from 'react';
 /* THIRD PARTY IMPORTS */
 import { withRouter } from 'react-router-dom';
-import { 
-    CircularProgress, 
-    withStyles 
-} from '@material-ui/core';
+import {  CircularProgress } from '@material-ui/core';
 /* LOCAL IMPORTS */
 import { AvailableSurveys, SurveyHistory, SurveyIndicatorLinear } from '../_components';
 import { apiCall } from '../_helpers';
-
-const styles = () => ({
-    surveyHistoryContainer: {
-        display: 'flex',
-        alignItems: 'flex-start',
-    },
-    surveyHistory: {
-        flex: '0 1 50%',
-    },
-    surveyHistoryGraph: {
-        flex: '1 0 50%',
-    },
-});
-
 
 class SurveysPage extends React.Component {
 
@@ -53,7 +36,6 @@ class SurveysPage extends React.Component {
     
     render() {
         const { availableSurveys, surveyHistory } = this.state;
-        const { classes } = this.props;
         if(!availableSurveys || !surveyHistory ) {
             return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
         }
@@ -62,22 +44,15 @@ class SurveysPage extends React.Component {
                 <AvailableSurveys 
                     availableSurveys={availableSurveys}
                     onSurveySelected={this.handleSurveySelected}/>
-                <div className={classes.surveyHistoryContainer}>
-                    <div className={`${classes.surveyHistory} inline-card-left`}>
-                        <SurveyHistory 
-                            surveyHistory={surveyHistory} />
-                    </div>
-                    <div className={classes.surveyHistoryGraph}>
-                        <SurveyIndicatorLinear 
-                            options={availableSurveys?.map(survey => survey.name)} 
-                            handleChange={this.handleGraphUpdate}/>
-                    </div>
-                </div>
+                <SurveyIndicatorLinear 
+                    handleChange={() => ''}
+                    options={availableSurveys?.map(survey => survey.name)} />
+                <SurveyHistory 
+                    surveyHistory={surveyHistory} />
             </React.Fragment>
         );
     }
 }
 
 const routedSurveysPage = withRouter(SurveysPage);
-const styledRoutedSurveysPage = withStyles(styles)(routedSurveysPage);
-export { styledRoutedSurveysPage as SurveysPage };
+export { routedSurveysPage as SurveysPage };

@@ -21,7 +21,7 @@ const styles = () => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginRight: '40px',
+        margin: '0px 40px 40px 0',
     },
     welcomeTitle: {
         marginBottom: '10px',
@@ -29,6 +29,7 @@ const styles = () => ({
     myInformationContainer: {
         display: 'flex',
         alignItems: 'flex-start',
+        flexWrap: 'wrap',
     },
     myInformation: {
         flex: '1 1 auto',
