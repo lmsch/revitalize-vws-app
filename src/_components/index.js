@@ -15,6 +15,9 @@ export * from './layout/Drawer';
 // Profile
 export * from './profile/MyInformation';
 
+// Error
+export * from './error/ErrorDisplay';
+
 // Graphs
 export * from './graphing/GraphSelector';
 export * from './graphing/SurveyIndicatorLinear';
