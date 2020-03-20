@@ -68,6 +68,8 @@ class SurveyHistory extends React.Component {
                                 <TableCell
                                     align="left">
                                     <Moment
+                                        utc
+                                        local
                                         format="LLL">
                                         {survey.time}
                                     </Moment>

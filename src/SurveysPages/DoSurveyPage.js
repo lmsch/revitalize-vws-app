@@ -38,7 +38,7 @@ class DoSurveyPage extends React.Component {
         _.forEach(errors, error => {
             messages.push(
                 <span>
-                    <b>Question {error.question_number}:</b> {error.user_message}
+                    <b>Question {error.question_number ? error.question_number : '(unnumbered)'}:</b> {error.user_message}
                 </span>
             );
         });
