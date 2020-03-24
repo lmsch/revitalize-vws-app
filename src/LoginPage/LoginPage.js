@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { withStyles } from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
-import { ErrorDisplay } from '../_components';
+import { NotifyDisplay } from '../_components';
 import { userActions } from '../_actions';
 import { renderTextField, requiredVal } from '../_helpers';
 
@@ -86,7 +86,7 @@ class LoginPage extends React.Component {
                 <DialogContent dividers>
                     <Container maxWidth="xs">
                         <div className={classes.loginContainer}>
-                            <ErrorDisplay errors={!loggedIn && error ? "Your username or password was incorrect." : ''} />
+                            <NotifyDisplay errors={!loggedIn && error ? "Your username or password was incorrect." : ''} />
                             <LoginForm 
                                 classes={classes}
                                 onSubmit={this.handleSubmit} />

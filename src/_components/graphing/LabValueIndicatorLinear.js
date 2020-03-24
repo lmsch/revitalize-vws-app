@@ -10,7 +10,6 @@ import {
     YAxis,
 } from 'recharts';
 import { withStyles } from '@material-ui/core';
-import * as moment from 'moment';
 /* LOCAL IMPORTS */
 import { GraphSelector } from './GraphSelector';
 import { styles } from './common';
@@ -26,38 +25,27 @@ const labValueFakeData = [
 
 class LabValueIndicatorLinear extends React.Component {
 
-    state = {
-        min_date: '',
-        max_date: '',
-        selector: '',
-    };
-
     handleChange = change => {
-        this.setState({...change});
-        if(this.props.handleChange) {
-            this.props.handleChange(change);
-        }
-    }
+        this.props.handleChange(change);
+    };
 
     render() {
         return (
             <GraphSelector
                 title="Lab Value Progress"
-                selectMessage="Select a Lab Value."
                 options={this.props.options}
                 handleChange={this.handleChange}>
-                <ResponsiveContainer width="70%" height={400}>
+                <ResponsiveContainer width="100%" height={400}>
                     <ScatterChart className={this.props.classes.graphMargin}>
                         <XAxis
                             dataKey="time"
                             domain={['auto', 'auto']}
                             name="Date"
-                            tickFormatter = {date => moment(date).format('YYYY-MM-DD')}
+                            tick={false}
                             type="string"/>
                         <YAxis
                             dataKey="indicator"
-                            name="Indicator"
-                            tick={false} />
+                            name="Indicator" />
                         <Scatter
                             data={labValueFakeData}
                             line={{ stroke: 'black' }}
@@ -72,7 +60,7 @@ class LabValueIndicatorLinear extends React.Component {
 
 LabValueIndicatorLinear.propTypes = {
     handleChange: PropTypes.func.isRequired,
-    options: PropTypes.object.isRequired,
+    options: PropTypes.array.isRequired,
 }
 
 const styledLabValueIndicatorLinear = withStyles(styles)(LabValueIndicatorLinear);

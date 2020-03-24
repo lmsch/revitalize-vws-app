@@ -22,7 +22,7 @@ const styles = () => ({
     },
 });
 
-class ErrorDisplay extends React.Component{
+class NotifyDisplay extends React.Component{
 
     determineTitle(errors, header) {
         if(header) {
@@ -45,11 +45,13 @@ class ErrorDisplay extends React.Component{
                 className={classes.root}
                 ref={props.errorsRef}>
                 <div className={classes.errorCardHeader}>
+                    {props.icon ?
                     <Icon 
                         fontSize="large" 
                         color="error">
                         error_outline
-                    </Icon>
+                    </Icon> : null
+                    }
                     <CardHeader 
                         title={this.determineTitle(props.errors, props.header)}
                         titleTypographyProps={{
@@ -70,5 +72,9 @@ class ErrorDisplay extends React.Component{
     }
 }
 
-const styledErrorDisplay = withStyles(styles)(ErrorDisplay);
-export { styledErrorDisplay as ErrorDisplay };
+NotifyDisplay.defaultProps = {
+    icon: true,
+}
+
+const styledNotifyDisplay = withStyles(styles)(NotifyDisplay);
+export { styledNotifyDisplay as NotifyDisplay };

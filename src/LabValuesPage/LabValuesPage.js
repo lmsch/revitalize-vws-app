@@ -1,15 +1,17 @@
 /* REACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */
-import { withStyles } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
+import * as moment from 'moment';
 /* LOCAL IMPORTS */
-import {LabValueIndicatorLinear} from "../_components/graphing/LabValueIndicatorLinear";
-
+import { apiCall } from '../_helpers';
+import { LabValueIndicatorLinear, LabValueHistory, NotifyDisplay } from '../_components';
 
 class LabValuesPage extends React.Component {
 
     state = {
-        availableLabs: null,
+        labValueHistory: null,
+        graphData: null,
     }
 
     //TODO: Make API Call
@@ -18,20 +20,32 @@ class LabValuesPage extends React.Component {
     }
 
     componentDidMount() {
-        /*apiCall('/available_surveys/', { method: 'GET'})
-            .then(response => this.setState({availableSurveys: response}));*/
-        this.setState({availableLabs: ["Lab Value 1", "Lab Value 2", "Lab Value 3", "Lab Value 4"]})
-
+        apiCall('/lab_values/', { method: 'GET' })
+            .then(response => {
+                this.setState({labValueHistory: response});
+                console.log(response);
+            });
     }
 
     render() {
-        const { availableLabs } = this.state;
-        const { classes } = this.props;
+        const { labValueHistory } = this.state;
+        if(!labValueHistory) {
+            return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
+        }
         return (
             <React.Fragment>
+                {labValueHistory?.length > 0 ?
+                <NotifyDisplay
+                    header="Most recent submitted lab value:"
+                    icon={false}
+                    errors={[`${labValueHistory[0].name} on ${moment.utc(labValueHistory[0].time).local().format('LLL')}`]} />
+                    : null
+                }
                 <LabValueIndicatorLinear
-                    options={availableLabs}
+                    options={[]}
                     handleChange={this.handleGraphUpdate}/>
+                <LabValueHistory 
+                    labValueHistory={[]} />
             </React.Fragment>
         );
     }

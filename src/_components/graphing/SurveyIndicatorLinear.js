@@ -13,40 +13,20 @@ import {
     withStyles, 
     withTheme 
 } from '@material-ui/core';
-import * as moment from 'moment';
 /* LOCAL IMPORTS */
 import { GraphSelector } from './GraphSelector';
 import { styles } from './common';
 
-//TODO: Use endpoints rather than fake data.
-const surveyFakeData = [
-    { indicator: 14, time: 1503617297689 },
-    { indicator: 15, time: 1503616962277 },
-    { indicator: 15, time: 1503616882654 },
-    { indicator: 20, time: 1503613184594 },
-    { indicator: 15, time: 1503611308914 },
-]
-
 class SurveyIndicatorLinear extends React.Component {
 
-    state = {
-        min_date: '',
-        max_date: '',
-        selector: '',
-    };
-
     handleChange = change => {
-        this.setState({...change});
-        if(this.props.handleChange) {
-            this.props.handleChange(change);
-        }
-    }
+        this.props.handleChange(change);
+    };
 
     render() {
         return (
             <GraphSelector 
                 title="Survey Progress"
-                selectMessage="Select a survey."
                 options={this.props.options}
                 handleChange={this.handleChange}>
                 <ResponsiveContainer width="100%" height={400}>      
@@ -55,13 +35,13 @@ class SurveyIndicatorLinear extends React.Component {
                             dataKey="time"
                             domain={['auto', 'auto']}
                             name="Date"
-                            tickFormatter = {date => moment(date).format('YYYY-MM-DD')}
+                            tick={false}
                             type="string"/>
                         <YAxis 
                             dataKey="indicator"
                             name="Indicator"/>
                         <Scatter 
-                            data={surveyFakeData} 
+                            data={this.props.data} 
                             line={{ stroke: 'black' }}
                             lineJointType="monotoneX"
                             lineType="joint"/>

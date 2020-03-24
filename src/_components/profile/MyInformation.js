@@ -76,8 +76,8 @@ class MyInformation extends React.Component {
     }
 
     handleExpandClick = () => {
-        this.setState({expanded: !this.state.expanded})
-    }
+        this.setState({expanded: !this.state.expanded});
+    };
 
     findProfileData(profile, common) {
         const data = [];
