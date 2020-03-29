@@ -23,19 +23,19 @@ class SurveysPage extends React.Component {
     }
 
     handleGraphUpdate = (change) => {
-        if(change.selector && change.min_date && change.max_date) {
-            //const range = JSON.stringify({min_date: change.min_date, max_date: change.max_date})
-            //apiCall(`/user_survey_indicators/${change.selector}/data/`, { method: 'GET', body: range })
+        if(Number(change.selector) > 0 && change.min_date && change.max_date) {
+            const range = JSON.stringify({min_date: change.min_date, max_date: change.max_date})
+            //apiCall(`/surveys/${change.selector}/user/`, { method: 'POST', body: range })
                 //.then(response => console.log(response));
         }
     }
 
     componentDidMount() {
-        apiCall('/available_surveys/', { method: 'GET'})
+        apiCall('/surveys/user/available/', { method: 'GET'})
             .then(response => this.setState({availableSurveys: response}));
-        apiCall('/survey_history/', { method: 'GET'})
+        apiCall('/surveys/user/', { method: 'GET'})
             .then(response => this.setState({surveyHistory: response}));
-        apiCall('/user_survey_indicators/', { method: 'GET' })
+        apiCall('/indicators/survey/user/', { method: 'GET' })
             .then(response => this.setState({userIndicators: response}));
     }
     
@@ -48,9 +48,9 @@ class SurveysPage extends React.Component {
             <React.Fragment>
                 {surveyHistory?.length > 0 ?
                 <NotifyDisplay
-                    header="Most recent submitted survey:"
+                    header="Most recent survey:"
                     icon={false}
-                    errors={[`${surveyHistory[0].name} on ${moment.utc(surveyHistory[0].time).local().format('LLL')}`]} />
+                    errors={[<span><b>{surveyHistory[0].name}</b> on <b>{moment.utc(surveyHistory[0].time).local().format('LLL')}</b></span>]} />
                     : null
                 }
                 <AvailableSurveys 

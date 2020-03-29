@@ -11,8 +11,12 @@ import {
     Card,
     CardHeader,
     CardContent,
+    Typography,
 } from "@material-ui/core";
 import * as moment from 'moment';
+/* LOCAL IMPORTS */
+import { useStyles } from './common';
+import { handleDateSort } from '../../_helpers';
 
 const labValueHistoryPreviewColumns = [
     {
@@ -31,16 +35,33 @@ const labValueHistoryPreviewColumns = [
 
 export function LabValueHistoryPreview(props) {
     const { labValueHistory } = props;
+    const classes = useStyles();
     return (
         <Card>
-            <CardHeader 
-                title="Recently Submitted Lab Values"
-                titleTypographyProps={{
-                    component: "h1",
-                    variant: "h4",
-                }} />
-            <Link to="/program/lab-values">See More</Link>
+            <div className={classes.rowFlexContainer}>
+                <CardHeader 
+                    title="Summary of Lab Values"
+                    titleTypographyProps={{
+                        component: "h1",
+                        variant: "h4",
+                    }} />
+                <Link 
+                    className={classes.seeMoreLink} 
+                    to="/program/lab-values">
+                    See More
+                    </Link>
+            </div>
             <CardContent>
+                <Typography 
+                    component="h2" 
+                    variant="h6">
+                    Physical Measurements
+                </Typography>
+                <Typography 
+                    component="h2" 
+                    variant="h6">
+                    Recent Lab Values
+                </Typography>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -54,7 +75,7 @@ export function LabValueHistoryPreview(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {labValueHistory?.slice(0, 3).map((lvalue, i)  => (
+                    {handleDateSort(labValueHistory, 'asc').slice(0, 3).map((lvalue, i)  => (
                         <TableRow
                             key={i}>
                             <TableCell

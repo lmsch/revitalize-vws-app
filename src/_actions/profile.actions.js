@@ -11,7 +11,7 @@ export const profileActions = {
 function getProfile() {
     return dispatch => {
         dispatch(request());
-        apiCall('/profile_retrieval/', {method: 'GET'})
+        apiCall('/profiles/user/', {method: 'GET'})
             .then(profile => dispatch(success(profile)))
             .catch(error => {
                 dispatch(failure(error));

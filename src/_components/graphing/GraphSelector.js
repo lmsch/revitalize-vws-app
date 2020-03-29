@@ -39,12 +39,19 @@ class GraphSelector extends React.Component {
     };
 
     componentDidMount() {
+        this.setInitialSelection();
+    }
+
+    componentDidUpdate() {
+        this.setInitialSelection();
+    }
+
+    setInitialSelection() {
         const { options } = this.props;
-        if (options?.length > 0) {
+        const { selector } = this.state;
+        if (options?.length > 0 && !selector) {
             this.setState({selector: String(options[0].id)}, this.callBack);
-        } else {
-            this.callBack();
-        }
+        }            
     }
 
     render() {

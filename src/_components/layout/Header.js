@@ -72,8 +72,8 @@ function ImageAvatars(props) {
     const [open, setOpen] = React.useState(false);
     const { classes, payload, loggedIn, dispatch, isMobile } = props;
 
-    if (!isMobile && loggedIn && payload?.length > 0) {
-        const profile = payload[0];
+    if (!isMobile && loggedIn && payload) {
+        const profile = payload;
         return (
             <React.Fragment>
                 <span>

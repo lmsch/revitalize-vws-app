@@ -24,6 +24,9 @@ class SurveyIndicatorLinear extends React.Component {
     };
 
     render() {
+        if(this.props.options?.length <= 0) {
+            return null;
+        }
         return (
             <GraphSelector 
                 title="Survey Progress"
@@ -55,7 +58,6 @@ class SurveyIndicatorLinear extends React.Component {
 
 SurveyIndicatorLinear.propTypes = {
     handleChange: PropTypes.func.isRequired,
-    options: PropTypes.array.isRequired,
 }
 
 const styledSurveyIndicatorLinear = withStyles(styles)(SurveyIndicatorLinear);

@@ -15,6 +15,8 @@ import {
     TablePagination,
 } from "@material-ui/core";
 import * as moment from 'moment';
+/* LOCAL IMPORTS */
+import { handleDateSort } from '../../_helpers';
 
 const labValueHistoryColumns = [
     {
@@ -52,25 +54,10 @@ class LabValueHistory extends React.Component{
         this.setState({dateOrder: dateOrder === 'asc' ? 'desc' : 'asc'});
     }
 
-    handleDateSort(labValueHistory) {
-        const { dateOrder } = this.state;
-        if(labValueHistory) {   
-            labValueHistory = labValueHistory.slice().sort((h1, h2) => {
-                return moment.utc(h1.time).diff(moment.utc(h2.time));
-            });
-            if(dateOrder === 'desc') {
-                labValueHistory.reverse();
-            }
-            return labValueHistory;
-        } else {
-            return [];
-        }
-    }
-
     render() {
         const { labValueHistory } = this.props;
         const { page, rowsPerPage, dateOrder } = this.state;
-        let soredLabValueHistory = this.handleDateSort(labValueHistory);
+        let soredLabValueHistory = handleDateSort(labValueHistory, dateOrder);
         if(rowsPerPage > 0) {
             soredLabValueHistory = soredLabValueHistory.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
         } 

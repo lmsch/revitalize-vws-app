@@ -8,7 +8,12 @@ import {
     withStyles,
 } from '@material-ui/core';
 /* LOCAL IMPORTS */
-import { MyInformation } from '../_components';
+import { 
+    MyInformation, 
+    LabValueHistoryPreview, 
+    SurveyHistoryPreview,
+} from '../_components';
+import { apiCall } from '../_helpers';
 
 const styles = () => ({
     largeAvatar: {
@@ -37,28 +42,45 @@ const styles = () => ({
 });
 
 class MyProfilePage extends React.Component {
+
+    state = {
+        labValueHistory: null,
+        surveyHistory: null,
+    }
+
+    componentDidMount() {
+        apiCall('/lab-values/user/', { method: 'GET' })
+            .then(response => this.setState({labValueHistory: response}));
+        apiCall('/surveys/user/', { method: 'GET'})
+            .then(response => this.setState({surveyHistory: response}));
+    }  
     
     render() {
         let { profile, classes } = this.props;
-        profile = profile.payload && profile.payload.length > 0 ? profile.payload[0] : {};
+        const { labValueHistory, surveyHistory } = this.state;
+        profile = profile.payload ? profile.payload : {};
         return (
-            <div className={classes.myInformationContainer}>
-                <div className={classes.avatarContainer}>
-                    <Typography
-                        className={classes.welcomeTitle}
-                        component="h1"
-                        variant="h6">
-                        {`Welcome, ${profile.first_name}!`} 
-                    </Typography>
-                    <Avatar 
-                        className={classes.largeAvatar}
-                        alt={`${profile.first_name} ${profile.last_name}`} 
-                        src={profile.profile_picture} />
+            <React.Fragment>
+                <div className={classes.myInformationContainer}>
+                    <div className={classes.avatarContainer}>
+                        <Typography
+                            className={classes.welcomeTitle}
+                            component="h1"
+                            variant="h6">
+                            {`Welcome, ${profile.first_name}!`} 
+                        </Typography>
+                        <Avatar 
+                            className={classes.largeAvatar}
+                            alt={`${profile.first_name} ${profile.last_name}`} 
+                            src={profile.profile_picture} />
+                    </div>
+                    <div className={classes.myInformation}>
+                        <MyInformation profile={profile} />
+                    </div>
                 </div>
-                <div className={classes.myInformation}>
-                    <MyInformation profile={profile} />
-                </div>
-            </div>
+                <LabValueHistoryPreview labValueHistory={labValueHistory} />
+                <SurveyHistoryPreview surveyHistory={surveyHistory} />
+            </React.Fragment>
         );
     }
 }

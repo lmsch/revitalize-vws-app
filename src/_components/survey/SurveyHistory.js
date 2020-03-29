@@ -15,6 +15,8 @@ import {
     TableSortLabel,
 } from "@material-ui/core";
 import * as moment from 'moment';
+/* LOCAL IMPORTS */
+import { handleDateSort } from '../../_helpers';
 
 const surveyHistoryColumns = [
     {
@@ -48,25 +50,10 @@ class SurveyHistory extends React.Component {
         this.setState({dateOrder: dateOrder === 'asc' ? 'desc' : 'asc'});
     }
 
-    handleDateSort(surveyHistory) {
-        const { dateOrder } = this.state;
-        if(surveyHistory) {   
-            surveyHistory = surveyHistory.slice().sort((h1, h2) => {
-                return moment.utc(h1.time).diff(moment.utc(h2.time));
-            });
-            if(dateOrder === 'desc') {
-                surveyHistory.reverse();
-            }
-            return surveyHistory;
-        } else {
-            return [];
-        }
-    }
-
     render() {
         const { surveyHistory } = this.props;
         const { page, rowsPerPage, dateOrder } = this.state;
-        let sortedSurveyHistory = this.handleDateSort(surveyHistory);
+        let sortedSurveyHistory = handleDateSort(surveyHistory, dateOrder);
         if(rowsPerPage > 0) {
             sortedSurveyHistory = sortedSurveyHistory.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
         } 

@@ -10,9 +10,13 @@ import {
     TableRow,
     TableCell,
     TableBody,
+    Typography,
  } from "@material-ui/core";
 import { Link } from 'react-router-dom';
 import * as moment from 'moment';
+/* LOCAL IMPORTS */
+import { useStyles } from './common';
+import { handleDateSort } from '../../_helpers';
 
 const surveyHistoryPreviewColumns = [
     {
@@ -27,16 +31,28 @@ const surveyHistoryPreviewColumns = [
 
 export function SurveyHistoryPreview(props) {
     const { surveyHistory } = props;
+    const classes = useStyles();
     return (
         <Card>
-            <CardHeader 
-                title="Recently Completed Surveys"
-                titleTypographyProps={{
-                    component: "h1",
-                    variant: "h4",
-                }} />
-            <Link to="/program/surveys">See More</Link>
+            <div className={classes.rowFlexContainer}>
+                <CardHeader 
+                    title="Summary of Surveys"
+                    titleTypographyProps={{
+                        component: "h1",
+                        variant: "h4",
+                    }} />
+                <Link 
+                    className={classes.seeMoreLink} 
+                    to="/program/surveys">
+                    See More
+                    </Link>
+            </div>
             <CardContent>
+                <Typography 
+                    component="h2" 
+                    variant="h6">
+                    Recent Surveys
+                </Typography>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -50,7 +66,7 @@ export function SurveyHistoryPreview(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {surveyHistory?.slice(0, 3).map((survey, i)  => (
+                    {handleDateSort(surveyHistory, 'asc').slice(0, 3).map((survey, i)  => (
                         <TableRow
                             key={i}>
                             <TableCell

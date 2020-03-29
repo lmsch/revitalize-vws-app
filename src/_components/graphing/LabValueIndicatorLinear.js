@@ -14,15 +14,6 @@ import { withStyles } from '@material-ui/core';
 import { GraphSelector } from './GraphSelector';
 import { styles } from './common';
 
-//TODO: Use endpoints rather than fake data.
-const labValueFakeData = [
-    { indicator: 14, time: 1503617297689 },
-    { indicator: 15, time: 1503616962277 },
-    { indicator: 15, time: 1503616882654 },
-    { indicator: 20, time: 1503613184594 },
-    { indicator: 15, time: 1503611308914 },
-]
-
 class LabValueIndicatorLinear extends React.Component {
 
     handleChange = change => {
@@ -30,6 +21,9 @@ class LabValueIndicatorLinear extends React.Component {
     };
 
     render() {
+        if(this.props.options?.length <= 0) {
+            return null;
+        }
         return (
             <GraphSelector
                 title="Lab Value Progress"
@@ -47,7 +41,7 @@ class LabValueIndicatorLinear extends React.Component {
                             dataKey="indicator"
                             name="Indicator" />
                         <Scatter
-                            data={labValueFakeData}
+                            data={this.props.data}
                             line={{ stroke: 'black' }}
                             lineJointType="monotoneX"
                             lineType="joint"/>
@@ -60,7 +54,6 @@ class LabValueIndicatorLinear extends React.Component {
 
 LabValueIndicatorLinear.propTypes = {
     handleChange: PropTypes.func.isRequired,
-    options: PropTypes.array.isRequired,
 }
 
 const styledLabValueIndicatorLinear = withStyles(styles)(LabValueIndicatorLinear);
