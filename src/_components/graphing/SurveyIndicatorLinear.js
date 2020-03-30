@@ -18,50 +18,46 @@ import * as moment from 'moment';
 import { GraphSelector } from './GraphSelector';
 import { styles } from './common';
 
-//TODO: Use endpoints rather than fake data.
-const surveyFakeData = [
-    { indicator: 14, time: 1503617297689 },
-    { indicator: 15, time: 1503616962277 },
-    { indicator: 15, time: 1503616882654 },
-    { indicator: 20, time: 1503613184594 },
-    { indicator: 15, time: 1503611308914 },
-]
-
 class SurveyIndicatorLinear extends React.Component {
 
-    state = {
-        min_date: '',
-        max_date: '',
-        selector: '',
+    handleChange = change => {
+        this.props.handleChange(change);
     };
 
-    handleChange = change => {
-        this.setState({...change});
-        if(this.props.handleChange) {
-            this.props.handleChange(change);
-        }
-    }
-
     render() {
+        const { options, data, classes } = this.props;
+        if(!options || options.length <= 0) {
+            return null;
+        }
+        if(!data || data.length <= 1) {
+            return (
+                <GraphSelector 
+                    title="Survey Progress"
+                    options={options}
+                    handleChange={this.handleChange}>
+                    <div className={classes.noDataMessage}><b>No data to display.</b></div>
+                </GraphSelector>
+            );
+        }
         return (
             <GraphSelector 
                 title="Survey Progress"
-                selectMessage="Select a survey."
-                options={this.props.options}
+                options={options}
                 handleChange={this.handleChange}>
                 <ResponsiveContainer width="100%" height={400}>      
-                    <ScatterChart className={this.props.classes.graphMargin}>
-                        <XAxis
-                            dataKey="time"
-                            domain={['auto', 'auto']}
-                            name="Date"
-                            tickFormatter = {date => moment(date).format('YYYY-MM-DD')}
-                            type="string"/>
+                    <ScatterChart className={classes.graphMargin}>
                         <YAxis 
-                            dataKey="indicator"
-                            name="Indicator"/>
+                            dataKey={'value'}
+                            name="Indicator"
+                            type="number"/>
+                        <XAxis
+                            domain = {['auto', 'auto']}
+                            dataKey={point => moment.utc(point.time).unix()}
+                            tick={false}
+                            name="Time"
+                            type="number" />
                         <Scatter 
-                            data={surveyFakeData} 
+                            data={data} 
                             line={{ stroke: 'black' }}
                             lineJointType="monotoneX"
                             lineType="joint"/>
@@ -75,7 +71,6 @@ class SurveyIndicatorLinear extends React.Component {
 
 SurveyIndicatorLinear.propTypes = {
     handleChange: PropTypes.func.isRequired,
-    options: PropTypes.array.isRequired,
 }
 
 const styledSurveyIndicatorLinear = withStyles(styles)(SurveyIndicatorLinear);

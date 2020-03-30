@@ -2,10 +2,14 @@
 import React from 'react';
 /* THIRD PARTY IMPORTS */
 import { withRouter } from 'react-router-dom';
-import { CircularProgress } from '@material-ui/core';
+import { 
+    CircularProgress, 
+    Button, 
+} from '@material-ui/core';
 import * as _ from 'lodash';
+import { withSnackbar } from 'notistack';
 /* LOCAL IMPORTS */
-import { GenerateSurvey, ErrorDisplay } from '../_components';
+import { GenerateSurvey, NotifyDisplay } from '../_components';
 import { apiCall } from '../_helpers';
 
 class DoSurveyPage extends React.Component {
@@ -26,11 +30,13 @@ class DoSurveyPage extends React.Component {
         const model = JSON.stringify(this.state.model);
         const { surveyId  } = this.props.match.params;
         apiCall(`/surveys/${surveyId}/submit/`, { method: 'POST', body: model }, false)
-            .then(_ => this.props.history.push('/program/surveys'))
-            .catch(error => {
-                this.setState({errors: error.data.errors, spinner: false});
-                this.errorsRef.current.scrollIntoView();
-            });
+            .then(_ => {
+                this.props.enqueueSnackbar('Survey submitted successfully!', {
+                    action: key => <Button style={{color: 'white'}} onClick={() => this.props.closeSnackbar(key)}>Dismiss</Button>,
+                });
+                this.props.history.push('/program/surveys')
+            })
+            .catch(error => this.setState({errors: error.data.errors, spinner: false}, () => this.errorsRef.current.scrollIntoView()));
     };
 
     generateErrorMessages(errors) {
@@ -58,7 +64,7 @@ class DoSurveyPage extends React.Component {
         }
         return (
             <React.Fragment>
-                <ErrorDisplay 
+                <NotifyDisplay 
                     header="Submission Error" 
                     errors={this.generateErrorMessages(this.state.errors)}
                     errorsRef={this.errorsRef} />
@@ -71,4 +77,5 @@ class DoSurveyPage extends React.Component {
 }
 
 const routedDoSurveyPage = withRouter(DoSurveyPage);
-export { routedDoSurveyPage as DoSurveyPage };
+const snackedRoutedDoSurveyPage = withSnackbar(routedDoSurveyPage);
+export { snackedRoutedDoSurveyPage as DoSurveyPage };

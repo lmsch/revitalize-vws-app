@@ -11,17 +11,21 @@ import {
     Card,
     CardHeader,
     CardContent,
-    TablePagination,
     TableSortLabel,
+    TablePagination,
 } from "@material-ui/core";
 import * as moment from 'moment';
 /* LOCAL IMPORTS */
 import { handleDateSort } from '../../_helpers';
 
-const surveyHistoryColumns = [
+const labValueHistoryColumns = [
     {
         id: 'name',
         label: 'Name',
+    },
+    {
+        id: 'value',
+        label: 'Value',
     },
     {
         id: 'submission_date',
@@ -29,8 +33,8 @@ const surveyHistoryColumns = [
     },
 ];
 
-class SurveyHistory extends React.Component {
-
+class LabValueHistory extends React.Component{
+    
     state = {
         page: 0,
         rowsPerPage: 5,
@@ -51,17 +55,17 @@ class SurveyHistory extends React.Component {
     }
 
     render() {
-        const { surveyHistory } = this.props;
+        const { labValueHistory } = this.props;
         const { page, rowsPerPage, dateOrder } = this.state;
-        let sortedSurveyHistory = handleDateSort(surveyHistory, dateOrder);
+        let soredLabValueHistory = handleDateSort(labValueHistory, dateOrder);
         if(rowsPerPage > 0) {
-            sortedSurveyHistory = sortedSurveyHistory.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+            soredLabValueHistory = soredLabValueHistory.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
         } 
-        const emptyRows = rowsPerPage - Math.min(rowsPerPage, surveyHistory.length - page * rowsPerPage);
+        const emptyRows = rowsPerPage - Math.min(rowsPerPage, labValueHistory.length - page * rowsPerPage);
         return (
             <Card>
                 <CardHeader 
-                    title="Survey History"
+                    title="Lab Value History"
                     titleTypographyProps={{
                         component: "h1",
                         variant: "h4",
@@ -70,7 +74,7 @@ class SurveyHistory extends React.Component {
                     <Table>
                         <TableHead>
                             <TableRow>
-                            {surveyHistoryColumns.map(column => (
+                            {labValueHistoryColumns.map(column => (
                                 <TableCell
                                     key={column.id}
                                     align="left">
@@ -87,16 +91,20 @@ class SurveyHistory extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        {sortedSurveyHistory.map((survey, i)  => (
+                        {soredLabValueHistory.map((lvalue, i)  => (
                             <TableRow
                                 key={i}>
                                 <TableCell
                                     align="left">
-                                    {survey.name}
+                                    {lvalue.name}
                                 </TableCell>
                                 <TableCell
                                     align="left">
-                                    {moment.utc(survey.time).local().format('LLL')}
+                                    {lvalue.value}
+                                </TableCell>
+                                <TableCell
+                                    align="left">
+                                    {moment.utc(lvalue.time).local().format('LLL')}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -110,7 +118,7 @@ class SurveyHistory extends React.Component {
                     <TablePagination
                         component="div"
                         rowsPerPageOptions={[5, 10, 25]}
-                        count={surveyHistory?.length}
+                        count={labValueHistory?.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onChangePage={this.handleChangePage}
@@ -121,7 +129,8 @@ class SurveyHistory extends React.Component {
     }
 }
 
-SurveyHistory.propTypes = {
-    surveyHistory: PropTypes.array.isRequired,
+LabValueHistory.propTypes = {
+    labValueHistory: PropTypes.array.isRequired,
 };
-export { SurveyHistory };
+
+export { LabValueHistory };

@@ -11,6 +11,10 @@ export const styles = theme => ({
         },
         graphMargin: {
             marginTop: '20px',
-        }
+        },
+        noDataMessage: {
+            marginTop: '20px',
+            paddingLeft: '10px',
+        },
     }
 );

@@ -76,8 +76,8 @@ class MyInformation extends React.Component {
     }
 
     handleExpandClick = () => {
-        this.setState({expanded: !this.state.expanded})
-    }
+        this.setState({expanded: !this.state.expanded});
+    };
 
     findProfileData(profile, common) {
         const data = [];
@@ -101,7 +101,7 @@ class MyInformation extends React.Component {
         return (
             <Card>
                 <CardHeader 
-                    title="My Information"
+                    title="Information"
                     titleTypographyProps={{
                         component: "h1",
                         variant: "h4",

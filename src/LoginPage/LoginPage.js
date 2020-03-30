@@ -9,12 +9,12 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
+    withStyles,
 } from '@material-ui/core';
-import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { withStyles } from "@material-ui/core/styles";
+import { withSnackbar } from 'notistack';
+import { connect } from 'react-redux';
 /* LOCAL IMPORTS */
-import { ErrorDisplay } from '../_components';
 import { userActions } from '../_actions';
 import { renderTextField, requiredVal } from '../_helpers';
 
@@ -68,11 +68,21 @@ LoginForm = reduxForm({
 class LoginPage extends React.Component {
 
     handleSubmit = values => {
-        this.props.dispatch(userActions.login(values.username, values.password, this.props.handleSubmit));
+        this.props.dispatch(userActions.login(values.username, values.password, this.onLoginAttempt));
+    }
+
+    onLoginAttempt = result => {
+        if(result === 'Unauthorized') {
+            this.props.enqueueSnackbar('Your username or password was incorrect.', {
+                variant: 'error',
+                action: key => <Button style={{color: 'white'}} onClick={() => this.props.closeSnackbar(key)}>Dismiss</Button>,
+            });
+        }
+        this.props.onLoginAttempt(result);
     }
 
     render() {
-        const { classes, open, handleClose, authentication: { loggedIn, error }} = this.props;
+        const { classes, open, handleClose } = this.props;
         return (
             <Dialog
                 open={open} 
@@ -86,7 +96,6 @@ class LoginPage extends React.Component {
                 <DialogContent dividers>
                     <Container maxWidth="xs">
                         <div className={classes.loginContainer}>
-                            <ErrorDisplay errors={!loggedIn && error ? "Your username or password was incorrect." : ''} />
                             <LoginForm 
                                 classes={classes}
                                 onSubmit={this.handleSubmit} />
@@ -100,17 +109,12 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
     open: PropTypes.bool.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
+    onLoginAttempt: PropTypes.func.isRequired,
     handleClose: PropTypes.func.isRequired,
 }
 
-function mapStateToProps(state) {
-    const { authentication } = state;
-    return {
-        authentication,
-    };
-}
 
 const styledLoginPage = withStyles(styles)(LoginPage);
-const connectedStyledLoginPage = connect(mapStateToProps)(styledLoginPage);
-export { connectedStyledLoginPage as LoginPage };
+const snackedStyledLoginPage = withSnackbar(styledLoginPage);
+const connectedSnackedStyledLoginPage = connect(null)(snackedStyledLoginPage);
+export { connectedSnackedStyledLoginPage as LoginPage };

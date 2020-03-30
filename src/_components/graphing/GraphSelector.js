@@ -19,26 +19,39 @@ import { styles } from './common';
 class GraphSelector extends React.Component {
 
     state = {
-        min_date: '',
-        max_date: '',
+        min_date: moment().subtract(1, 'month').format('YYYY-MM-DD'),
+        max_date: moment().format('YYYY-MM-DD'),
         selector: '',
     };
 
-    handleChange = event => {
-        this.setState({[event.target.name]: event.target.value});
+    callBack = () => {
         if(this.props.handleChange) {
-            this.props.handleChange(this.state);
+            this.props.handleChange({
+                min_date: moment.utc(this.state.min_date).startOf('day').format(),
+                max_date: moment.utc(this.state.max_date).endOf('day').format(),
+                selector: this.state.selector,
+            });
         }
+    }
+
+    handleChange = event => {
+        this.setState({[event.target.name]: event.target.value}, this.callBack);
     };
 
     componentDidMount() {
+        this.setInitialSelection();
+    }
+
+    componentDidUpdate() {
+        this.setInitialSelection();
+    }
+
+    setInitialSelection() {
         const { options } = this.props;
-        if (options?.length > 0) {
-            this.setState({selector: options[0]});
-        }
-        if(this.props.handleChange) {
-            this.props.handleChange(this.state);
-        }
+        const { selector } = this.state;
+        if (options?.length > 0 && !selector) {
+            this.setState({selector: String(options[0].id)}, this.callBack);
+        }            
     }
 
     render() {
@@ -61,9 +74,9 @@ class GraphSelector extends React.Component {
                                 onChange={this.handleChange}>
                                 {options?.map(option => 
                                 <MenuItem 
-                                    key={option} 
-                                    value={option}>
-                                    {option}
+                                    key={option.id} 
+                                    value={option.id}>
+                                    {option.name}
                                 </MenuItem>
                                 )}
                             </Select>
@@ -74,7 +87,7 @@ class GraphSelector extends React.Component {
                                 className={classes.controlsMargin}
                                 label="Starting:"
                                 type="date"
-                                defaultValue={moment().subtract(1, 'month').format('YYYY-MM-DD')}
+                                defaultValue={this.state.min_date}
                                 onChange={this.handleChange}
                                 InputLabelProps={{shrink: true}} />
                              <TextField
@@ -82,7 +95,7 @@ class GraphSelector extends React.Component {
                                 className={classes.controlsMargin}
                                 label="Ending:"
                                 type="date"
-                                defaultValue={moment().format('YYYY-MM-DD')}
+                                defaultValue={this.state.max_date}
                                 onChange={this.handleChange}
                                 InputLabelProps={{shrink: true}} />
                         </form>

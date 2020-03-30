@@ -23,14 +23,13 @@ class ExclusiveChoices extends React.Component {
     constructor(props) {
         super(props);
         this.state = setupInitialState(props.model);
-        console.log(this.state);
     }
 
     /**
      * Sets state and updates model with new selection.
      */
     handleChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({[e.target.name]: e.target.value});
         this.props.model.questions[e.target.name].response = e.target.value;
     };
 

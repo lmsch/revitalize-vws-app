@@ -1,6 +1,6 @@
 export const programLinks = [
     {
-        label: 'My Profile',
+        label: 'Profile',
         url: '/program/profile',
         icon: 'account_box'
     },

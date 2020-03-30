@@ -3,8 +3,9 @@ import React from 'react';
 /* THIRD PARTY IMPORTS */
 import { withRouter } from 'react-router-dom';
 import {  CircularProgress } from '@material-ui/core';
+import * as moment from 'moment';
 /* LOCAL IMPORTS */
-import { AvailableSurveys, SurveyHistory, SurveyIndicatorLinear } from '../_components';
+import { AvailableSurveys, SurveyHistory, SurveyIndicatorLinear, NotifyDisplay } from '../_components';
 import { apiCall } from '../_helpers';
 
 class SurveysPage extends React.Component {
@@ -12,6 +13,7 @@ class SurveysPage extends React.Component {
     state = {
         availableSurveys: null,
         surveyHistory: null,
+        userIndicators: null,
         graphData: null,
     }
 
@@ -20,33 +22,44 @@ class SurveysPage extends React.Component {
         this.props.history.push(`${path}/${surveyId}`);
     }
 
-    //TODO: Make API Call
     handleGraphUpdate = (change) => {
-        console.log(change);
+        if(Number(change.selector) > 0 && change.min_date && change.max_date) {
+            const range = JSON.stringify({min_date: change.min_date, max_date: change.max_date})
+            apiCall(`/survey-values/${change.selector}/user/`, { method: 'POST', body: range })
+                .then(response => this.setState({graphData: response}));
+        }
     }
 
     componentDidMount() {
-        apiCall('/available_surveys/', { method: 'GET'})
+        apiCall('/surveys/user/available/', { method: 'GET'})
             .then(response => this.setState({availableSurveys: response}));
-        // TODO: Remove reverse and allow sorting in history.
-        apiCall('/survey_history/', { method: 'GET'})
-            .then(response => this.setState({surveyHistory: response.reverse()}));
-            
+        apiCall('/surveys/user/', { method: 'GET'})
+            .then(response => this.setState({surveyHistory: response}));
+        apiCall('/indicators/survey/user/', { method: 'GET' })
+            .then(response => this.setState({userIndicators: response}));
     }
     
     render() {
-        const { availableSurveys, surveyHistory } = this.state;
-        if(!availableSurveys || !surveyHistory ) {
+        const { availableSurveys, surveyHistory, userIndicators, graphData } = this.state;
+        if(!availableSurveys || !surveyHistory || !userIndicators) {
             return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
         }
         return (
             <React.Fragment>
+                {surveyHistory?.length > 0 ?
+                <NotifyDisplay
+                    header="Most recent survey:"
+                    icon={false}
+                    errors={[<span><b>{surveyHistory[0].name}</b> on <b>{moment.utc(surveyHistory[0].time).local().format('LLL')}</b></span>]} />
+                    : null
+                }
                 <AvailableSurveys 
                     availableSurveys={availableSurveys}
                     onSurveySelected={this.handleSurveySelected}/>
                 <SurveyIndicatorLinear 
-                    handleChange={() => ''}
-                    options={availableSurveys?.map(survey => survey.name)} />
+                    handleChange={this.handleGraphUpdate}
+                    data={graphData}
+                    options={userIndicators?.map(indicator => ({name: indicator.name, id: indicator.id}))} />
                 <SurveyHistory 
                     surveyHistory={surveyHistory} />
             </React.Fragment>

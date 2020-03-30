@@ -2,16 +2,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom'
 /* THIRD PARTY IMPORTS */
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import MenuIcon from '@material-ui/icons/Menu';
-import Icon from '@material-ui/core/Icon';
-import Divider from '@material-ui/core/Divider';
-import { useMediaQuery } from '@material-ui/core';
+import { 
+    useMediaQuery,
+    makeStyles,
+    Drawer,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemIcon,
+    Icon,
+    Divider,
+    ListSubheader
+} from '@material-ui/core';
 import { connect } from 'react-redux';
 /* LOCAL IMPORTS */
 import { programLinks, mainLinks } from './common';
@@ -49,8 +52,32 @@ function SideDrawer(props) {
             onKeyDown={toggleDrawer(side, false)}
         >
             <List>
+                {isMobile ?
+                <React.Fragment>
+                    <ListSubheader>
+                        REVITALIZE
+                    </ListSubheader>
+                    <Divider />
+                    {mainLinks.map((link) => (
+                    <ListItem 
+                        button 
+                        key={link.label}
+                        onClick={_ => history.push(link.url)}>
+                        <ListItemIcon>
+                            <Icon>chevron_right</Icon>
+                        </ListItemIcon>
+                        <ListItemText primary={link.label} />
+                    </ListItem>
+                    ))} 
+                    <Divider />
+                </React.Fragment> : null
+                }
                 {loggedIn ?
                 <React.Fragment>
+                    <ListSubheader>
+                        Your Program
+                    </ListSubheader>
+                    <Divider />
                     {programLinks.map((link) => (
                     <ListItem 
                         button 
@@ -63,21 +90,6 @@ function SideDrawer(props) {
                     </ListItem>
                     ))}
                     <Divider />
-                </React.Fragment> : null
-                }
-                {isMobile ?
-                <React.Fragment>
-                    {mainLinks.map((link) => (
-                    <ListItem 
-                        button 
-                        key={link.label}
-                        onClick={_ => history.push(link.url)}>
-                        <ListItemIcon>
-                            <Icon>{link.icon}</Icon>
-                        </ListItemIcon>
-                        <ListItemText primary={link.label} />
-                    </ListItem>
-                    ))} 
                 </React.Fragment> : null
                 }
             </List>

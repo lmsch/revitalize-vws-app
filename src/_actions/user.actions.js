@@ -18,13 +18,16 @@ function login(username, password, callback = null) {
                 user => { 
                     dispatch(success(user));
                     if (callback) {
-                        callback();
+                        callback('Success');
                     }
                     history.push('/program/profile');
                 },
                 error => {
                     dispatch(failure(error));
                     dispatch(alertActions.error(error));
+                    if (callback) {
+                        callback(error);
+                    }
                 }
             );
     };
