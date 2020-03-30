@@ -11,5 +11,8 @@ export const useStyles = makeStyles({
     },
     seeMoreLink: {
         padding: '16px',
-    }
+    },
+    noDataMessage: {
+        marginTop: '20px',
+    },
 });

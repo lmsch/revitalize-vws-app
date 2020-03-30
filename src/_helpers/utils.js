@@ -1,7 +1,7 @@
 /* REACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useMediaQuery } from '@material-ui/core';
 import * as moment from 'moment';
 
 export const withMediaQuery = (...args) => Component => props => {
@@ -12,7 +12,7 @@ export const withMediaQuery = (...args) => Component => props => {
 export function handleDateSort(history, dateOrder) {
   if(history) {   
       history = history.slice().sort((h1, h2) => {
-          return moment.utc(h1.time).diff(moment.utc(h2.time));
+          return moment.utc(h1.time).diff(moment.utc(h2.time), 'minutes');
       });
       if(dateOrder === 'desc') {
           history.reverse();
@@ -22,3 +22,5 @@ export function handleDateSort(history, dateOrder) {
       return [];
   }
 }
+
+

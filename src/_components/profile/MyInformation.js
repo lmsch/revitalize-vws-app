@@ -101,7 +101,7 @@ class MyInformation extends React.Component {
         return (
             <Card>
                 <CardHeader 
-                    title="My Information"
+                    title="Information"
                     titleTypographyProps={{
                         component: "h1",
                         variant: "h4",

@@ -72,6 +72,12 @@ function ImageAvatars(props) {
     const [open, setOpen] = React.useState(false);
     const { classes, payload, loggedIn, dispatch, isMobile } = props;
 
+    const onLoginAttempt = result => {
+        if(result === 'Success') {
+            setOpen(false);
+        }
+    }
+
     if (!isMobile && loggedIn && payload) {
         const profile = payload;
         return (
@@ -103,7 +109,7 @@ function ImageAvatars(props) {
                 </Button>
                 <LoginPage
                     open={open}
-                    handleSubmit={_ => setOpen(false)}
+                    onLoginAttempt={onLoginAttempt}
                     handleClose={_ => setOpen(false)} />
             </div>
         );

@@ -6,6 +6,7 @@ import {
     Typography,
     Avatar,
     withStyles,
+    CircularProgress,
 } from '@material-ui/core';
 /* LOCAL IMPORTS */
 import { 
@@ -46,19 +47,28 @@ class MyProfilePage extends React.Component {
     state = {
         labValueHistory: null,
         surveyHistory: null,
-    }
+        height: null,
+        weight: null,
+    };
 
     componentDidMount() {
         apiCall('/lab-values/user/', { method: 'GET' })
             .then(response => this.setState({labValueHistory: response}));
         apiCall('/surveys/user/', { method: 'GET'})
             .then(response => this.setState({surveyHistory: response}));
+        apiCall('/indicators/lab-value/1/user/recent/', { method: 'GET' })
+            .then(response => console.log(response));
+        apiCall('/indicators/lab-value/2/user/recent/', { method: 'GET' })
+            .then(response => this.setState({height: response}));
     }  
     
     render() {
         let { profile, classes } = this.props;
         const { labValueHistory, surveyHistory } = this.state;
-        profile = profile.payload ? profile.payload : {};
+        profile = profile.payload ? profile.payload : {}
+        if(!labValueHistory || !surveyHistory) {
+            return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
+        }
         return (
             <React.Fragment>
                 <div className={classes.myInformationContainer}>

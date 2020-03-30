@@ -23,10 +23,11 @@ class SurveysPage extends React.Component {
     }
 
     handleGraphUpdate = (change) => {
+        console.log(change);
         if(Number(change.selector) > 0 && change.min_date && change.max_date) {
             const range = JSON.stringify({min_date: change.min_date, max_date: change.max_date})
-            //apiCall(`/surveys/${change.selector}/user/`, { method: 'POST', body: range })
-                //.then(response => console.log(response));
+            apiCall(`/survey-values/${change.selector}/user/`, { method: 'POST', body: range })
+                .then(response => console.log(response));
         }
     }
 

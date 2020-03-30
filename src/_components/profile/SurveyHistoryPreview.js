@@ -53,6 +53,9 @@ export function SurveyHistoryPreview(props) {
                     variant="h6">
                     Recent Surveys
                 </Typography>
+                { !surveyHistory || surveyHistory.length <= 0 ?
+                <div className={classes.noDataMessage}><b>No data to display.</b></div>
+                :
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -81,6 +84,7 @@ export function SurveyHistoryPreview(props) {
                         ))}
                     </TableBody>
                 </Table>
+                }
             </CardContent>
         </Card>
     );

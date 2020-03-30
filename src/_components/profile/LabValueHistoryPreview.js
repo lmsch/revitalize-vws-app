@@ -55,13 +55,16 @@ export function LabValueHistoryPreview(props) {
                 <Typography 
                     component="h2" 
                     variant="h6">
-                    Physical Measurements
+                    Current Physical Measurements
                 </Typography>
                 <Typography 
                     component="h2" 
                     variant="h6">
                     Recent Lab Values
                 </Typography>
+                { !labValueHistory || labValueHistory.length <= 0 ?
+                <div className={classes.noDataMessage}><b>No data to display.</b></div>
+                :
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -94,6 +97,7 @@ export function LabValueHistoryPreview(props) {
                         ))}
                     </TableBody>
                 </Table>
+                }
             </CardContent>
         </Card>
     );
