@@ -27,8 +27,8 @@ class GraphSelector extends React.Component {
     callBack = () => {
         if(this.props.handleChange) {
             this.props.handleChange({
-                min_date: moment.utc(this.state.min_date).format(),
-                max_date: moment.utc(this.state.max_date).format(),
+                min_date: moment.utc(this.state.min_date).startOf('day').format(),
+                max_date: moment.utc(this.state.max_date).endOf('day').format(),
                 selector: this.state.selector,
             });
         }

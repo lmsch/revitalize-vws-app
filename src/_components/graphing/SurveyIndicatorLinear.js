@@ -13,6 +13,7 @@ import {
     withStyles, 
     withTheme 
 } from '@material-ui/core';
+import * as moment from 'moment';
 /* LOCAL IMPORTS */
 import { GraphSelector } from './GraphSelector';
 import { styles } from './common';
@@ -45,15 +46,16 @@ class SurveyIndicatorLinear extends React.Component {
                 handleChange={this.handleChange}>
                 <ResponsiveContainer width="100%" height={400}>      
                     <ScatterChart className={classes.graphMargin}>
-                        <XAxis
-                            dataKey="time"
-                            domain={['auto', 'auto']}
-                            name="Date"
-                            tick={false}
-                            type="string"/>
                         <YAxis 
-                            dataKey="indicator"
-                            name="Indicator"/>
+                            dataKey={'value'}
+                            name="Indicator"
+                            type="number"/>
+                        <XAxis
+                            domain = {['auto', 'auto']}
+                            dataKey={point => moment.utc(point.time).unix()}
+                            tick={false}
+                            name="Time"
+                            type="number" />
                         <Scatter 
                             data={data} 
                             line={{ stroke: 'black' }}

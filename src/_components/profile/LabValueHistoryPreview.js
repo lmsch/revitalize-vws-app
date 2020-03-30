@@ -34,11 +34,11 @@ const labValueHistoryPreviewColumns = [
 ]
 
 export function LabValueHistoryPreview(props) {
-    const { labValueHistory } = props;
+    const { labValueHistory, height, weight } = props;
     const classes = useStyles();
     return (
         <Card>
-            <div className={classes.rowFlexContainer}>
+            <div className={classes.linkContainer}>
                 <CardHeader 
                     title="Summary of Lab Values"
                     titleTypographyProps={{
@@ -49,7 +49,7 @@ export function LabValueHistoryPreview(props) {
                     className={classes.seeMoreLink} 
                     to="/program/lab-values">
                     See More
-                    </Link>
+                </Link>
             </div>
             <CardContent>
                 <Typography 
@@ -57,6 +57,10 @@ export function LabValueHistoryPreview(props) {
                     variant="h6">
                     Current Physical Measurements
                 </Typography>
+                <div className={classes.physicalMeasurementContainer}>
+                    <label className={classes.physicalMeasurementChild}><b>Height:</b> {height ? height : 'N/A'}</label>
+                    <label className={classes.physicalMeasurementChild}><b>Weight:</b> {weight ? weight: 'N/A'}</label>
+                </div>
                 <Typography 
                     component="h2" 
                     variant="h6">

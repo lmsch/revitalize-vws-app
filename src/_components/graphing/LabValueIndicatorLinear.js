@@ -10,6 +10,7 @@ import {
     YAxis,
 } from 'recharts';
 import { withStyles } from '@material-ui/core';
+import * as moment from 'moment';
 /* LOCAL IMPORTS */
 import { GraphSelector } from './GraphSelector';
 import { styles } from './common';
@@ -42,15 +43,16 @@ class LabValueIndicatorLinear extends React.Component {
                 handleChange={this.handleChange}>
                 <ResponsiveContainer width="100%" height={400}>
                     <ScatterChart className={classes.graphMargin}>
+                        <YAxis 
+                            dataKey={'value'}
+                            name="Indicator"
+                            type="number"/>
                         <XAxis
-                            dataKey="time"
-                            domain={['auto', 'auto']}
-                            name="Date"
+                            domain = {['auto', 'auto']}
+                            dataKey={point => moment.utc(point.time).unix()}
                             tick={false}
-                            type="string"/>
-                        <YAxis
-                            dataKey="indicator"
-                            name="Indicator" />
+                            name="Time"
+                            type="number" />
                         <Scatter
                             data={data}
                             line={{ stroke: 'black' }}

@@ -16,11 +16,10 @@ class LabValuesPage extends React.Component {
     }
 
     handleGraphUpdate = (change) => {
-        console.log(change);
         if(Number(change.selector) > 0 && change.min_date && change.max_date) {
             const range = JSON.stringify({min_date: change.min_date, max_date: change.max_date})
             apiCall(`/lab-values/${change.selector}/user/`, { method: 'POST', body: range })
-                .then(response => console.log(response));
+                .then(response => this.setState({graphData: response}));
         }
     }
 
@@ -33,7 +32,7 @@ class LabValuesPage extends React.Component {
 
     render() {
         const { labValueHistory, labValueIndicators, graphData } = this.state;
-        if(!labValueHistory) {
+        if(!labValueHistory || !labValueIndicators) {
             return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
         }
         return (
@@ -47,6 +46,7 @@ class LabValuesPage extends React.Component {
                 }
                 <LabValueIndicatorLinear
                     options={labValueIndicators}
+                    data={graphData}
                     handleChange={this.handleGraphUpdate}/>
                 <LabValueHistory 
                     labValueHistory={labValueHistory} />

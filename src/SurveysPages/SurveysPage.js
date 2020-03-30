@@ -23,11 +23,10 @@ class SurveysPage extends React.Component {
     }
 
     handleGraphUpdate = (change) => {
-        console.log(change);
         if(Number(change.selector) > 0 && change.min_date && change.max_date) {
             const range = JSON.stringify({min_date: change.min_date, max_date: change.max_date})
             apiCall(`/survey-values/${change.selector}/user/`, { method: 'POST', body: range })
-                .then(response => console.log(response));
+                .then(response => this.setState({graphData: response}));
         }
     }
 
@@ -41,8 +40,8 @@ class SurveysPage extends React.Component {
     }
     
     render() {
-        const { availableSurveys, surveyHistory, userIndicators } = this.state;
-        if(!availableSurveys || !surveyHistory || !userIndicators ) {
+        const { availableSurveys, surveyHistory, userIndicators, graphData } = this.state;
+        if(!availableSurveys || !surveyHistory || !userIndicators) {
             return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
         }
         return (
@@ -59,6 +58,7 @@ class SurveysPage extends React.Component {
                     onSurveySelected={this.handleSurveySelected}/>
                 <SurveyIndicatorLinear 
                     handleChange={this.handleGraphUpdate}
+                    data={graphData}
                     options={userIndicators?.map(indicator => ({name: indicator.name, id: indicator.id}))} />
                 <SurveyHistory 
                     surveyHistory={surveyHistory} />

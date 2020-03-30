@@ -34,7 +34,7 @@ export function SurveyHistoryPreview(props) {
     const classes = useStyles();
     return (
         <Card>
-            <div className={classes.rowFlexContainer}>
+            <div className={classes.linkContainer}>
                 <CardHeader 
                     title="Summary of Surveys"
                     titleTypographyProps={{
