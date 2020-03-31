@@ -1,3 +1,6 @@
+// ---utils.js
+// organizes the history by date using moment.
+
 /* REACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */

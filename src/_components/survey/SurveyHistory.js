@@ -1,3 +1,6 @@
+
+// ---surveyHistory.js
+// shows the last 5 surveys that were filled out.
 /* REACT IMPORTS */
 import React from "react";
 import PropTypes from 'prop-types';

@@ -1,2 +1,0 @@
----Notifydisplay.js
-error control

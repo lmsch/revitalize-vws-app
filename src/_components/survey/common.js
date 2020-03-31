@@ -1,3 +1,7 @@
+// ---common.js
+// contains the theme/layout.
+
+
 // Survey styles.
 export const styles = (theme) => ({
     rowFlexContainer: {

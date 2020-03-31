@@ -1,3 +1,7 @@
+// ---authenticationReducer.js
+// takes the state and uses a switch statement to process the next output and next state value.
+
+
 /* LOCAL IMPORTS */
 import { userConstants } from '../_constants';
 

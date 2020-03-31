@@ -1,3 +1,7 @@
+// ---store.js
+// creates the store that acts to main taine login status.
+
+
 /* REACT IMPORTS */
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';

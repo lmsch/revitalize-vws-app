@@ -1,3 +1,8 @@
+// ---dosurveyPage.js
+// retreives the selected survey that the user had clicked on and allows the user to fill/anwer out the survey and also conduct the error checking and provide error messages as output from the ones created as constants.
+
+
+
 /* LREACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */

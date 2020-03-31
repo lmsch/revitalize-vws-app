@@ -1,3 +1,7 @@
+// ---forms.js
+// checks if the values entered into the forms are valid with the required data types.
+
+
 /* REACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */

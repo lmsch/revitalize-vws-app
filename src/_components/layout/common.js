@@ -1,3 +1,8 @@
+// ---common.js
+// Shows the routing links for the vairous program links/pages of the website/application.Also posses the icons for those links/routes.
+// The main links stated out with their routing and assigned values 0-2.
+
+
 export const programLinks = [
     {
         label: 'Profile',

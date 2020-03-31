@@ -1,3 +1,7 @@
+
+// ---Generatesurveys.js
+// the system that in charge of taking in the questions of the admins who have surveys and then generates the questions into a survey based on the type of requested values as outputs.
+
 /* REACT IMPORTS */
 import React from 'react';
 import PropTypes from 'prop-types';

@@ -1,3 +1,6 @@
+// ---Notifydisplay.js
+// error control
+
 /* REACT IMPORTS */
 import React from 'react'
 /* THIRD PARTY IMPORTS */

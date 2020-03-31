@@ -1,3 +1,6 @@
+// ---Header.js
+// the top of the page has the header which is always displayed. has the layout of the components in it, all stated. Has within it, the profileavatar, login link, checks if logged in, language selector, the button for opening the side drawer.
+
 /* REACT IMPORTS */
 import React, { useEffect } from "react";
 import { useHistory, useLocation } from 'react-router-dom';

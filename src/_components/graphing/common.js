@@ -1,3 +1,6 @@
+
+// ---common.js
+// serves as the basics for the layout of the theme.
 export const styles = theme => ({
         selectorControlsContainer: {
             width: '100%',

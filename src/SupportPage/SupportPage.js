@@ -1,3 +1,6 @@
+// ---supportPage.js
+// contains the details for the support page.
+
 /* REACT IMPORTS */
 import React from 'react';
 

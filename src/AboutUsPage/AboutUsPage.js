@@ -1,3 +1,6 @@
+// ---AboutUspage.js
+// contains the details of the about us page.
+
 /* REACT IMPORTS */
 import React from 'react';
 

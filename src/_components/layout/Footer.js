@@ -1,3 +1,7 @@
+// ---footer.js
+// the bootom of the page footer, same theme as the general application.
+
+
 /* REACT IMPORTS */
 import React from 'react'
 /* THIRD PARTY IMPORTS */

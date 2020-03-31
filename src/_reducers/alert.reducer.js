@@ -1,3 +1,7 @@
+// ---alertReducer.js
+// using the state, a switch statement will process an output message.
+
+
 /* LOCAL IMPORTS */
 import { alertConstants } from '../_constants';
 

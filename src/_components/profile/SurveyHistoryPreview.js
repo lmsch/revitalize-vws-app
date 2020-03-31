@@ -1,3 +1,7 @@
+// ---surveyHistoryPreviewColumns.js
+// shows the name and the submission date historys in a table  limited to 3 rows and is routed to the program/surveys page
+
+
 /* REACT IMPORTS */
 import React from "react";
 /* THIRD PARTY IMPORTS */

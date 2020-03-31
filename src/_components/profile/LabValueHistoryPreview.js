@@ -1,3 +1,8 @@
+
+// ---labvalueHistoryPreview.js
+// name, value and submission date put into a container. routed to program/lab-values. shows the last 3 lab value history in a table
+
+
 /* REACT IMPORTS */
 import React from "react";
 import { Link } from 'react-router-dom';

@@ -1,3 +1,7 @@
+// ---auth.js
+// checks to see if the authentication with the backend for login is correct.
+
+
 /* LOCAL IMPORTS */
 import { userService } from '../_services';
 import { alertActions, userActions } from '../_actions';

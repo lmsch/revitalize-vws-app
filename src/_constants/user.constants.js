@@ -1,3 +1,5 @@
+// ---userconstants.js
+// declaration of the user login and page refresh messages.
 export const userConstants = {
     LOGIN_REQUEST: 'USERS_LOGIN_REQUEST',
     LOGIN_SUCCESS: 'USERS_LOGIN_SUCCESS',

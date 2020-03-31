@@ -1,3 +1,8 @@
+// ---labvalueindicator.js
+// makes use of parameteres such as options, data and classes and checks if they are empty and calls upon the graph selector method to graph them, if they are not empty.
+// Also makes use of the scatterchart to graph the indicator vs the time.
+
+
 /* REACT IMPORTS */
 import React from 'react';
 import PropTypes from 'prop-types';

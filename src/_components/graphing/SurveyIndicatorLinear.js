@@ -1,3 +1,6 @@
+// ---surveyIndicatorLinear.js
+// graph named Survey progress, similar to the graphing of labvalueindicator.
+
 /* REACT IMPORTS */
 import React from 'react';
 import PropTypes from 'prop-types';

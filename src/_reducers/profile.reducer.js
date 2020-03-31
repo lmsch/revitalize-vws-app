@@ -1,3 +1,6 @@
+// ---profileReducer.js
+// uses the state to process an output and set the next value for the payload and loadingProfile.
+
 /* LOCAL IMPORTS */
 import { profileConstants } from '../_constants';
 

@@ -1,3 +1,7 @@
+// ---Drawer.js
+// The side drawer of the application which is to only be shown to those who are logged in on the website. Can be adjusted for mobile viewing
+
+
 /* REACT IMPORTS */
 import React from 'react';
 import { useHistory } from 'react-router-dom'

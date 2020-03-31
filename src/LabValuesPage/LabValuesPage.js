@@ -1,3 +1,6 @@
+// ---labvaluespage.js
+// retrievs the lab values data from the backend of the application.
+
 /* REACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */

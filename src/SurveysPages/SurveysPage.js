@@ -1,3 +1,6 @@
+// ---surveyPage.js
+// The survey pages retreives from the backend, the surveys that have been done, that can be done and other survey details. Serves as the main page for survey veiewing client side.
+
 /* LREACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */

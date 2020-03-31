@@ -1,3 +1,7 @@
+
+// ---common.js
+// The layout for the theme.
+
 /* THIRD PARTY IMPORTS */
 import { makeStyles } from '@material-ui/core';
 

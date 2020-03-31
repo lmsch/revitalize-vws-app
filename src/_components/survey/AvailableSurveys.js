@@ -1,3 +1,6 @@
+// ---AvailableSurveys.js
+// name and description are displayed from the surveys that have been generated but not filled out.
+
 /* REACT IMPORTS */
 import React from 'react';
 import PropTypes from 'prop-types';

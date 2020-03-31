@@ -1,3 +1,7 @@
+// ---GraphSelector.js
+// posseses the information for the data that will be graphed with max data and min date as the limits and also utilizing the start of the days to the end of the days as the range.
+
+
 /* REACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */
