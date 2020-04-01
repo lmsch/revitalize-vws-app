@@ -4,7 +4,7 @@ import React from 'react';
 import { CircularProgress } from '@material-ui/core';
 import * as moment from 'moment';
 /* LOCAL IMPORTS */
-import { apiCall } from '../_helpers';
+import { apiCall, handleDateSort } from '../_helpers';
 import { LabValueIndicatorLinear, LabValueHistory, NotifyDisplay } from '../_components';
 
 class LabValuesPage extends React.Component {
@@ -32,16 +32,20 @@ class LabValuesPage extends React.Component {
 
     render() {
         const { labValueHistory, labValueIndicators, graphData } = this.state;
+        let mostRecentLabValue;
         if(!labValueHistory || !labValueIndicators) {
             return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
         }
+        if(labValueHistory.length > 0) {
+            mostRecentLabValue = handleDateSort(labValueHistory, 'desc')[0];
+        }
         return (
             <React.Fragment>
-                {labValueHistory?.length > 0 ?
+                {mostRecentLabValue ?
                 <NotifyDisplay
                     header="Most recent lab value:"
                     icon={false}
-                    errors={[<span><b>{labValueHistory[0].name}</b> on <b>{moment.utc(labValueHistory[0].time).local().format('LLL')}</b></span>]} />
+                    errors={[<span><b>{mostRecentLabValue.name}</b> on <b>{moment.utc(mostRecentLabValue.time).local().format('LLL')}</b></span>]}/>
                     : null
                 }
                 <LabValueIndicatorLinear

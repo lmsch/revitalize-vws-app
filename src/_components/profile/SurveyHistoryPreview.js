@@ -69,7 +69,7 @@ export function SurveyHistoryPreview(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {handleDateSort(surveyHistory, 'asc').slice(0, 3).map((survey, i)  => (
+                    {handleDateSort(surveyHistory, 'desc').slice(0, 4).map((survey, i)  => (
                         <TableRow
                             key={i}>
                             <TableCell

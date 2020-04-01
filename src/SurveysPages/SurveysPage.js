@@ -6,7 +6,7 @@ import {  CircularProgress } from '@material-ui/core';
 import * as moment from 'moment';
 /* LOCAL IMPORTS */
 import { AvailableSurveys, SurveyHistory, SurveyIndicatorLinear, NotifyDisplay } from '../_components';
-import { apiCall } from '../_helpers';
+import { apiCall, handleDateSort } from '../_helpers';
 
 class SurveysPage extends React.Component {
 
@@ -41,16 +41,20 @@ class SurveysPage extends React.Component {
     
     render() {
         const { availableSurveys, surveyHistory, userIndicators, graphData } = this.state;
+        let mostRecentSurvey;
         if(!availableSurveys || !surveyHistory || !userIndicators) {
             return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
         }
+        if(surveyHistory.length > 0) {
+            mostRecentSurvey = handleDateSort(surveyHistory, 'desc')[0];
+        }
         return (
             <React.Fragment>
-                {surveyHistory?.length > 0 ?
+                {mostRecentSurvey ?
                 <NotifyDisplay
                     header="Most recent survey:"
                     icon={false}
-                    errors={[<span><b>{surveyHistory[0].name}</b> on <b>{moment.utc(surveyHistory[0].time).local().format('LLL')}</b></span>]} />
+                    errors={[<span><b>{mostRecentSurvey.name}</b> on <b>{moment.utc(mostRecentSurvey.time).local().format('LLL')}</b></span>]}/>
                     : null
                 }
                 <AvailableSurveys 

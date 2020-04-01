@@ -82,7 +82,7 @@ export function LabValueHistoryPreview(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {handleDateSort(labValueHistory, 'asc').slice(0, 3).map((lvalue, i)  => (
+                    {handleDateSort(labValueHistory, 'desc').slice(0, 4).map((lvalue, i)  => (
                         <TableRow
                             key={i}>
                             <TableCell

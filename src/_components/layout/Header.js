@@ -93,7 +93,7 @@ function ImageAvatars(props) {
                 <Avatar
                     className={classes.selectAvatar}
                     alt={`${profile.first_name} ${profile.last_name}`}
-                    src={profile.profile_picture} />
+                    src={`${process.env.REACT_APP_DEV_DOMAIN}${profile.profile_picture}`} />
             </React.Fragment>
         );
     }
