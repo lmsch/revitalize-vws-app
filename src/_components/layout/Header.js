@@ -15,6 +15,7 @@ import { SideDrawer } from "./Drawer";
 import { LoginPage } from '../../LoginPage';
 import { userActions } from '../../_actions';
 
+/* Styling of the header of the page */
 const useStyles = makeStyles(theme => ({
     appBar: {
         display: 'flex',
@@ -58,6 +59,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+/* Main pages that is About Us/ Support/ Contact Us */
 const mainLinks = [
     {
         id: 'about-us',

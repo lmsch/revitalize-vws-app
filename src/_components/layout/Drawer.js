@@ -22,6 +22,7 @@ const useStyles = makeStyles({
     },
 });
 
+/* Links to each page */
 const programLinks = [
     {
         label: 'My Profile',
@@ -64,6 +65,7 @@ export function SideDrawer() {
     };
 
     const sideList = side => (
+        /* Side list to show the options of pages */
         <div
             className={classes.list}
             role="presentation"
