@@ -30,6 +30,7 @@ export default function TemporaryDrawer() {
         setState({ ...state, [side]: open });
     };
 
+    /*Adding pages titles in the drawer*/
     const sideList = side => (
         <div
             className={classes.list}
