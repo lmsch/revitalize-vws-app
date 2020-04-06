@@ -21,6 +21,7 @@ export default function AutoRadioGroup() {
     const classes = useStyles();
     const [value, setValue] = React.useState("agree");
 
+    /*Detects changes and handles it*/
     const handleChange = event => {
         setValue(event.target.value);
     };
@@ -59,7 +60,7 @@ export default function AutoRadioGroup() {
                     />
                 </RadioGroup>
             </FormControl>
-
+            
             <FormLabel component="legend">Choose from following</FormLabel>
             <RadioGroup
                 aria-label="position"
