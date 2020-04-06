@@ -10,6 +10,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
+/*Styling the auto radio group*/
 const useStyles = makeStyles(theme => ({
     formControl: {
         margin: theme.spacing(3)
@@ -36,18 +37,21 @@ export default function AutoRadioGroup() {
                     row
                 >
                     <FormControlLabel
+                        /*Agree choice to choose from*/
                         value="agree"
                         control={<Radio color="primary" />}
                         label="Agree"
                         labelPlacement="top"
                     />
                     <FormControlLabel
+                        /*Neutral choice to choose from*/
                         value="neutral"
                         control={<Radio color="primary" />}
                         label="Neutral"
                         labelPlacement="top"
                     />
                     <FormControlLabel
+                        /*Disagree choice to choose from*/
                         value="disagree"
                         control={<Radio color="primary" />}
                         label="Disagree"

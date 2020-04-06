@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
 import { userActions } from '../_actions';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const styles  = theme => ({
     layout: {
@@ -70,6 +71,7 @@ class LoginPage extends React.Component {
                     </Typography>
                     <form className={classes.form} onSubmit={this.handleSubmit} noValidate>
                         <TextField
+                            /*Prompting user to enter the username and password*/
                             variant="outlined"
                             margin="normal"
                             required
@@ -89,7 +91,7 @@ class LoginPage extends React.Component {
                             type="password"
                             value={password} 
                             onChange={this.handleChange}/>
-                        <Button
+                        <Button //Submit button to proceed to login
                             type="submit"
                             fullWidth
                             variant="contained"
