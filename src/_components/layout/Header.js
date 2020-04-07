@@ -1,3 +1,11 @@
+/**
+ * HEADER: A very complex component that displays at the top of the app.
+ * Contains a button to open the drawer.
+ * Contains MATERIAL-UI tabs to navigate between contact, about, and support. 
+ * Contains a language selector.
+ * Contains a sign in button when logged out: otherwise, shows avatar, name, and sign out link. 
+ */
+
 /* REACT IMPORTS */
 import React, { useEffect } from "react";
 import { useHistory, useLocation } from 'react-router-dom';
@@ -70,14 +78,15 @@ const useStyles = makeStyles(theme => ({
 
 function ImageAvatars(props) {
     const [open, setOpen] = React.useState(false);
+    // Payload is profile data.
     const { classes, payload, loggedIn, dispatch, isMobile } = props;
-
+    // Closes the LoginPage dialog on successful login.
     const onLoginAttempt = result => {
         if(result === 'Success') {
             setOpen(false);
         }
     }
-
+    // Displays name, avatar, and sign out link.
     if (!isMobile && loggedIn && payload) {
         const profile = payload;
         return (
@@ -97,6 +106,7 @@ function ImageAvatars(props) {
             </React.Fragment>
         );
     }
+    // Displays sign in link.
     else if (!loggedIn) {
         return (
             <div>
@@ -113,6 +123,7 @@ function ImageAvatars(props) {
                     handleClose={_ => setOpen(false)} />
             </div>
         );
+        // Displays sign out link by itself (no picture or name when in mobile)
     } else {
         return (
             <button
@@ -134,8 +145,10 @@ function Header(props) {
     const { loggedIn } = props.authentication;
     const { payload, loadingProfile, profileLoaded } = props.profile;
 
+    // Whenever rendered, determine if current path is one of the main links.
     const currentPath = mainLinks.find(link => link.url === location.pathname);
 
+    // Retrieve profile data if not retrieved yet.
     useEffect(() => {
         if (loggedIn && !loadingProfile && !profileLoaded) {
             dispatch(profileActions.getProfile());
@@ -164,6 +177,7 @@ function Header(props) {
                         REVITALIZE
                     </Typography>
                     {!isMobile ?
+                    // If not in mobile, display tabs with pathname selected.
                     <Tabs
                         classes={{ indicator: !currentPath ? classes.inProgramTabs : '' }}
                         variant="fullWidth"

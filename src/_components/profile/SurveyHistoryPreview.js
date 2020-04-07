@@ -1,3 +1,11 @@
+/**
+ * SURVEY HISTORY PREVIEW: A preview of survey history that displays on the user profile.
+ * Shows last 4 submitted surveys.
+ * Uses a MATERIAL UI table.
+ * Props:
+ *  SurveyHistory: The history of all submitted surveys for a user. {name: string, time: string}[]
+ */
+
 /* REACT IMPORTS */
 import React from "react";
 /* THIRD PARTY IMPORTS */
@@ -18,6 +26,7 @@ import * as moment from 'moment';
 import { useStyles } from './common';
 import { handleDateSort } from '../../_helpers';
 
+// Columns to display in survey history table.
 const surveyHistoryPreviewColumns = [
     {
         id: 'name',

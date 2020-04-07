@@ -1,3 +1,12 @@
+/**
+ * SURVEY INDICATOR LINEAR GRAPH: A component displayed on the SurveysPAge that can be used to graph survey indicator history.
+ * TODO: Add message for indicating the meaning of the graphed data (already exists in API).
+ * Props:
+ *  options: List of options displayed in multiselect. {id: any, name: string}[]
+ *  data: Dataset to be graphed for the corresponding option. {time: string, value: number}[]
+ *  handleChange: Callback function for when selection changes.
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 import PropTypes from 'prop-types';

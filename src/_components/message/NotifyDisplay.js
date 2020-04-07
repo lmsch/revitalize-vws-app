@@ -1,3 +1,12 @@
+/**
+ * NOTIFY DISPLAY: A reusable component for showing error messages or notifications.
+ * Will only display if contains a list of messages; otherwise it returns null.
+ * Props:
+ *  header: Set title manually. string
+ *  items: A list of items to display or a single string (displayed as a title). string[] | string
+ *  itemsRef: A node reference to control the component (perhaps to scroll it into view). RefObject
+ *  icon: Whether to display an error icon or not. boolean
+ */
 /* REACT IMPORTS */
 import React from 'react'
 /* THIRD PARTY IMPORTS */
@@ -14,7 +23,7 @@ const styles = () => ({
     root: {
         marginBottom: '20px',
     },
-    errorCardHeader: {
+    itemCardHeader: {
         padding: '0 10px 0 10px',
         display: 'flex',
         alignItems: 'center',
@@ -24,11 +33,17 @@ const styles = () => ({
 
 class NotifyDisplay extends React.Component{
 
-    determineTitle(errors, header) {
+    /**
+     * If header is provided, sets the title to header. Otherwise if items is a single string,
+     * the title becomes a string. Otherwise uses default.
+     * @param {*} items - A list of items.
+     * @param {*} header - A header.
+     */
+    determineTitle(items, header) {
         if(header) {
             return header;
-        } else if(_.isString(errors)) {
-            return errors;
+        } else if(_.isString(items)) {
+            return items;
         } else {
             return 'See errors below:';
         }
@@ -37,14 +52,14 @@ class NotifyDisplay extends React.Component{
     render(){
         const props = this.props;
         const { classes } = props;
-        if(!props.errors || props.errors.length <= 0) {
+        if(!props.items) {
             return null;
         }
         return (
             <Card 
                 className={classes.root}
-                ref={props.errorsRef}>
-                <div className={classes.errorCardHeader}>
+                ref={props.itemsRef}>
+                <div className={classes.itemCardHeader}>
                     {props.icon ?
                     <Icon 
                         fontSize="large" 
@@ -53,16 +68,16 @@ class NotifyDisplay extends React.Component{
                     </Icon> : null
                     }
                     <CardHeader 
-                        title={this.determineTitle(props.errors, props.header)}
+                        title={this.determineTitle(props.items, props.header)}
                         titleTypographyProps={{
                             component: "h6",
                             variant: "h6",
                         }} />
                 </div>
-                {_.isArray(props.errors) && props.errors.length > 0 ?
+                {_.isArray(props.items) && props.items.length > 0 ?
                     <CardContent>
                         <ul>
-                        {props.errors.map((error, i) =><li key={i}>{error}</li>)}
+                        {props.items.map((item, i) =><li key={i}>{item}</li>)}
                         </ul>
                     </CardContent>
                     : null

@@ -1,6 +1,9 @@
 /* LOCAL IMPORTS */
 import { alertConstants } from '../_constants';
 
+/**
+ * Reduces an alertAction dispatch. States contains a type and a message.
+ */
 export function alert(state = {}, action) {
     switch (action.type) {
         case alertConstants.SUCCESS:

@@ -1,3 +1,8 @@
+/**
+ * MY INFORMATION: A component displaying various pieces of user information. Uses a MATERIAL UI table and expandable card.
+ * Some information is always visible. To show more, the user can expand the card.
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 import { PropTypes } from 'prop-types'
@@ -17,7 +22,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-// This is really bad. We should include labels and visible properties in the endpoints.
+// The key and label for visible data obtained from the API. TODO: We should include label properties in the endpoints.
 const visibleKeys = [
     { 
         key: 'first_name',
@@ -37,7 +42,7 @@ const visibleKeys = [
     }
 ];
 
-// Again, really bad.
+// The key and label for hidden data obtained from the API. Must be expanded.
 const hiddenKeys = [
     { 
         key: 'gender',
@@ -79,6 +84,13 @@ class MyInformation extends React.Component {
         this.setState({expanded: !this.state.expanded});
     };
 
+    /**
+     * Returns an array of configured data depending on the data in the profile and
+     * the common array provided. Essentially finds the intersection between the common array objects
+     * and the keys of the profile. Uses to display data in table.
+     * @param {*} profile - Profile data object.
+     * @param {*} common - The array to compare against. Either hiddenKeys or visibleKeys
+     */
     findProfileData(profile, common) {
         const data = [];
         for(let cObj of common) {

@@ -1,3 +1,8 @@
+/**
+ * Various helpers for REDUX Form:
+ * Includes common validators and render textfield function for integration with MATERIAL UI.
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */
