@@ -1,3 +1,12 @@
+/**
+ * LAB VALUE HISTORY PREVIEW: A preview of lab value history that displays on the user profile.
+ * Shows Current Physical Measurements (height and weight) as well as last 4 submitted lab values.
+ * Uses a MATERIAL UI table.
+ * TODO: Add height and weight units.
+ * Props:
+ *  labValueHistory: The history of all lab values for a user. {name: string, value: string, unit: string, time: string}[]
+ */
+
 /* REACT IMPORTS */
 import React from "react";
 import { Link } from 'react-router-dom';
@@ -18,6 +27,7 @@ import * as moment from 'moment';
 import { useStyles } from './common';
 import { handleDateSort } from '../../_helpers';
 
+// Columns to display in lab value history table. TODO: Add units.
 const labValueHistoryPreviewColumns = [
     {
         id: 'name',

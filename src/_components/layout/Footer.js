@@ -1,3 +1,7 @@
+/**
+ * FOOTER: A simple footer component that display at the bottom of the app.
+ */
+
 /* REACT IMPORTS */
 import React from 'react'
 /* THIRD PARTY IMPORTS */

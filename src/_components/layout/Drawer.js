@@ -1,3 +1,9 @@
+/**
+ * DRAWER: This is the MATERIAL-UI drawer that appears on the left side of the app.
+ * It appears when the user is logged in on desktop or when the app is in a small window.
+ * Contains links to program if logged in and about, contact, and support if in mobile.
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 import { useHistory } from 'react-router-dom'
@@ -54,6 +60,7 @@ function SideDrawer(props) {
         >
             <List>
                 {isMobile ?
+                // Display primary links if in mobile.
                 <React.Fragment>
                     <ListSubheader>
                         REVITALIZE
@@ -74,6 +81,7 @@ function SideDrawer(props) {
                 </React.Fragment> : null
                 }
                 {loggedIn ?
+                // Display program links if logged in.
                 <React.Fragment>
                     <ListSubheader>
                         Your Program

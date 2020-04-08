@@ -7,6 +7,12 @@ export const userService = {
     refreshAccess,
 };
 
+/**
+ * Service for login logic. Does a fetch to retrieve access and refresh token
+ * from API using username and password. Used by userActions.
+ * @param {*} username 
+ * @param {*} password 
+ */
 function login(username, password) {
     const requestOptions = {
         method: 'POST',
@@ -21,10 +27,16 @@ function login(username, password) {
         });
 }
 
+/**
+ * Removes access and refresh token from localstorage.
+ */
 function logout() {
     localStorage.removeItem('user');
 }
 
+/**
+ * Attempts to refresh the access token using the refresh token stored in localstorage.
+ */
 function refreshAccess() {
     const requestOptions = {
         method: 'POST',
@@ -41,6 +53,11 @@ function refreshAccess() {
         });
 }
 
+/**
+ * Helper method to parse responses.
+ * @param {*} response - Fetch response.
+ * @param {*} loggingIn - If set, will not log user out if fetch response is an error.
+ */
 function handleResponse(response, loggingIn = false) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);

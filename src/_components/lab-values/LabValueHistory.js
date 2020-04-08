@@ -1,3 +1,10 @@
+/**
+ * LAB VALUE HISTORY: A component for displaying the name, value, unit, and submission date of all lab values submitted
+ * for a user. Displayed on LabValuesPage. Uses MATERIAL-UI table and paginator.
+ * Props:
+ *  labValueHistory: The history of all lab values for a user. {name: string, value: string, unit: string, time: string}[]
+ */
+
 /* REACT IMPORTS */
 import React from "react";
 import PropTypes from 'prop-types';
@@ -18,6 +25,7 @@ import * as moment from 'moment';
 /* LOCAL IMPORTS */
 import { handleDateSort } from '../../_helpers';
 
+// Columns of history table. TODO: Add unit.
 const labValueHistoryColumns = [
     {
         id: 'name',
@@ -35,6 +43,7 @@ const labValueHistoryColumns = [
 
 class LabValueHistory extends React.Component{
     
+    // State contains the current page of history data, the number of rows to display per page, and the sort order.
     state = {
         page: 0,
         rowsPerPage: 5,
@@ -57,10 +66,12 @@ class LabValueHistory extends React.Component{
     render() {
         const { labValueHistory } = this.props;
         const { page, rowsPerPage, dateOrder } = this.state;
-        let soredLabValueHistory = handleDateSort(labValueHistory, dateOrder);
+        let sortedLabValueHistory = handleDateSort(labValueHistory, dateOrder);
+        // Computes section of history to display.
         if(rowsPerPage > 0) {
-            soredLabValueHistory = soredLabValueHistory.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+            sortedLabValueHistory = sortedLabValueHistory.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
         } 
+        // Shows any remaining room in the table as empty rows.
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, labValueHistory.length - page * rowsPerPage);
         return (
             <Card>
@@ -91,7 +102,7 @@ class LabValueHistory extends React.Component{
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        {soredLabValueHistory.map((lvalue, i)  => (
+                        {sortedLabValueHistory.map((lvalue, i)  => (
                             <TableRow
                                 key={i}>
                                 <TableCell

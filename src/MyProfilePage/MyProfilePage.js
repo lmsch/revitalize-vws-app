@@ -1,3 +1,11 @@
+/**
+ * PROFILE: A page that shows various information and preview components. Contains:
+ *  Profile picture
+ *  My Information
+ *  Lab Values Preview
+ *  Surveys Preview
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -51,6 +59,7 @@ class MyProfilePage extends React.Component {
         weight: null,
     };
 
+    // API calls to retrieve lab and survey history.
     componentDidMount() {
         apiCall('/lab-values/user/', { method: 'GET' })
             .then(response => this.setState({labValueHistory: response}));
@@ -62,6 +71,7 @@ class MyProfilePage extends React.Component {
         let { profile, classes } = this.props;
         let { labValueHistory, surveyHistory} = this.state;
         profile = profile.payload ? profile.payload : {}
+        // Show spinner if not loaded yet.
         if(!labValueHistory || !surveyHistory) {
             return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
         }

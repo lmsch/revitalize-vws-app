@@ -43,6 +43,7 @@ export const styles = (theme) => ({
 
 /**
  * Setup state to initial (as defined by API) for each question. Mapped as [question_index: number]: [radio_value: number].
+* @param {*} model - The survey model, as provided by the API.
  */
 export function setupInitialState(model) {
     const initialResponse = String(model.question_group_type_data.initial);

@@ -1,3 +1,12 @@
+/**
+ * LAB VALUE INDICATOR LINEAR GRAPH: A component displayed on the LabValuesPage that can be used to graph lab value history.
+ * TODO: Add message for indicating the meaning of the graphed data (already exists in API).
+ * Props:
+ *  options: List of options displayed in multiselect. {id: any, name: string}[]
+ *  data: Dataset to be graphed for the corresponding option. {time: string, value: number}[]
+ *  handleChange: Callback function for when selection changes.
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -49,7 +58,7 @@ class LabValueIndicatorLinear extends React.Component {
                             type="number"/>
                         <XAxis
                             domain = {['auto', 'auto']}
-                            dataKey={point => moment.utc(point.time).unix()}
+                            dataKey={point => moment.utc(point.time).unix()} // Dataset is converted to UNIX epoch for graphing
                             tick={false}
                             name="Time"
                             type="number" />

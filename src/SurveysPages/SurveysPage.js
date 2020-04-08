@@ -1,4 +1,12 @@
-/* LREACT IMPORTS */
+/**
+ * SURVEY PAGE: Contains various components related to a user's submitted surveys, such as:
+ *  Most recent submitted survey
+ *  Available surveys to complete
+ *  Survey indicator progress graphs
+ *  Survey history
+ */
+
+/* REACT IMPORTS */
 import React from 'react';
 /* THIRD PARTY IMPORTS */
 import { withRouter } from 'react-router-dom';
@@ -17,11 +25,13 @@ class SurveysPage extends React.Component {
         graphData: null,
     }
 
+    // Called when the user clicks "Do Survey" from AvailableSurveys. Adds the survey ID as a path variable and redirects.
     handleSurveySelected = (surveyId) => {
         const { path } = this.props.match;
         this.props.history.push(`${path}/${surveyId}`);
     }
 
+    // If user has selected a new date range or survey indicator to graph, make an API call to retrieve the data to graph.
     handleGraphUpdate = (change) => {
         if(Number(change.selector) > 0 && change.min_date && change.max_date) {
             const range = JSON.stringify({min_date: change.min_date, max_date: change.max_date})
@@ -30,6 +40,7 @@ class SurveysPage extends React.Component {
         }
     }
 
+    // API calls to retrieve available surveys, survey history, and survey indicators.
     componentDidMount() {
         apiCall('/surveys/user/available/', { method: 'GET'})
             .then(response => this.setState({availableSurveys: response}));
@@ -41,6 +52,7 @@ class SurveysPage extends React.Component {
     
     render() {
         const { availableSurveys, surveyHistory, userIndicators, graphData } = this.state;
+        // Show spinner if not loaded yet.
         if(!availableSurveys || !surveyHistory || !userIndicators) {
             return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
         }
@@ -50,7 +62,7 @@ class SurveysPage extends React.Component {
                 <NotifyDisplay
                     header="Most recent survey:"
                     icon={false}
-                    errors={[<span><b>{surveyHistory[0].name}</b> on <b>{moment.utc(surveyHistory[0].time).local().format('LLL')}</b></span>]} />
+                    items={[<span><b>{surveyHistory[0].name}</b> on <b>{moment.utc(surveyHistory[0].time).local().format('LLL')}</b></span>]} />
                     : null
                 }
                 <AvailableSurveys 
