@@ -1,3 +1,4 @@
+// Config for links in program. Contains label, url, and material icon name.
 export const programLinks = [
     {
         label: 'Profile',
@@ -26,6 +27,7 @@ export const programLinks = [
     }
 ];
 
+// Config for main links. Contains label, url, and a value for the MATERIAL UI tabs.
 export const mainLinks = [
     {
         label: 'About Us',

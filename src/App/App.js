@@ -1,3 +1,7 @@
+/**
+ * APP: Handles top-level routing and general layout of app.
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -13,6 +17,7 @@ import { AboutUsPage } from '../AboutUsPage';
 
 class App extends React.Component {
     
+    // Whenever app is refreshed, clear any alerts that have been dispatched.
     constructor(props) {
         super(props);
         const { dispatch } = this.props;
@@ -23,6 +28,7 @@ class App extends React.Component {
     }
 
     render() {
+        // Support, Contact, and About Us can be accessed freely. Anything inside program is priveleged, so the user must be authenticated.
         return (
             <div className="app-layout">
                 <Header />

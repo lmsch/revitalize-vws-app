@@ -1,3 +1,11 @@
+/**
+ * SURVEY HISTORY: A component for displaying the name and submission date of all surveys submitted
+ * for a user. Displayed on SurveysPAge. Uses MATERIAL-UI table and paginator.
+ * Props:
+ *  surveyHistory: The history of all surveys for a user. {name: string, time: string}[]
+ */
+
+
 /* REACT IMPORTS */
 import React from "react";
 import PropTypes from 'prop-types';
@@ -18,6 +26,7 @@ import * as moment from 'moment';
 /* LOCAL IMPORTS */
 import { handleDateSort } from '../../_helpers';
 
+// Columns of history table.
 const surveyHistoryColumns = [
     {
         id: 'name',
@@ -31,6 +40,7 @@ const surveyHistoryColumns = [
 
 class SurveyHistory extends React.Component {
 
+    // State contains the current page of history data, the number of rows to display per page, and the sort order.
     state = {
         page: 0,
         rowsPerPage: 5,
@@ -54,9 +64,11 @@ class SurveyHistory extends React.Component {
         const { surveyHistory } = this.props;
         const { page, rowsPerPage, dateOrder } = this.state;
         let sortedSurveyHistory = handleDateSort(surveyHistory, dateOrder);
+        // Computes section of history to display.
         if(rowsPerPage > 0) {
             sortedSurveyHistory = sortedSurveyHistory.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
         } 
+        // Shows any remaining room in the table as empty rows.
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, surveyHistory.length - page * rowsPerPage);
         return (
             <Card>

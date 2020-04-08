@@ -1,3 +1,7 @@
+/**
+ * STORE: Creation of REDUX store.
+ */
+
 /* REACT IMPORTS */
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';

@@ -1,3 +1,10 @@
+/**
+ * AVAILABLE SURVEYS: A component for selecting a survey to complete. User clicks on a row from a 
+ * MATERIAL UI table and clicks do survey. Selection is highlighted.
+ * Props:
+ *  availableSurveys: A list of available surveys. {name: string, description: string, id: number}[]
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -17,6 +24,7 @@ import { withStyles } from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
 import { styles } from './common';
 
+// Columns to display in available surveys table.
 const availableSurveyColumns = [
     {
         id: 'name',
@@ -38,6 +46,7 @@ class AvailableSurveys extends React.Component {
         this.setState({ selectedSurvey: survey });
     };
 
+    // Called when user selects to do survey. Executes if a survey is selected.
     handleDoSurvey = () => {
         if (this.state.selectedSurvey) {
             this.props.onSurveySelected(this.state.selectedSurvey.id);

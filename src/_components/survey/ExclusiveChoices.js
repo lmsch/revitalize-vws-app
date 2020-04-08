@@ -1,3 +1,11 @@
+/**
+ * EXCLUSIVE CHOICES: Represents multiselect and likert scales for surveys. Modeled by API survey JSON 
+ * (see API documentation for more details). Normally displays radio button groups. In mobile, displays
+ * as a multiselect.
+ * Props:
+ *  model: An element from an element group. And element can contain 1 or more questions of identical answer structure.
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -25,14 +33,19 @@ class ExclusiveChoices extends React.Component {
         this.state = setupInitialState(props.model);
     }
 
-    /**
-     * Sets state and updates model with new selection.
-     */
+    // Sets state and updates model with new selection.
     handleChange = e => {
         this.setState({[e.target.name]: e.target.value});
         this.props.model.questions[e.target.name].response = e.target.value;
     };
 
+    /**
+     * In regard to likert scales, if the beginning or end of an array, include
+     * the minimum or maximum annotation correspondingly. Used to display annotation
+     * in mobile.
+     * @param {*} index - Current index of loop.
+     * @param {*} questionData  - The questionData that describes te current questions being modeled.
+     */
     determineAnnotation(index, questionData) {
         const { labels, annotations } = questionData;
         if(index === 0) {

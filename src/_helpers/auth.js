@@ -6,6 +6,15 @@ import { store } from '.';
 
 export const DEFAULT_TIMEOUT = 3;
 
+/**
+ * Helper method to do an API Call. Will make HTTP request. If access token has expired,
+ * will automatically try to renew it. Will timeout after DEFAULT_TIMEOUT failures.
+ * Returns either the parsed data or error in form {response: Response, data: any}
+ * @param {*} url - The url of the endpoint. Example: '/profile/user/'
+ * @param {*} options - Normal fetch options. Defaults to 'application-json' in headers.
+ * @param {*} logout - Log the user out if the apiCall fails after timeout. Defaults to true.
+ * @param {*} timeout - How many times to try the fetch. Defaults to DEFAULT_TIMEOUT.
+ */
 export async function apiCall(url, options, logout = true, timeout = DEFAULT_TIMEOUT) {
     try {
         if(!options.headers) {
@@ -37,6 +46,9 @@ export async function apiCall(url, options, logout = true, timeout = DEFAULT_TIM
     }
 }
 
+/**
+ * Helper to dispatch an apiRefresh REDUX action. Trys to refresh API access token.
+ */
 async function apiRefresh() {
     store.dispatch(request());
     try {
@@ -52,6 +64,10 @@ async function apiRefresh() {
     function failure(error) { return { type: userConstants.REFRESH_FAILURE, error } }
 }
 
+/**
+ * Helper method to parse response from fetch.
+ * @param {*} response - Response from fetch.
+ */
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
@@ -62,6 +78,9 @@ function handleResponse(response) {
     });
 }
 
+/**
+ * Helper method to add access header to a fetch for the API.
+ */
 export function accessHeader() {
     let user = JSON.parse(localStorage.getItem('user'));
     if (user && user.access) {
@@ -71,6 +90,9 @@ export function accessHeader() {
     }
 }
 
+/**
+ * Helper method to add a refresh header to an API refresh request.
+ */
 export function refreshData() {
     let user = JSON.parse(localStorage.getItem('user'));
     if (user && user.refresh) {

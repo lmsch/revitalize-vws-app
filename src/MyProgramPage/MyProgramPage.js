@@ -1,3 +1,8 @@
+/**
+ * MY PROGRAM: Handles routing for all routes related to the program. Such routes are private
+ * so the user must be authenticated in order to access them.
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 import { Router, Switch, withRouter } from 'react-router-dom';

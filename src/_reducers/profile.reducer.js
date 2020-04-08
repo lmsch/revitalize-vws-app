@@ -1,6 +1,12 @@
 /* LOCAL IMPORTS */
 import { profileConstants } from '../_constants';
 
+/**
+ * Reduces a profileAction dispatch. State can contain:
+ *  loadingProfile: boolean
+ *  payload: any (contains profile data)
+ *  profileLoaded: boolean,
+ */
 export function profile(state = {}, action) {
     switch (action.type) {
         case profileConstants.PROFILE_REQUEST:

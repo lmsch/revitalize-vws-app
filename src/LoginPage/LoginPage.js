@@ -1,3 +1,11 @@
+/**
+ * LOGIN PAGE: Login dialog page. Uses REDUX FORM to display MATERIAL UI text fields.
+ * Props:
+ *  open: Whether the dialog is open or not. boolean.
+ *  onLoginAttempt: Function that is called on an attempted login. Emits 'Success' is login is sucessful; otherwise,  and error message.
+ *  handleClose: If user attempts to close dialog, function is called.
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
 import { PropTypes } from 'prop-types';
@@ -71,6 +79,7 @@ class LoginPage extends React.Component {
         this.props.dispatch(userActions.login(values.username, values.password, this.onLoginAttempt));
     }
 
+    // If failed login attempt, create a snackbar showing error message.
     onLoginAttempt = result => {
         if(result === 'Unauthorized') {
             this.props.enqueueSnackbar('Your username or password was incorrect.', {
