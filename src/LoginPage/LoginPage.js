@@ -1,59 +1,88 @@
 /* REACT IMPORTS */
 import React from 'react';
-import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 /* THIRD PARTY IMPORTS */
-import TextField from '@material-ui/core/TextField';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { withStyles } from "@material-ui/core/styles";
+import {
+    Container,
+    Typography,
+    Button,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    withStyles,
+} from '@material-ui/core';
+import { reduxForm, Field } from 'redux-form';
+import { withSnackbar } from 'notistack';
+import { connect } from 'react-redux';
 /* LOCAL IMPORTS */
 import { userActions } from '../_actions';
+import { renderTextField, requiredVal } from '../_helpers';
 
-const styles  = theme => ({
-    layout: {
+const styles = () => ({
+    loginContainer: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
     },
-    form: {
-        width: '100%',
-        marginTop: theme.spacing(1),
-    },
     submit: {
-        margin: theme.spacing(3, 0, 2),
+        marginTop:'28px',
     },
+
 });
+
+let LoginForm = props => (
+    <form onSubmit={props.handleSubmit}>
+        <Field
+            component={renderTextField}
+            name="username"
+            label="Username"
+            validate={requiredVal}
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            autoFocus />
+        <Field
+            component={renderTextField}
+            name="password"
+            label="Password"
+            type="password"
+            validate={requiredVal}
+            variant="outlined"
+            margin="normal"
+            fullWidth />
+        <Button
+            className={props.classes.submit}
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth>
+            Sign In
+        </Button>
+    </form>
+);
+
+LoginForm = reduxForm({
+    form: 'loginForm',
+})(LoginForm);
 
 class LoginPage extends React.Component {
 
-    state = {
-        username: '',
-        password: '',
+    handleSubmit = values => {
+        this.props.dispatch(userActions.login(values.username, values.password, this.onLoginAttempt));
     }
 
-    handleChange = (e) => {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const { username, password } = this.state;
-        const { dispatch, handleSubmit } = this.props;
-        if (username && password) {
-            this.setState({username: '', password: ''});
-            dispatch(userActions.login(username, password, handleSubmit));
+    onLoginAttempt = result => {
+        if(result === 'Unauthorized') {
+            this.props.enqueueSnackbar('Your username or password was incorrect.', {
+                variant: 'error',
+                action: key => <Button style={{color: 'white'}} onClick={() => this.props.closeSnackbar(key)}>Dismiss</Button>,
+            });
         }
+        this.props.onLoginAttempt(result);
     }
 
     render() {
         const { classes, open, handleClose } = this.props;
-        const { username, password } = this.state;
         return (
             <Dialog
                 open={open} 
@@ -66,37 +95,10 @@ class LoginPage extends React.Component {
                 </DialogTitle>
                 <DialogContent dividers>
                     <Container maxWidth="xs">
-                        <div className={classes.layout}>
-                            <form className={classes.form} onSubmit={this.handleSubmit} noValidate>
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    autoFocus
-                                    name="username"
-                                    label="Username"
-                                    value={username} 
-                                    onChange={this.handleChange}/>
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    value={password} 
-                                    onChange={this.handleChange}/>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.submit}>
-                                    Sign In
-                                </Button>
-                            </form>
+                        <div className={classes.loginContainer}>
+                            <LoginForm 
+                                classes={classes}
+                                onSubmit={this.handleSubmit} />
                         </div>
                     </Container>
                 </DialogContent>
@@ -107,10 +109,12 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
     open: PropTypes.bool.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
+    onLoginAttempt: PropTypes.func.isRequired,
     handleClose: PropTypes.func.isRequired,
 }
 
-const connectedLoginPage = connect(null)(LoginPage);
-const styledConnectedLoginPage = withStyles(styles)(connectedLoginPage);
-export { styledConnectedLoginPage as LoginPage };
+
+const styledLoginPage = withStyles(styles)(LoginPage);
+const snackedStyledLoginPage = withSnackbar(styledLoginPage);
+const connectedSnackedStyledLoginPage = connect(null)(snackedStyledLoginPage);
+export { connectedSnackedStyledLoginPage as LoginPage };

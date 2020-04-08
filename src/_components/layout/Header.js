@@ -1,19 +1,27 @@
 /* REACT IMPORTS */
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 /* THIRD PARTY IMPORTS */
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Button from '@material-ui/core/Button';
-import Typography from "@material-ui/core/Typography";
 import LanguageIcon from "@material-ui/icons/Language";
-import { Select, MenuItem, IconButton, makeStyles, Avatar } from '@material-ui/core';
+import {
+    Select,
+    MenuItem,
+    IconButton,
+    useMediaQuery,
+    makeStyles,
+    Avatar,
+    AppBar,
+    Tabs,
+    Tab,
+    Button,
+    Typography,
+} from '@material-ui/core';
 /* LOCAL IMPORTS */
 import { SideDrawer } from "./Drawer";
 import { LoginPage } from '../../LoginPage';
-import { userActions } from '../../_actions';
+import { userActions, profileActions } from '../../_actions';
+import { mainLinks } from './common';
 
 /* Styling of the header of the page */
 const useStyles = makeStyles(theme => ({
@@ -22,7 +30,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: '0 30px 0 18px',
+        padding: '0 15px 0 15px',
         width: '100%',
     },
     selectContainer: {
@@ -31,22 +39,16 @@ const useStyles = makeStyles(theme => ({
         flex: '0 0 auto',
     },
     selectChild: {
-        margin: '0 30px 0 5px',
+        margin: '0 20px 0 5px',
         color: 'white',
     },
     selectAvatar: {
-        marginLeft: '10px',
+        marginLeft: '5px',
     },
     tabsContainer: {
         display: 'flex',
         alignItems: 'center',
         flex: '0 0 auto',
-    },
-    tabs: {
-        margin: '0 60px 0 60px',
-    },
-    menuButton: {
-        marginRight: '18px',
     },
     inProgramTabs: {
         visibility: 'hidden',
@@ -55,81 +57,48 @@ const useStyles = makeStyles(theme => ({
         visibility: 'hidden',
     },
     signOutLink: {
+        background: 'none !important',
+        border: 'none',
+        padding: '0 !important',
         color: 'white',
+        textDecoration: 'underline',
+        cursor: 'pointer',
     },
+    title: {
+        margin: '0 15px 0 15px',
+    }
 }));
-
-/* Main pages that is About Us/ Support/ Contact Us */
-const mainLinks = [
-    {
-        id: 'about-us',
-        label: 'About Us',
-        link: '/',
-        value: 0,
-    },
-    {
-        id: 'support',
-        label: 'Support',
-        link: '/support',
-        value: 1,
-    },
-    {
-        id: 'contact',
-        label: 'Contact Us',
-        link: '/contact',
-        value: 2,
-    },
-];
-
-function LinkTab(props) {
-    const history = useHistory();
-    return (
-        <Tab
-            component="a"
-            onClick={event => {
-                event.preventDefault();
-                history.push(props.href);
-            }}
-            {...props}
-        />
-    );
-}
 
 function ImageAvatars(props) {
     const [open, setOpen] = React.useState(false);
-    const profilePayload = useSelector(state => state.profile.payload);
-    const dispatch = useDispatch();
-    const { classes } = props;
+    const { classes, payload, loggedIn, dispatch, isMobile } = props;
 
-    const handleClose = () => {
-        setOpen(false);
+    const onLoginAttempt = result => {
+        if(result === 'Success') {
+            setOpen(false);
+        }
     }
 
-    const handleSubmit = () => {
-        setOpen(false);
-    }
-
-    if (props.loggedIn && profilePayload?.length > 0) {
-        const profile = profilePayload[0];
+    if (!isMobile && loggedIn && payload) {
+        const profile = payload;
         return (
             <React.Fragment>
                 <span>
                     {`${profile.first_name} ${profile.last_name} `}
-                    <a 
-                        className={classes.signOutLink} 
-                        href="#"
+                    <button
+                        className={classes.signOutLink}
                         onClick={_ => dispatch(userActions.logout(true))}>
                         (Sign Out)
-                    </a>
+                    </button>
                 </span>
-                <Avatar 
-                    className={classes.selectAvatar} 
-                    alt={`${profile.first_name} ${profile.last_name}`} 
+                <Avatar
+                    className={classes.selectAvatar}
+                    alt={`${profile.first_name} ${profile.last_name}`}
                     src={profile.profile_picture} />
             </React.Fragment>
         );
     }
-    else if (!props.loggedIn) {
+    else if (!loggedIn) {
         return (
             <div>
                 <Button
@@ -139,34 +108,43 @@ function ImageAvatars(props) {
                     onClick={_ => setOpen(true)}>
                     Sign In
                 </Button>
-                <LoginPage 
+                <LoginPage
                     open={open}
-                    handleSubmit={handleSubmit}
-                    handleClose={handleClose} />
+                    onLoginAttempt={onLoginAttempt}
+                    handleClose={_ => setOpen(false)} />
             </div>
         );
     } else {
         return (
-            <a 
-                className={classes.signOutLink} 
-                href="#"
+            <button
+                className={classes.signOutLink}
                 onClick={_ => dispatch(userActions.logout(true))}>
                 (Sign Out)
-            </a>
+            </button>
         );
     }
 }
 
-
-export function Header() {
+function Header(props) {
+    const isMobile = useMediaQuery('(max-width:992px)');
     const classes = useStyles();
-    const loggedIn = useSelector(state => state.authentication.loggedIn);
     const location = useLocation();
-    const currentPath = mainLinks.find((link) => link.link === location.pathname);
-    let inProgram = true;
-    if(currentPath) {
-        inProgram = false;
-    }
+    const history = useHistory();
+    const dispatch = props.dispatch;
+
+    const { loggedIn } = props.authentication;
+    const { payload, loadingProfile, profileLoaded } = props.profile;
+
+    const currentPath = mainLinks.find(link => link.url === location.pathname);
+
+    useEffect(() => {
+        if (loggedIn && !loadingProfile && !profileLoaded) {
+            dispatch(profileActions.getProfile());
+        }
+    });
+
+    const imageAvatarProps = { classes, loggedIn, payload, dispatch, isMobile };
+
     return (
         <div>
             <AppBar
@@ -174,31 +152,33 @@ export function Header() {
                 className={classes.appBar}>
                 <div className={classes.tabsContainer}>
                     <IconButton
-                        className={`${!loggedIn ? classes.notLoggedInMenu : ''} ${classes.menuButton}`}
-                        disabled={!loggedIn}
+                        className={!loggedIn && !isMobile ? classes.notLoggedInMenu : ''}
+                        disabled={!loggedIn && !isMobile}
                         color="inherit"
                         aria-label="open drawer">
                         <SideDrawer />
                     </IconButton>
                     <Typography
+                        className={classes.title}
                         component="h1"
                         variant="h6">
                         REVITALIZE
                     </Typography>
+                    {!isMobile ?
                     <Tabs
-                        className={classes.tabs}
-                        classes={{ indicator: inProgram ? classes.inProgramTabs : '' }}
+                        classes={{ indicator: !currentPath ? classes.inProgramTabs : '' }}
                         variant="fullWidth"
                         aria-label="nav tabs"
-                        value={currentPath ? currentPath.value : false }
+                        value={currentPath ? currentPath.value : false}
                     >
-                    {mainLinks.map(link =>
-                        <LinkTab 
-                            key={link.id} 
-                            label={link.label}
-                            href={link.link} />
-                    )}
-                    </Tabs>
+                        {mainLinks.map(link =>
+                            <Tab
+                                key={link.label}
+                                label={link.label}
+                                component="a"
+                                onClick={_ => history.push(link.url)} />)}
+                    </Tabs> : null
+                    }
                 </div>
                 <div className={classes.selectContainer}>
                     <LanguageIcon />
@@ -210,11 +190,20 @@ export function Header() {
                         <MenuItem value="EN">EN</MenuItem>
                         <MenuItem value="FR">FR</MenuItem>
                     </Select>
-                    <ImageAvatars 
-                        loggedIn={loggedIn} 
-                        classes={classes} />
+                    <ImageAvatars {...imageAvatarProps} />
                 </div>
             </AppBar>
         </div>
     );
 }
+
+function mapStateToProps(state) {
+    const { authentication, profile } = state;
+    return {
+        authentication,
+        profile,
+    };
+}
+
+const connectedHeader = connect(mapStateToProps)(Header);
+export { connectedHeader as Header };

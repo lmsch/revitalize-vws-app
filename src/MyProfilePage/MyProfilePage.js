@@ -6,9 +6,15 @@ import {
     Typography,
     Avatar,
     withStyles,
+    CircularProgress,
 } from '@material-ui/core';
 /* LOCAL IMPORTS */
-import { MyInformation } from '../_components';
+import { 
+    MyInformation, 
+    LabValueHistoryPreview, 
+    SurveyHistoryPreview,
+} from '../_components';
+import { apiCall } from '../_helpers';
 
 const styles = () => ({
     largeAvatar: {
@@ -21,7 +27,7 @@ const styles = () => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginRight: '40px',
+        margin: '0px 40px 40px 0',
     },
     welcomeTitle: {
         marginBottom: '10px',
@@ -29,6 +35,7 @@ const styles = () => ({
     myInformationContainer: {
         display: 'flex',
         alignItems: 'flex-start',
+        flexWrap: 'wrap',
     },
     myInformation: {
         flex: '1 1 auto',
@@ -36,28 +43,53 @@ const styles = () => ({
 });
 
 class MyProfilePage extends React.Component {
+
+    state = {
+        labValueHistory: null,
+        surveyHistory: null,
+        height: null,
+        weight: null,
+    };
+
+    componentDidMount() {
+        apiCall('/lab-values/user/', { method: 'GET' })
+            .then(response => this.setState({labValueHistory: response}));
+        apiCall('/surveys/user/', { method: 'GET'})
+            .then(response => this.setState({surveyHistory: response}));
+    }  
     
     render() {
         let { profile, classes } = this.props;
-        profile = profile.payload && profile.payload.length > 0 ? profile.payload[0] : {};
+        let { labValueHistory, surveyHistory} = this.state;
+        profile = profile.payload ? profile.payload : {}
+        if(!labValueHistory || !surveyHistory) {
+            return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
+        }
         return (
-            <div className={classes.myInformationContainer}>
-                <div className={classes.avatarContainer}>
-                    <Typography
-                        className={classes.welcomeTitle}
-                        component="h1"
-                        variant="h6">
-                        {`Welcome, ${profile.first_name}!`} 
-                    </Typography>
-                    <Avatar 
-                        className={classes.largeAvatar}
-                        alt={`${profile.first_name} ${profile.last_name}`} 
-                        src={profile.profile_picture} />
+            <React.Fragment>
+                <div className={classes.myInformationContainer}>
+                    <div className={classes.avatarContainer}>
+                        <Typography
+                            className={classes.welcomeTitle}
+                            component="h1"
+                            variant="h6">
+                            {`Welcome, ${profile.first_name}!`} 
+                        </Typography>
+                        <Avatar 
+                            className={classes.largeAvatar}
+                            alt={`${profile.first_name} ${profile.last_name}`} 
+                            src={profile.profile_picture} />
+                    </div>
+                    <div className={classes.myInformation}>
+                        <MyInformation profile={profile} />
+                    </div>
                 </div>
-                <div className={classes.myInformation}>
-                    <MyInformation profile={profile} />
-                </div>
-            </div>
+                <LabValueHistoryPreview 
+                    labValueHistory={labValueHistory} 
+                    height={profile.height}
+                    weight={profile.weight} />
+                <SurveyHistoryPreview surveyHistory={surveyHistory} />
+            </React.Fragment>
         );
     }
 }

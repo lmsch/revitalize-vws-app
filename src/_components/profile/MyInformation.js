@@ -2,6 +2,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types'
 /* THIRD PARTY IMPORTS */
+import * as _ from 'lodash';
 import { 
     Card, 
     CardHeader, 
@@ -51,15 +52,15 @@ const hiddenKeys = [
         label: 'Phone',
     },
     { 
-        key: 'street_address',
+        key: 'address.street_address',
         label: 'Street Adress',
     },
     { 
-        key: 'city',
+        key: 'address.city',
         label: 'City',
     },
     {
-        key: 'province',
+        key: 'address.province',
         label: 'Province',
     },
     { 
@@ -75,20 +76,19 @@ class MyInformation extends React.Component {
     }
 
     handleExpandClick = () => {
-        this.setState({expanded: !this.state.expanded})
-    }
+        this.setState({expanded: !this.state.expanded});
+    };
 
     findProfileData(profile, common) {
         const data = [];
         for(let cObj of common) {
-            for(let pKey in profile) {
-                if(pKey === cObj.key) {
-                    data.push({
-                        id: pKey,
-                        label: cObj.label,
-                        value: profile[pKey],
-                    });
-                }
+            const profileItem = _.get(profile, cObj.key);
+            if(profileItem) {
+                data.push({
+                    id: cObj.key,
+                    label: cObj.label,
+                    value: profileItem,
+                });
             }
         }
         return data;
@@ -101,7 +101,7 @@ class MyInformation extends React.Component {
         return (
             <Card>
                 <CardHeader 
-                    title="My Information"
+                    title="Information"
                     titleTypographyProps={{
                         component: "h1",
                         variant: "h4",

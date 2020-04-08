@@ -2,13 +2,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 /* THIRD PARTY IMPORTS */
-import { 
+import {
+    Select,
+    MenuItem,
     Radio,
     RadioGroup,
     FormControl,
     FormControlLabel,
     Typography,
-    Grid
 } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
@@ -32,102 +33,85 @@ class ExclusiveChoices extends React.Component {
         this.props.model.questions[e.target.name].response = e.target.value;
     };
 
+    determineAnnotation(index, questionData) {
+        const { labels, annotations } = questionData;
+        if(index === 0) {
+            return <span>{labels[index]}&emsp;<b>{annotations?.minimum}</b></span>
+        } else if(index === labels.length - 1) {
+            return <span>{labels[index]}&emsp;<b>{annotations?.maximum}</b></span>
+        } else {
+            return labels[index];
+        }
+    }
+
     /**
      * Renders the component based on various model conditions.
      */
     render() {
-        const { classes, model } = this.props;
+        const { classes, model, isMobile } = this.props;
         const questionData = model.question_group_type_data;
-        if (model.number_of_questions === 1) {
-            const question = model.questions[0];
-            return (
-                <div className={`${classes.colFlexContainer} ${classes.multiLineJustify} ${classes.questionPadding}`}>
-                    <Typography 
-                        component="p" 
-                        variant="subtitle1"
-                        dangerouslySetInnerHTML={{__html: question.number ? 
-                        `<b>${question.number}</b>: ${question.text} ` : `${question.text}`}}>
-                    </Typography>
-                    <FormControl 
-                        component="fieldset">
-                        <RadioGroup 
-                            className={`${classes.rowFlexContainer} ${classes.questionJustify}`}
-                            name={String(0)}
-                            value={this.state[0]} 
-                            onChange={this.handleChange}>
-                            {questionData.labels?.map((label, j) => 
-                                <FormControlLabel
-                                    key={j}
-                                    label={label}
-                                    value={String(j + 1)}
-                                    control={<Radio color="primary" />}
-                                    labelPlacement="end"/>
-                            )}
-                        </RadioGroup>
-                    </FormControl>
-                </div>
-            );
-        } else {
-            return (
-                <Grid
-                    className={classes.questionPadding}
-                    container
-                    directon="column">
-                    {model.questions?.map((question, i) =>
-                        <Grid 
-                            key={i}
-                            item
-                            container>
-                            <Grid 
-                                item
-                                xs={6}
-                                container
-                                alignItems="flex-end">
-                                <Typography 
-                                    component="p" 
-                                    variant="subtitle1"
-                                    dangerouslySetInnerHTML={{__html: question.number ? 
-                                    `<b>${question.number}</b>: ${question.text} ` : `${question.text}`}}>
+        return (
+            <React.Fragment>
+                {model.questions?.map((question, i) =>
+                    <div
+                        className={`${classes.questionPadding} ${classes.colFlexContainer} ${classes.questionJustify}`}
+                        key={i}>
+                        <Typography
+                            component="p"
+                            variant="subtitle1"
+                            dangerouslySetInnerHTML={{
+                                __html: question.number ?
+                                    `<b>${question.number}</b>: ${question.text}` : `${question.text}`
+                            }}>
+                        </Typography>
+                        <FormControl
+                            component="fieldset">
+                            {isMobile ?
+                            <Select
+                                variant="outlined"
+                                name={String(i)}
+                                value={this.state[i]}
+                                onChange={this.handleChange}>
+                                {questionData.labels?.map((label, j) => 
+                                <MenuItem 
+                                    key={j} 
+                                    value={String(j + 1)}>
+                                    {this.determineAnnotation(j, questionData)}
+                                </MenuItem>
+                                )}
+                            </Select>
+                            :
+                            <RadioGroup
+                                className={`${classes.rowFlexContainer} ${classes.questionJustify}`}
+                                name={String(i)}
+                                value={this.state[i]}
+                                onChange={this.handleChange}>
+                                <Typography
+                                    component="h6"
+                                    variant="subtitle1">
+                                    {questionData.annotations?.minimum}
                                 </Typography>
-                            </Grid>
-                            <Grid 
-                                item
-                                xs={6}
-                                container
-                                alignItems="flex-end">
-                                <FormControl 
-                                    component="fieldset"
-                                    className={classes.formControlBlock}>
-                                    <RadioGroup 
-                                        className={`${classes.rowFlexContainer} ${classes.exclusiveChoiceGroup}`}
-                                        name={String(i)}
-                                        value={this.state[i]} 
-                                        onChange={this.handleChange}>
-                                        {questionData.labels?.map((label, j) => 
-                                            <FormControlLabel
-                                                key={j}
-                                                classes={{label: 
-                                                    i? classes.labelNotVisible : ''
-                                                }}
-                                                value={String(j + 1)}
-                                                label={
-                                                <Typography 
-                                                    component="h6" 
-                                                    variant="subtitle1">
-                                                    {label}
-                                                </Typography>
-                                                }
-                                                control={<Radio color="primary" />}
-                                                labelPlacement="top"/>
-                                        )}
-                                    </RadioGroup>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    )}
-                </Grid> 
-            );
-        }
+                                {questionData.labels?.map((label, j) =>
+                                    <FormControlLabel
+                                        className={classes.integerScaleMargin}
+                                        key={j}
+                                        label={label}
+                                        value={String(j + 1)}
+                                        control={<Radio color="primary" />}
+                                        labelPlacement="bottom" />
+                                )}
+                                <Typography
+                                    component="h6"
+                                    variant="subtitle1">
+                                    {questionData.annotations?.maximum}
+                                </Typography>
+                            </RadioGroup>
+                            }
+                        </FormControl>
+                    </div>
+                )}
+            </React.Fragment>
+        );
     }
 }
 

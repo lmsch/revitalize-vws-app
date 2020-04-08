@@ -2,15 +2,22 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom'
 /* THIRD PARTY IMPORTS */
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import MenuIcon from '@material-ui/icons/Menu';
-import Icon from '@material-ui/core/Icon';
-import Divider from '@material-ui/core/Divider';
+import { 
+    useMediaQuery,
+    makeStyles,
+    Drawer,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemIcon,
+    Icon,
+    Divider,
+    ListSubheader
+} from '@material-ui/core';
+import { connect } from 'react-redux';
+/* LOCAL IMPORTS */
+import { programLinks, mainLinks } from './common';
 
 const useStyles = makeStyles({
     list: {
@@ -22,38 +29,11 @@ const useStyles = makeStyles({
     },
 });
 
-/* Links to each page */
-const programLinks = [
-    {
-        label: 'My Profile',
-        url: '/program/profile',
-        icon: 'account_box'
-    },
-    {
-        label: 'Lab Values',
-        url: '/program/lab-values',
-        icon: 'folder_shared',
-    },
-    {
-        label: 'Surveys',
-        url: '/program/surveys',
-        icon: 'library_books',
-    },
-    {
-        label: 'Dietary Journal',
-        url: '/program/journal',
-        icon: 'menu_book',
-    },
-    {
-        label: 'Goal Progress',
-        url: '/program/progress',
-        icon: 'trending_up',
-    }
-];
-
-export function SideDrawer() {
+function SideDrawer(props) {
+    const isMobile = useMediaQuery('(max-width:992px)');
     const history = useHistory();
     const classes = useStyles();
+    const { loggedIn } = props.authentication;
     const [state, setState] = React.useState({ left: false, });
 
     const toggleDrawer = (side, open) => event => {
@@ -73,8 +53,33 @@ export function SideDrawer() {
             onKeyDown={toggleDrawer(side, false)}
         >
             <List>
-                <Divider />
-                {programLinks.map((link) => (
+                {isMobile ?
+                <React.Fragment>
+                    <ListSubheader>
+                        REVITALIZE
+                    </ListSubheader>
+                    <Divider />
+                    {mainLinks.map((link) => (
+                    <ListItem 
+                        button 
+                        key={link.label}
+                        onClick={_ => history.push(link.url)}>
+                        <ListItemIcon>
+                            <Icon>chevron_right</Icon>
+                        </ListItemIcon>
+                        <ListItemText primary={link.label} />
+                    </ListItem>
+                    ))} 
+                    <Divider />
+                </React.Fragment> : null
+                }
+                {loggedIn ?
+                <React.Fragment>
+                    <ListSubheader>
+                        Your Program
+                    </ListSubheader>
+                    <Divider />
+                    {programLinks.map((link) => (
                     <ListItem 
                         button 
                         key={link.label}
@@ -84,8 +89,10 @@ export function SideDrawer() {
                         </ListItemIcon>
                         <ListItemText primary={link.label} />
                     </ListItem>
-                ))}
-                <Divider />
+                    ))}
+                    <Divider />
+                </React.Fragment> : null
+                }
             </List>
         </div>
     );
@@ -99,3 +106,13 @@ export function SideDrawer() {
         </div>
     );
 }
+
+function mapStateToProps(state) {
+    const { authentication } = state;
+    return {
+        authentication,
+    };
+}
+
+const connectedSideDrawer = connect(mapStateToProps)(SideDrawer);
+export { connectedSideDrawer as SideDrawer};

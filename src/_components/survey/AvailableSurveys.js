@@ -68,7 +68,7 @@ class AvailableSurveys extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        {availableSurveys.map(survey => (
+                        {availableSurveys?.map(survey => (
                             <TableRow
                                 hover
                                 classes={{
@@ -92,12 +92,12 @@ class AvailableSurveys extends React.Component {
                                 <TableCell 
                                     colSpan={2}>
                                     <div className={`${classes.doSurveyContainer} ${classes.rowFlexContainer}`}>
-                                        <span>
+                                        <b>
                                             { this.state.selectedSurvey ? 
                                                 `You have selected ${this.state.selectedSurvey.name}.`
                                                 : 'Click on a row to select a survey.'
                                             }
-                                        </span> 
+                                        </b> 
                                         <Button 
                                             className={classes.doSurveyButton}
                                             variant="contained" 
