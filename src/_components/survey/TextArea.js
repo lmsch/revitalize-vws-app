@@ -1,12 +1,22 @@
+/**
+ * TEXT AREA: A component for the user to enter short answer questions in a survey. Manipulates model
+ * when MATERIAL-UI text area is typed in.
+ */
+
 /* REACT IMPORTS */
 import React from 'react';
-/* THIRD PARTY IMPORTS */
-import TextField from '@material-ui/core/TextField';
-import {withStyles} from "@material-ui/core/styles";
-/* LOCAL IMPORTS */
-import {setupInitialState, styles} from './common';
 import PropTypes from "prop-types";
-
+/* THIRD PARTY IMPORTS */
+import {
+    TextField,
+    Typography,
+    withStyles,
+}from '@material-ui/core';
+/* LOCAL IMPORTS */
+import {
+    setupInitialState, 
+    styles,
+} from './common';
 
 class TextArea extends React.Component {
 
@@ -27,36 +37,41 @@ class TextArea extends React.Component {
      * Renders the component based on various model conditions.
      */
     render() {
-        const {classes, model} = this.props;
-        const questionData = model.question_group_type_data;
-
+        const { classes, model } = this.props;
         return (
-            <form className={classes.root} autoComplete="off">
+            <React.Fragment>
                 {model.questions?.map((question, i) =>
-                    <div>
-                        "Questions testing ?"
-                        dangerouslySetInnerHTML={{
-                        __html: question.number ?
-                            `<b>${question.number}</b>: ${question.text}` : `${question.text}`
-                    }}>
+                    <div
+                        className={`${classes.questionPadding} ${classes.colFlexContainer} ${classes.questionJustify}`}
+                        key={i}>
+                        <Typography
+                            component="p"
+                            variant="subtitle1"
+                            dangerouslySetInnerHTML={{
+                                __html: question.number ?
+                                    `<b>${question.number}</b>: ${question.text}` : `${question.text}`
+                            }}>
+                        </Typography>
                         <TextField
-                            id="outlined-textarea"
-                            label="Enter text here"
-                            placeholder="text"
+                            name={String(i)}
+                            value={this.state[i]}
+                            onChange={this.handleChange} 
+                            autoComplete="off"
+                            fullWidth
                             multiline
-                            variant="filled"
-                        />
+                            rows="3"
+                            placeholder="Type your answer here."
+                            variant="outlined" />
                     </div>
                 )}
-            </form>
+            </React.Fragment>
         )
     };
 }
+
 TextArea.propTypes = {
     model: PropTypes.object.isRequired,
 };
 
 const styledTextArea = withStyles(styles)(TextArea);
 export { styledTextArea as TextArea };
-
-
