@@ -7,6 +7,7 @@ import React from 'react'
 /* THIRD PARTY IMPORTS */
 import { withStyles, Box } from "@material-ui/core";
 
+/* Styling for the footer */
 const styles = (theme) => (
     {
         footer: {
@@ -20,6 +21,7 @@ const styles = (theme) => (
 );
 
 class Footer extends React.Component{
+    /* Footer of the page */
     render(){
         const { classes } = this.props;
         return (

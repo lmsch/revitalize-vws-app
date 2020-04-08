@@ -4,6 +4,7 @@ export * from './PrivateRoute';
 export * from './survey/ExclusiveChoices';
 export * from './survey/GenerateSurvey';
 export * from './survey/AvailableSurveys';
+export * from './survey/TextArea'
 export * from './survey/SurveyHistory';
 
 // Lab Values

@@ -31,6 +31,7 @@ import { LoginPage } from '../../LoginPage';
 import { userActions, profileActions } from '../../_actions';
 import { mainLinks } from './common';
 
+/* Styling of the header of the page */
 const useStyles = makeStyles(theme => ({
     appBar: {
         display: 'flex',

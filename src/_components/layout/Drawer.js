@@ -51,6 +51,7 @@ function SideDrawer(props) {
     };
 
     const sideList = side => (
+        /* Side list to show the options of pages */
         <div
             className={classes.list}
             role="presentation"
