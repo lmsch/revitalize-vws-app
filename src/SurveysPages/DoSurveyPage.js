@@ -68,7 +68,7 @@ class DoSurveyPage extends React.Component {
         return messages.length > 0 ? messages: null;
     }
 
-    // When initially mounted, graph the survey ID from the path and use it to get the survey model (needed to generate survey).
+    // When initially mounted, get the survey ID from the path and use it to get the survey model (needed to generate survey).
     componentDidMount() {
         const { surveyId  } = this.props.match.params;
         apiCall(`/surveys/${surveyId}/`, { method: 'GET'})
