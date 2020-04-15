@@ -55,22 +55,22 @@ Name | Description
 -----|------------
 `@material-ui/core` | The app folows standard material theming using the various components from this library. For more information on material theming, see [this](https://material.io/design/material-theming/overview.html).
 `i18next` | A library that streamlines internationalization, including changing between different languages.
-`lodash` | A popular JS library for simplifying commong operations.
+`lodash` | A popular JS library for simplifying common operations.
 `moment` | A popular JS library for formatting and displaying dates in correct locale format.
 `notistack` | A useful library for functionally creating and stacking material-ui snackbars.
-`react-redux` | Provides standard component-level redux integration. See [REDUX Store](##REDUX-Store).
+`react-redux` | Provides standard component-level redux integration. See [Redux Store](#redux-store).
 `react-router-dom` | Component routing for react.
-`recharts` | A graphing library for generating dynamically sized graphs. Uses for showing goal progress.
+`recharts` | A graphing library for generating dynamically sized graphs. Used for showing goal progress.
 `redux-form` | A useful library that ties all form states to the redux store.
-`redux-logger` | Middleware for logging all redux state updates.
+`redux-logger` | Middleware for logging all redux store state updates.
 
-## REDUX Store
+## Rdux Store
 
 This app has one global redux store. Included in this store is:
-* [authentication](###Authentication)
-* [alert](###Alert)
-* [profile](###Profile)
-* [form](###Form)
+* [authentication](#authentication)
+* [alert](#alert)
+* [profile]($profile)
+* [form](#form)
 
 ### Authentication
 
@@ -134,7 +134,7 @@ export function alert(state = {}, action) {
 }
 ```
 
-`alert.reducer.js` is used to propagare messages throughout the app.
+`alert.reducer.js` is used to propagate messages throughout the app.
 
 ### Profile
 
@@ -161,6 +161,7 @@ export function profile(state = {}, action) {
 `profile.reducer.js` describes the the user's profile, which is retrieved upon initial log in.
 
 ### Form
+
 This state is handle entirely by redux form. All form states are within this state.
 
 ## Survey Generation
@@ -334,13 +335,13 @@ Below is an example of a survey JSON. Continue reading afterwards for more infor
 ```
 
 A survey is described in this JSON as a list of elements. Elements represent sections of a survey (in the HTML, these sections are separated 
-by horizontal dividers). An element can be a piece of text or a group of 1 or more questions (as indicated by element_type). Text elements
+by horizontal dividers). An element can be a piece of text or a group of 1 or more questions (as indicated by `element_type`). Text elements
 are separate from the name and description of a survey. They may, for example, represent a set of instructions between questions in the survey.
-Question elements can be boolean, exclusive choices, text areas, etc.
+Question elements can have type `boolean`, `exclusive_choice`, `text_area`, `integer_range`, etc.
 
-Depending on the question type (as defined by question_group_type), question elements will include extra data (as defined by question_group_type_data). For example, a likert scale (integer_range) question will usually include a minimum or maximum annotation indicating
+Depending on the question type (as defined by `question_group_type`), question elements will include extra data (as defined by `question_group_type_data`). For example, a likert scale (`integer_range`) question will usually include a minimum or maximum annotation indicating
 the range of the likert scale. All question types that involve multiple choice will have a list of labels, and some can have an initial
-selection (as defined by initial). Elements and individual questions can have a number and text associated with them.
+selection (as defined by `initial`). Elements and individual questions can have a number and text associated with them.
 
 Below is the render function from `GenerateSurvey.js`.
 
@@ -389,11 +390,11 @@ function renderElement(element, classes, isMobile) {
 }
 ```
 
-Given an element form a list of elements, this function will generate JSX depending on the element type.
-The key idea is an object is being used to map an element_type to a corresponding component type.
-Using the surveyMap, the correct component is retrieved and passed its props.
+Given an element from a list of elements, this function will generate JSX depending on the element type.
+The key idea is an object is being used to map an element type to a corresponding component type.
+Using the `surveyMap`, the correct component is retrieved and passed its props.
 
-Below is the component that handles boolean, exclusive choices, and integer ranges.
+Below is the component that handles booleans, exclusive choices, and integer ranges.
 
 ```javascript
 // Sets state and updates model with new selection.
@@ -472,10 +473,12 @@ render() {
 
 Here we see labels and radio buttons are generated for each question in the element. Minimum and maximum annotations
 are added to the left and right respectively to create a likert scale. When a radio button is selected, the `handleChange`
-function is called. The component updates its inner state as well as the model that was passed in as a prop.
+function is called. The component updates its inner state as well as the `model` that was passed in as a prop.
 
-It is important to keep in mind that the survey JSON retrieved from the API is parsed into a config object and passed directly to `GenerateSurvey.js` as a prop called `model`. Each component that represents a question type (in this case, `ExclusiveChoices`) is then passed its corresponding
-element from the config object as a prop called `model`. Thus, all generated question components are manipulating the same config object (that is, adding a `response` property containing the user's selection value, as seen in `handleChange`.)
+It is important to keep in mind that the survey JSON retrieved from the API is parsed into a config object and passed directly to `GenerateSurvey` as a prop called `model`. Each component that represents a question (in this case, `ExclusiveChoices`) is then passed its corresponding
+element from the config object as a prop called `model`. Thus, all generated question components are manipulating the same config object (that is, adding a `response` property containing the user's selected value, as seen in `handleChange`.)
+
+Below is from `DoSurvey.js`, where the `model` is retrieved from the API and passed to `GenerateSurvey`.
 
 ```javascript
 // When initially mounted, get the survey ID from the path and use it to get the survey model (needed to generate survey).
