@@ -8,9 +8,9 @@ written in [Django](https://github.com/django/django).
 
 ## Contributors
 
-* [Luke Schipper](lschipper@upei.ca)
-* [Alfred Uzokwe](auzokwe@upei.ca)
-* [Kareem Abulez](kabulez@upei.ca)
+* [Luke Schipper](mailto:lschipper@upei.ca)
+* [Alfred Uzokwe](mailto:auzokwe@upei.ca)
+* [Kareem Abulez](mailto:kabulez@upei.ca)
 
 ## Running the App
 
@@ -64,7 +64,7 @@ Name | Description
 `redux-form` | A useful library that ties all form states to the redux store.
 `redux-logger` | Middleware for logging all redux store state updates.
 
-## Rdux Store
+## Redux Store
 
 This app has one global redux store. Included in this store is:
 * [authentication](#authentication)
