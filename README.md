@@ -69,7 +69,7 @@ Name | Description
 This app has one global redux store. Included in this store is:
 * [authentication](#authentication)
 * [alert](#alert)
-* [profile]($profile)
+* [profile](#profile)
 * [form](#form)
 
 ### Authentication
