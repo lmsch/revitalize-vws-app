@@ -31,6 +31,7 @@ import { withStyles } from "@material-ui/core/styles";
 /* LOCAL IMPORTS */
 import { styles } from './common';
 import { ExclusiveChoices } from './ExclusiveChoices';
+import { TextArea } from './TextArea';
 import { withMediaQuery } from '../../_helpers';
 
 // Survey component map.
@@ -38,6 +39,7 @@ const surveyMap = {
     'integer_range': ExclusiveChoices,
     'exclusive_choices': ExclusiveChoices,
     'boolean': ExclusiveChoices,
+    'text_area': TextArea,
 };
 
 /**
