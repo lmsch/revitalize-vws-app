@@ -49,7 +49,11 @@ class DoSurveyPage extends React.Component {
                 this.props.history.push('/program/surveys')
             })
             // Scroll the NotifyDisplay into view.
-            .catch(error => this.setState({errors: error.data.errors, spinner: false}, () => this.errorsRef.current.scrollIntoView()));
+            .catch(error => this.setState({errors: error.data.errors, spinner: false}, () => {
+                if(this.errorsRef.current) { 
+                    this.errorsRef.current.scrollIntoView();
+                }
+            }));
     };
 
     /**
