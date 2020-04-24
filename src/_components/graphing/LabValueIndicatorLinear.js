@@ -69,6 +69,9 @@ class LabValueIndicatorLinear extends React.Component {
                             lineType="joint"/>
                     </ScatterChart>
                 </ResponsiveContainer>
+                <div className={classes.graphHintMessageContainer}>
+                    {data[0].indicator_data.goal_message}
+                </div>
             </GraphSelector>
         );
     }

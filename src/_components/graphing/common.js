@@ -6,6 +6,11 @@ export const styles = theme => ({
             justifyContent: 'space-between',
             flexWrap: 'wrap',
         },
+        graphHintMessageContainer: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
         controlsMargin: {
             margin: '10px',
         },

@@ -35,6 +35,7 @@ class SurveyIndicatorLinear extends React.Component {
 
     render() {
         const { options, data, classes } = this.props;
+        console.log(data)
         if(!options || options.length <= 0) {
             return null;
         }
@@ -72,6 +73,9 @@ class SurveyIndicatorLinear extends React.Component {
                             lineType="joint"/>
                     </ScatterChart>
                 </ResponsiveContainer>
+                <div className={classes.graphHintMessageContainer}>
+                    {data[0].indicator_data.goal_message}
+                </div>
             </GraphSelector>
         );
     }
