@@ -36,6 +36,10 @@ const labValueHistoryColumns = [
         label: 'Value',
     },
     {
+        id: 'unit',
+        label: 'Unit',
+    },
+    {
         id: 'submission_date',
         label: 'Submission Date',
     },
@@ -112,6 +116,10 @@ class LabValueHistory extends React.Component{
                                 <TableCell
                                     align="left">
                                     {lvalue.value}
+                                </TableCell>
+                                <TableCell
+                                    align="left">
+                                    {lvalue.indicator_data.unit}
                                 </TableCell>
                                 <TableCell
                                     align="left">

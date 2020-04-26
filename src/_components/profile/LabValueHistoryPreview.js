@@ -38,6 +38,10 @@ const labValueHistoryPreviewColumns = [
         label: 'Value',
     },
     {
+        id: 'unit',
+        label: 'Unit',
+    },
+    {
         id: 'submission_date',
         label: 'Submission Date',
     },
@@ -68,8 +72,8 @@ export function LabValueHistoryPreview(props) {
                     Current Physical Measurements
                 </Typography>
                 <div className={classes.physicalMeasurementContainer}>
-                    <label className={classes.physicalMeasurementChild}><b>Height:</b> {height ? height : 'N/A'}</label>
-                    <label className={classes.physicalMeasurementChild}><b>Weight:</b> {weight ? weight: 'N/A'}</label>
+                    <label className={classes.physicalMeasurementChild}><b>Height:</b> {height ? height + ' m' : 'N/A'}</label>
+                    <label className={classes.physicalMeasurementChild}><b>Weight:</b> {weight ? weight + ' kg': 'N/A'}</label>
                 </div>
                 <Typography 
                     component="h2" 
@@ -92,7 +96,7 @@ export function LabValueHistoryPreview(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {handleDateSort(labValueHistory, 'asc').slice(0, 3).map((lvalue, i)  => (
+                    {handleDateSort(labValueHistory, 'desc').slice(0, 4).map((lvalue, i)  => (
                         <TableRow
                             key={i}>
                             <TableCell
@@ -102,6 +106,10 @@ export function LabValueHistoryPreview(props) {
                             <TableCell
                                 align="left">
                                 {lvalue.value}
+                            </TableCell>
+                            <TableCell
+                                align="left">
+                                {lvalue.indicator_data.unit}
                             </TableCell>
                             <TableCell
                                 align="left">

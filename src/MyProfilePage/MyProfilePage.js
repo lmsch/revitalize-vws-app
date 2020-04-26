@@ -69,8 +69,8 @@ class MyProfilePage extends React.Component {
     
     render() {
         let { profile, classes } = this.props;
-        let { labValueHistory, surveyHistory} = this.state;
-        profile = profile.payload ? profile.payload : {}
+        let { labValueHistory, surveyHistory } = this.state;
+        profile = profile.payload ? profile.payload : {};
         // Show spinner if not loaded yet.
         if(!labValueHistory || !surveyHistory) {
             return <div className="progress-spinner-container"><CircularProgress size={100} /></div>
