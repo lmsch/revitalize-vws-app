@@ -18,7 +18,7 @@ export const withMediaQuery = (...args) => Component => props => {
 export function handleDateSort(history, dateOrder) {
   if(history) {   
       history = history.slice().sort((h1, h2) => {
-          return moment.utc(h1.time).diff(moment.utc(h2.time), 'minutes');
+          return moment.utc(h1.time).diff(moment.utc(h2.time));
       });
       if(dateOrder === 'desc') {
           history.reverse();
